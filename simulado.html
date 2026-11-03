@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulado · Carrera Final · Maratón Nocturno · Espanhol 6º</title>
+<style>
+  :root{
+    --bg:#0f1218; --bg2:#161b24; --card:#1a2030; --borda:#2a3347; --borda2:#3a4560;
+    --naranja:#ff7a1a; --verde:#b6f03c; --cian:#2ad4e8; --rojo:#ff4d5e; --amar:#ffd23f;
+    --texto:#eef1f7; --cinza:#94a0b8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',system-ui,Arial,sans-serif;background:var(--bg);color:var(--texto);line-height:1.6;padding-bottom:60px;font-size:17px}
+  header{background:linear-gradient(120deg,#0d1a3a,#132552);padding:26px 18px;text-align:center;box-shadow:0 4px 18px rgba(0,0,0,.5);border-bottom:5px solid #e23b4e}
+  header .selo{font-size:.78rem;letter-spacing:2px;color:#c8d6ff;text-transform:uppercase}
+  header h1{font-size:1.55rem;margin:4px 0 2px}
+  header p{color:#d8dce6;font-size:.92rem}
+  .wrap{max-width:840px;margin:0 auto;padding:16px}
+  .barra-nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:16px 0}
+  .barra-nav a{background:var(--bg2);color:var(--texto);text-decoration:none;padding:7px 12px;border-radius:20px;font-size:.85rem;border:1px solid var(--borda)}
+  .barra-nav a.on{background:#e23b4e;color:#fff;font-weight:bold}
+  .intro{background:var(--bg2);border:1px solid var(--borda);border-radius:14px;padding:16px;margin-bottom:16px}
+  .intro h2{color:#ff8a96;font-size:1.15rem;margin-bottom:8px}
+  .painel{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;background:var(--bg2);border:1px solid var(--borda);border-radius:12px;padding:10px 14px;margin-bottom:16px;font-size:.85rem}
+  .painel .btns{display:flex;gap:6px;flex-wrap:wrap}
+  button{cursor:pointer;font-family:inherit}
+  .mini{background:var(--bg);color:var(--texto);border:1px solid var(--borda2);border-radius:8px;padding:6px 10px;font-size:.8rem}
+  .codigo{background:linear-gradient(120deg,#1b260c,#2c3d10);border:2px solid var(--verde);border-radius:14px;padding:16px;text-align:center;margin-bottom:16px;display:none}
+  .codigo.show{display:block}
+  .codigo .cod{font-size:1.8rem;font-weight:bold;letter-spacing:3px;color:var(--verde);margin:6px 0}
+  .progresso{height:10px;background:var(--borda);border-radius:6px;overflow:hidden;margin-bottom:16px}
+  .progresso div{height:100%;background:linear-gradient(90deg,#e23b4e,#ff7a8a);width:0;transition:width .3s}
+  .q{background:var(--bg2);border:1px solid var(--borda);border-left:5px solid #e23b4e;border-radius:14px;padding:14px 16px;margin-bottom:14px}
+  .q .num{color:#ff8a96;font-weight:bold;font-size:.8rem;letter-spacing:1px;text-transform:uppercase}
+  .tipo{display:inline-block;font-size:.7rem;border-radius:10px;padding:2px 9px;margin-bottom:4px;font-weight:bold}
+  .tipo.mc{background:#26385f;color:#9fc2ff}
+  .tipo.fill{background:#2c1d45;color:#d6b3ff}
+  .tipo.reorder{background:#123a2f;color:#8ff0c4}
+  .tipo.rom{background:#4a2a10;color:#ffcf9a}
+  .q h3{font-size:1.02rem;margin:6px 0 10px;font-weight:600}
+  .alt{display:block;background:#121722;border:1px solid var(--borda2);border-radius:10px;padding:10px 12px;margin:6px 0;cursor:pointer}
+  .alt:hover{border-color:#ff8a96}
+  .alt input{margin-right:8px}
+  .alt.sel{border-color:#ff8a96;background:#2a1419}
+  .alt.certa{border-color:var(--verde);background:#1b260c}
+  .alt.errada{border-color:#555;background:#171a20;color:#aab}
+  .alt.marcada-errada{border-color:var(--rojo);background:#3a1419}
+  .afirm{background:#121722;border-left:3px solid var(--naranja);padding:7px 10px;margin:5px 0;border-radius:0 8px 8px 0;font-size:.97rem}
+  .afirm.ok{border-left-color:var(--verde)} .afirm.no{border-left-color:#777}
+  .fill-in{width:100%;background:#0b0e14;border:1.5px solid var(--borda2);border-radius:10px;padding:10px 12px;color:var(--texto);font-size:1rem;font-family:inherit}
+  .fill-in.ok-c{border-color:var(--verde);background:#1b260c}
+  .fill-in.no-c{border-color:var(--rojo);background:#3a1419}
+  .linha{min-height:46px;border:1.5px dashed var(--borda2);border-radius:10px;padding:8px;display:flex;flex-wrap:wrap;gap:6px;margin-bottom:9px;background:#0b0e14}
+  .linha.ok-c{border-color:var(--verde)} .linha.no-c{border-color:var(--rojo)}
+  .vazio{color:var(--cinza);font-size:.88rem}
+  .banco{display:flex;flex-wrap:wrap;gap:6px}
+  .chip{background:#1d2740;color:var(--texto);border:1px solid var(--borda2);border-radius:8px;padding:6px 11px;font-size:.98rem}
+  .chip.usado{opacity:.25;pointer-events:none}
+  .exp{display:none;font-size:.88rem;margin-top:6px;color:#cfd6e3}
+  .exp.show{display:block}
+  .enviar{width:100%;background:#e23b4e;color:#fff;border:none;border-radius:12px;padding:14px;font-size:1.05rem;font-weight:bold;margin:10px 0}
+  .enviar:disabled{background:#2a2f3a;color:#77808f;cursor:not-allowed}
+  .gab{background:var(--bg2);border:1px dashed #ff8a96;border-radius:14px;padding:16px;margin:16px 0;display:none}
+  .gab.show{display:block}
+  .gab input{padding:9px;border-radius:8px;border:1px solid var(--borda2);background:#0b0e14;color:var(--texto);font-size:1rem;width:180px;text-transform:uppercase}
+  .gab button{background:#e23b4e;color:#fff;border:none;border-radius:8px;padding:9px 14px;font-weight:bold;margin-left:6px}
+  .gab .msg{margin-top:8px;font-size:.92rem}
+  .fim{background:linear-gradient(120deg,#1b260c,#22300f);border:2px solid var(--verde);border-radius:16px;padding:18px;margin-top:18px;text-align:center}
+  .fim h3{color:var(--verde);margin-bottom:8px}
+  .fim a{display:inline-block;margin-top:8px;background:var(--verde);color:#1a2600;text-decoration:none;font-weight:bold;padding:11px 20px;border-radius:10px}
+  .modal-bg{display:none;position:fixed;inset:0;background:rgba(5,7,10,.96);z-index:50;align-items:center;justify-content:center;padding:16px}
+  .modal-bg.show{display:flex}
+  .modal{background:var(--bg2);border:1px solid #e23b4e;border-radius:14px;padding:22px;max-width:440px;text-align:center}
+  .modal p{margin-bottom:14px}
+  .modal .big{font-size:2.2rem}
+  .modal button,.modal a{display:inline-block;background:#e23b4e;color:#fff;border:none;border-radius:8px;padding:9px 16px;font-weight:bold;text-decoration:none}
+  .rodape{text-align:center;color:var(--cinza);font-size:.8rem;margin-top:24px}
+</style>
+</head>
+<body>
+<header>
+  <div class="selo">Maratón Nocturno · Espanhol 6º ano · CCF</div>
+  <h1>📝 Simulado · Carrera Final</h1>
+  <p>25 questões no estilo da prova · Múltipla escolha · Complete · Monte a frase · Números romanos · Código SIM</p>
+</header>
+
+<div class="wrap">
+  <nav class="barra-nav" id="nav">
+    <a href="leitura-guiada.html">📖 Leitura Guiada</a>
+    <a href="quiz.html">🎯 Quiz</a>
+    <a href="resumo.html">🗺️ Resumo</a>
+    <a class="on" href="simulado.html">📝 Simulado</a>
+    <a href="index.html">🏠 Início</a>
+  </nav>
+
+  <div class="codigo" id="codigo"><div>Seu código de liberação</div><div class="cod" id="cod"></div><div id="codtxt"></div></div>
+
+  <div class="intro">
+    <h2>🏁 Valendo!</h2>
+    <p>Faça como se fosse a prova: <b>25 questões</b>, todas obrigatórias, <b>sem áudio</b> e sem consultar. São 4 tipos:</p>
+    <ul style="margin:6px 0 0 20px">
+      <li><b>Múltipla escolha</b> (15): escolha a alternativa certa.</li>
+      <li><b>Complete</b> (4): escreva a palavra que falta (sem dica).</li>
+      <li><b>Monte a frase</b> (3): toque nas partes na ordem certa (toque de novo para devolver).</li>
+      <li><b>Números romanos</b> (3): leia as afirmativas I, II, III e IV e escolha a alternativa correta.</li>
+    </ul>
+    <p style="margin-top:6px">Depois de enviar, as respostas travam e sai o código <b>SIM</b>.</p>
+  </div>
+
+  <div class="painel">
+    <span id="salvo">💾 Progresso salvo automaticamente.</span>
+    <div class="btns">
+      <button class="mini" onclick="exportar()">📥 Exportar</button>
+      <button class="mini" onclick="document.getElementById('imp').click()">📤 Importar</button>
+      <input type="file" id="imp" accept="application/json" style="display:none" onchange="importar(event)">
+      <button class="mini" onclick="pedirZerar()">🗑️ Zerar tudo</button>
+    </div>
+  </div>
+
+  <div class="progresso"><div id="barra"></div></div>
+  <div id="questoes"></div>
+  <button class="enviar" id="btn-enviar" onclick="enviar()" disabled>📨 Enviar simulado (responda todas)</button>
+
+  <div class="gab" id="gab">
+    <b>🔑 Gabarito comentado:</b> digite o código SIM que apareceu no topo.<br>
+    <input id="gab-in" placeholder="SIM-XX-YY"><button onclick="abrirGab()">Ver gabarito</button>
+    <div class="msg" id="gab-msg"></div>
+  </div>
+
+  <div class="fim" id="fim" style="display:none">
+    <h3>🏅 ¡Llegaste a la meta!</h3>
+    <p>Você correu a maratona inteira, na ordem. Agora tudo fica aberto para revisar quantas vezes quiser até a prova.</p>
+    <a href="index.html">🏠 Voltar ao início</a>
+  </div>
+
+  <div class="rodape">Feito com carinho para o jovem aprendiz. 🏃 ¡Buena prueba!</div>
+</div>
+
+<div class="modal-bg" id="lock">
+  <div class="modal">
+    <div class="big">🔒</div>
+    <p><b>Esta etapa ainda está trancada.</b></p>
+    <p id="lock-txt">Para abrir o Simulado, leia o Resumo até o fim.</p>
+    <a href="index.html">Voltar ao início</a>
+  </div>
+</div>
+<div class="modal-bg" id="modal" style="background:rgba(0,0,0,.75)">
+  <div class="modal">
+    <p id="modal-txt"></p>
+    <button onclick="fecharModal()" id="modal-ok">Ok</button>
+    <button class="mini" onclick="fecharModal()" id="modal-cancel" style="display:none;margin-left:8px">Cancelar</button>
+  </div>
+</div>
+
+<script>
+/* ====== TRILHA COM CADEADOS (módulo comum do kit) ====== */
+var KIT='maraton_nocturno_esp6';
+var TRILHA=[
+ {id:'leitura', chave:KIT+'_leitura_v1', nome:'Leitura Guiada', arquivo:'leitura-guiada.html', emoji:'📖'},
+ {id:'quiz', chave:KIT+'_quiz_v1', nome:'Quiz', arquivo:'quiz.html', emoji:'🎯'},
+ {id:'resumo', chave:KIT+'_resumo_v1', nome:'Resumo', arquivo:'resumo.html', emoji:'🗺️'},
+ {id:'simulado', chave:KIT+'_simulado_v1', nome:'Simulado', arquivo:'simulado.html', emoji:'📝'}
+];
+function lerJSON(k){ try{ var s=localStorage.getItem(k); return s?JSON.parse(s):null; }catch(e){ return null; } }
+function trilhaLiberada(){ var t=lerJSON(KIT+'_trilha_v1'); return !!(t&&t.liberadoPelosPais); }
+function etapaConcluida(id){ var e=TRILHA.filter(function(t){return t.id===id;})[0]; var d=lerJSON(e.chave); return !!(d&&d.concluido); }
+function podeAbrir(id){ var idx=TRILHA.map(function(t){return t.id;}).indexOf(id); if(idx<=0||trilhaLiberada()) return true; return etapaConcluida(TRILHA[idx-1].id); }
+function checarTrava(){
+  if(podeAbrir('simulado')) return true;
+  var txt='Para abrir o Simulado, leia o Resumo até o fim e clique em “Li o resumo até o fim”.';
+  if(!etapaConcluida('quiz')) txt='Para abrir o Simulado, envie o Quiz e leia o Resumo até o fim.';
+  if(!etapaConcluida('leitura')) txt='Para abrir o Simulado, conclua a Leitura Guiada, envie o Quiz e leia o Resumo até o fim.';
+  document.getElementById('lock-txt').textContent=txt;
+  document.getElementById('lock').classList.add('show');
+  document.querySelector('.wrap').style.filter='blur(8px)';
+  return false;
+}
+
+/* ====== QUESTÕES (só o livro, pp. 114–128 das fotos) — correta guardada pelo id / pelo texto ====== */
+var Q=[
+ /* ---------- MÚLTIPLA ESCOLHA (15) ---------- */
+ {tipo:"mc",p:"Segundo a abertura da unidade (p. 114), os esportes reduzem o risco de algumas doenças. Quais o livro cita?",alts:[
+  {id:"a",t:"diabetes, ciertos tipos de cáncer, osteoporosis",ok:true,e:"São as três doenças citadas na p. 114."},
+  {id:"b",t:"estrés, depresión y mal humor",e:"Estresse e depressão aparecem no Cuenta conmigo (p. 121) como saúde mental — não na lista de doenças da p. 114."},
+  {id:"c",t:"solo la osteoporosis",e:"O livro cita três: diabetes, alguns tipos de câncer e osteoporose."},
+  {id:"d",t:"o livro não cita nenhuma doença",e:"Cita sim: diabetes, ciertos tipos de cáncer, osteoporosis."}]},
+ {tipo:"mc",p:"No quadro <b>Cuenta conmigo</b> (p. 121), a prática esportiva pode contribuir para a saúde mental porque pode:",alts:[
+  {id:"a",t:"melhorar o humor, aumentar a concentração e reduzir o estresse e a depressão.",ok:true,e:"Também melhora a autoconfiança e ajuda no autoconhecimento."},
+  {id:"b",t:"aumentar o estresse para treinar a mente.",e:"O livro diz que o esporte REDUZ o estresse."},
+  {id:"c",t:"substituir o autoconhecimento.",e:"O livro diz que o esporte é uma ferramenta PARA o autoconhecimento."},
+  {id:"d",t:"impedir a escolha de outros esportes.",e:"O autoconhecimento pode influenciar na escolha dos esportes — não impedir."}]},
+ {tipo:"mc",p:"Qual é a mensagem que SaNkHs deixa para as meninas no fim da entrevista?",alts:[
+  {id:"a",t:"Que não tenham medo do que possam dizer, confiem nelas mesmas e saibam que podem chegar aonde quiserem.",ok:true,e:"“…que no tengan miedo de lo que puedan decir; que confíen en ellas mismas…”"},
+  {id:"b",t:"Que deixem os esports para os meninos.",e:"É o contrário: ela incentiva as meninas."},
+  {id:"c",t:"Que só joguem em grupo, nunca sozinhas.",e:"Ela não fala disso."},
+  {id:"d",t:"Que procurem sempre um clube espanhol.",e:"Ela não fala disso; a mensagem é de coragem e confiança."}]},
+ {tipo:"mc",p:"Segundo a entrevista (p. 116), SaNkHs está ligada (fichada) a quais clubes?",alts:[
+  {id:"a",t:"SDHuesca e Falcons.",ok:true,e:"SDHuesca (sociedade esportiva) e Falcons (clube de esportes eletrônicos)."},
+  {id:"b",t:"LaurixGames e Falcons.",e:"LaurixGames é a outra FIFA player profissional citada, não um clube."},
+  {id:"c",t:"GamHer e SDHuesca.",e:"GamHer é o nome do torneio, não um clube."},
+  {id:"d",t:"Movistar eSports e Falcons.",e:"Movistar eSports aparece como produtor do vídeo indicado, não como clube dela."}]},
+ {tipo:"mc",p:"Na entrevista, <i>“¿Qué te parece que las mujeres comiencen a tener terreno en el mundo de los esports?”</i> é:",alts:[
+  {id:"a",t:"uma pergunta feita pelo entrevistador.",ok:true,e:"Ela vem antes da resposta “Me parece algo lógico…”."},
+  {id:"b",t:"uma resposta da entrevistada.",e:"As respostas dela aparecem entre aspas, depois das perguntas."},
+  {id:"c",t:"o título da entrevista.",e:"O título é “Muchas mujeres juegan bien, pero les da miedo exponerse”."},
+  {id:"d",t:"a fonte (referência) do texto.",e:"A fonte é a linha final com o nome do site e a data."}]},
+ {tipo:"mc",p:"Segundo a Hora de escribir (p. 124), as perguntas do guion devem ser formuladas de modo:",alts:[
+  {id:"a",t:"claro, objetivo e respeitoso.",ok:true,e:"“Formula las preguntas de modo claro, objetivo y respetuoso.”"},
+  {id:"b",t:"longo e difícil, para testar o entrevistado.",e:"O livro pede perguntas claras e objetivas."},
+  {id:"c",t:"secreto, sem contar o objetivo.",e:"Na introdução, o livro pede justamente contextualizar o objetivo."},
+  {id:"d",t:"apenas com perguntas de sim ou não.",e:"O livro não pede isso: pede perguntas claras, objetivas e respeitosas."}]},
+ {tipo:"mc",p:"Depois de fazer a entrevista, o livro pede uma pequena <b>introdução</b> para o leitor. Ela deve:",alts:[
+  {id:"a",t:"contextualizar o objetivo da entrevista e o perfil do entrevistado.",ok:true,e:"É a orientação da p. 124."},
+  {id:"b",t:"repetir todas as respostas do entrevistado.",e:"As respostas vêm depois, transcritas junto das perguntas."},
+  {id:"c",t:"trazer só o título.",e:"Título e introdução são etapas diferentes."},
+  {id:"d",t:"contar a opinião do leitor.",e:"A introdução apresenta objetivo e perfil do entrevistado."}]},
+ {tipo:"mc",p:"Na atividade 3 da p. 121, <i>“Ando con la bici.”</i> tem qual função?",alts:[
+  {id:"a",t:"Falar sobre os acessórios esportivos.",ok:true,e:"Como “Juego con la pelota” e “Surfeo con la tabla”."},
+  {id:"b",t:"Informar os esportes que uma pessoa pratica.",e:"Essa função é de frases como “Practico natación”."},
+  {id:"c",t:"Perguntar que esporte a pessoa pratica.",e:"A pergunta é “¿Qué deportes practicas?”."},
+  {id:"d",t:"Indicar uma ação já terminada.",e:"Não tem relação com a função da atividade 3."}]},
+ {tipo:"mc",p:"Qual linha tem <b>só</b> os gerúndios dos verbos <b>irregulares</b> da tabela da p. 122?",alts:[
+  {id:"a",t:"cayendo, leyendo, yendo",ok:true,e:"Caer, leer e ir — todos com y."},
+  {id:"b",t:"andando, corriendo, subiendo",e:"Esses são os regulares da tabela."},
+  {id:"c",t:"cayendo, corriendo, subiendo",e:"Corriendo e subiendo são regulares."},
+  {id:"d",t:"leyendo, andando, yendo",e:"Andando é regular."}]},
+ {tipo:"mc",p:"Complete (atividade 2, p. 122): <i>“Siempre las veo ___ en el parque.”</i> (correr)",alts:[
+  {id:"a",t:"corriendo",ok:true,e:"Correr → corriendo."},
+  {id:"b",t:"corrando",e:"Só o verbo em -ar da tabela (andar) ficou com -ando."},
+  {id:"c",t:"corriyendo",e:"O y é dos irregulares (cayendo, leyendo, yendo)."},
+  {id:"d",t:"correndo",e:"Essa é a forma em português."}]},
+ {tipo:"mc",p:"Reescreva com <b>nosotras</b> (atividade 5, p. 123): <i>“Estoy yendo al juego.”</i>",alts:[
+  {id:"a",t:"Estamos yendo al juego.",ok:true,e:"Só o estar muda: estoy → estamos; o gerúndio continua yendo."},
+  {id:"b",t:"Estoy yendo al juego.",e:"Não trocou a pessoa: estoy é de yo."},
+  {id:"c",t:"Están yendo al juego.",e:"Están é para ellos/ellas."},
+  {id:"d",t:"Estamos iendo al juego.",e:"O gerúndio de ir é yendo, com y."}]},
+ {tipo:"mc",p:"Como se escreve <b>700</b>, segundo a tabela da p. 123?",alts:[
+  {id:"a",t:"setecientos",ok:true,e:"700 = setecientos (uma das “diferentonas”)."},
+  {id:"b",t:"sietecientos",e:"Pegadinha: a tabela mostra setecientos."},
+  {id:"c",t:"setenta",e:"Setenta é 70."},
+  {id:"d",t:"ochocientos",e:"Ochocientos é 800."}]},
+ {tipo:"mc",p:"Segundo o quadro da p. 120, a letra <b>c</b> antes de <b>a, o, u</b> (casa, colegio, cuadro):",alts:[
+  {id:"a",t:"representa o mesmo fonema que em português antes dessas vogais.",ok:true,e:"É a primeira regra do quadro."},
+  {id:"b",t:"é sempre pronunciada com a língua entre os dentes.",e:"Isso é uma das pronúncias da c antes de e/i (grande parte da Espanha)."},
+  {id:"c",t:"nunca pode ser escrita.",e:"Pode: casa, colegio, cuadro."},
+  {id:"d",t:"tem o som da letra s em toda a Hispano-América.",e:"O som de s é uma das pronúncias da c antes de e/i."}]},
+ {tipo:"mc",p:"Segundo o Conecta con Historia (p. 125), os primeiros Juegos Mundiales de los Pueblos Indígenas aconteceram:",alts:[
+  {id:"a",t:"em 2015, no Brasil.",ok:true,e:"Com tribos da América Latina e representantes de etnias de outros países."},
+  {id:"b",t:"em 2015, no México.",e:"O México é onde surgiu o juego de pelota; os Jogos de 2015 foram no Brasil."},
+  {id:"c",t:"há mais de 3700 anos.",e:"Esse é o tempo do surgimento do juego de pelota."},
+  {id:"d",t:"no período paleolítico.",e:"O Paleolítico é a origem dos esportes (p. 128)."}]},
+ {tipo:"mc",p:"Segundo a p. 128, no período paleolítico a prática dos esportes estava ligada:",alts:[
+  {id:"a",t:"à sobrevivência (supervivencia).",ok:true,e:"Depois, a função e as características mudaram ao longo dos anos."},
+  {id:"b",t:"aos esports.",e:"Os esports (ciberdeportes) são de hoje."},
+  {id:"c",t:"aos torneios de FIFA.",e:"Não tem relação com o Paleolítico."},
+  {id:"d",t:"somente ao entretenimento.",e:"O livro liga a prática no Paleolítico à sobrevivência."}]},
+ /* ---------- COMPLETE (4) ---------- */
+ {tipo:"fill",p:"Escreva o gerúndio de <b>andar</b> (tabela dos regulares):",aceitas:["andando"],correta:"andando",e:"Andar → andando (“Están andando por los senderos”)."},
+ {tipo:"fill",p:"Escreva o gerúndio de <b>caer</b> (tabela dos irregulares):",aceitas:["cayendo"],correta:"cayendo",e:"Caer → cayendo (com y)."},
+ {tipo:"fill",p:"Escreva por extenso o número <b>32</b>:",aceitas:["treinta y dos"],correta:"treinta y dos",e:"Está na tabela: 32 – treinta y dos."},
+ {tipo:"fill",p:"Reescreva com <b>ellos</b> e complete: <i>“Estamos leyendo los resultados del torneo.”</i> → <i>“___ leyendo los resultados del torneo.”</i>",aceitas:["están","estan"],correta:"Están",e:"Com ellos: están (como em “Están andando por los senderos”)."},
+ /* ---------- MONTE A FRASE (3) ---------- */
+ {tipo:"reorder",p:"Monte a frase da p. 122 com dois gerúndios:",pecas:["Están","andando","por los senderos","y subiendo","la montaña."],aceitas:["Están andando por los senderos y subiendo la montaña."],e:"Estar + gerúndio (andando, subiendo)."},
+ {tipo:"reorder",p:"Monte a pergunta da Hora de hablar (p. 121):",pecas:["¿Qué","deportes","practicas?"],aceitas:["¿Qué deportes practicas?"],e:"Pergunta que serve para saber que esportes a pessoa pratica."},
+ {tipo:"reorder",p:"Monte a frase da p. 121 com a perífrase “estar” + gerundio:",pecas:["Siempre","estoy","corriendo","de los problemas."],aceitas:["Siempre estoy corriendo de los problemas."],e:"Siempre + estoy (yo) + corriendo + complemento."},
+ /* ---------- NÚMEROS ROMANOS (3) ---------- */
+ {tipo:"rom",p:"Analise as afirmativas sobre a ENTREVISTA (p. 124):",itens:[
+  {n:"I",t:"É um gênero textual produzido a partir da interação entre duas ou mais pessoas.",ok:true,e:"Correta (Fíjate en el género)."},
+  {n:"II",t:"O entrevistado é o responsável por fazer as perguntas.",e:"Errada: quem pergunta é o entrevistador."},
+  {n:"III",t:"É um texto caracterizado pela oralidade.",ok:true,e:"Correta."},
+  {n:"IV",t:"É sempre formal, em qualquer contexto.",e:"Errada: pode ser formal ou informal, conforme o contexto."}],
+  alts:[{id:"a",t:"Apenas I e III.",ok:true,e:"I e III estão certas; II e IV estão erradas."},{id:"b",t:"Apenas I, II e III.",e:"A II é errada."},{id:"c",t:"Apenas II e IV.",e:"Essas são justamente as erradas."},{id:"d",t:"Todas as afirmativas.",e:"II e IV são erradas."}]},
+ {tipo:"rom",p:"Analise as afirmativas sobre o GERÚNDIO e a perífrase “estar” + gerundio (p. 122):",itens:[
+  {n:"I",t:"Andar → andando é um gerúndio regular.",ok:true,e:"Correta (tabela dos regulares)."},
+  {n:"II",t:"Leer → leyendo é um gerúndio irregular.",ok:true,e:"Correta (tabela dos irregulares)."},
+  {n:"III",t:"A perífrase “estar” + gerundio indica ações que já estão terminadas.",e:"Errada: indica ações que estão em curso."},
+  {n:"IV",t:"O gerúndio de ir é yendo.",ok:true,e:"Correta."}],
+  alts:[{id:"a",t:"Apenas I, II e IV.",ok:true,e:"Só a III está errada."},{id:"b",t:"Apenas I e III.",e:"A III é errada e faltaram II e IV."},{id:"c",t:"Apenas II e III.",e:"A III é errada."},{id:"d",t:"Todas as afirmativas.",e:"A III é errada."}]},
+ {tipo:"rom",p:"Analise as afirmativas sobre o Conecta con Historia (p. 125):",itens:[
+  {n:"I",t:"O juego de pelota mesoamericano também é chamado tlachtli em náhuatl ou pok-ta-pok em maya.",ok:true,e:"Correta."},
+  {n:"II",t:"O juego de pelota surgiu há mais de 3700 anos, na costa do golfo do México.",ok:true,e:"Correta."},
+  {n:"III",t:"No juego de pelota era permitido bater na bola com os pés e com as mãos.",e:"Errada: era proibido."},
+  {n:"IV",t:"Na América pré-colombiana, os esportes tinham somente a função de entreter.",e:"Errada: tinham várias funções (competição, alianças, conflitos, habilidades, treino para a guerra…)."}],
+  alts:[{id:"a",t:"Apenas I e II.",ok:true,e:"I e II estão certas; III e IV estão erradas."},{id:"b",t:"Apenas I, II e III.",e:"A III é errada."},{id:"c",t:"Apenas III e IV.",e:"Essas são justamente as erradas."},{id:"d",t:"Apenas II e IV.",e:"A IV é errada e faltou a I."}]}
+];
+
+/* ====== EMBARALHAMENTO COM SEMENTE FIXA (mulberry32) — correta guardada pelo id ====== */
+function mulberry32(a){ return function(){ a|=0; a=a+0x6D2B79F5|0; var t=Math.imul(a^a>>>15,1|a); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
+var rnd=mulberry32(51126077);
+function embaralhar(arr){ var a=arr.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(rnd()*(i+1)); var tmp=a[i]; a[i]=a[j]; a[j]=tmp; } return a; }
+Q.forEach(function(q){
+  if(q.alts){ q.ordem=embaralhar(q.alts); }
+  if(q.tipo==='reorder'){ var idx=q.pecas.map(function(_,k){return k;}); var o; var tent=0; do{ o=embaralhar(idx); tent++; }while(o.join(',')===idx.join(',') && tent<20); q.banco=o; }
+});
+var OBJ=Q.length;
+
+/* ====== ESTADO ====== */
+var CHAVE=KIT+'_simulado_v1'; var mem={}; var estado=carregar();
+function carregar(){ try{ var s=localStorage.getItem(CHAVE); if(s) return JSON.parse(s);}catch(e){ if(mem[CHAVE]) return JSON.parse(mem[CHAVE]); } return {resp:{},enviado:false}; }
+function salvar(){ var n=0; Q.forEach(function(q,i){ if(respondida(i)) n++; }); estado.respondidas=n; estado.total=Q.length; var s=JSON.stringify(estado); try{ localStorage.setItem(CHAVE,s);}catch(e){ mem[CHAVE]=s; } var d=new Date(); document.getElementById('salvo').textContent='💾 Salvo às '+d.toLocaleTimeString('pt-BR')+' de '+d.toLocaleDateString('pt-BR'); }
+var LETRAS='ABCDEFGHJKLMNPQRSTUVWXYZ';
+function gerarCodigo(ac){ var xx=(ac<10?'0':'')+ac; var yy=LETRAS[Math.floor(Math.random()*LETRAS.length)]+LETRAS[Math.floor(Math.random()*LETRAS.length)]; return 'SIM-'+xx+'-'+yy; }
+function norm(s){ return (s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[¿?¡!.,]/g,'').replace(/\s+/g,' ').trim(); }
+function textoReorder(q,arr){ return (arr||[]).map(function(k){return q.pecas[k];}).join(' '); }
+function respondida(i){ var q=Q[i], r=estado.resp[i]; if(q.tipo==='reorder') return !!(r&&r.length===q.pecas.length); if(q.tipo==='fill') return !!(r&&r.trim().length>0); return !(r===undefined||r===null||r===''); }
+function acertou(i){
+  var q=Q[i], r=estado.resp[i];
+  if(q.tipo==='fill') return q.aceitas.some(function(a){ return norm(a)===norm(r); });
+  if(q.tipo==='reorder') return q.aceitas.some(function(a){ return norm(a)===norm(textoReorder(q,r)); });
+  var a=q.alts.filter(function(x){return x.id===r;})[0]; return !!(a&&a.ok);
+}
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
+
+function render(){
+  var c=document.getElementById('questoes'); var h=''; var G=estado.gabarito; var T=estado.enviado;
+  Q.forEach(function(q,i){
+    var tipoTxt={mc:'Múltipla escolha',fill:'Complete',reorder:'Monte a frase',rom:'Números romanos'}[q.tipo];
+    h+='<div class="q" id="q'+i+'"><span class="tipo '+q.tipo+'">'+tipoTxt+'</span><div class="num">Questão '+(i+1)+' de '+Q.length+'</div><h3>'+q.p+'</h3>';
+    if(q.tipo==='rom'){
+      q.itens.forEach(function(it){ var cls='afirm'+(G?(it.ok?' ok':' no'):''); h+='<div class="'+cls+'">'+it.n+'. '+it.t+(G?'<div class="exp show">'+(it.ok?'✅ ':'❌ ')+it.e+'</div>':'')+'</div>'; });
+    }
+    if(q.tipo==='mc'||q.tipo==='rom'){
+      q.ordem.forEach(function(a,k){
+        var letra='abcd'[k]; var sel=estado.resp[i]===a.id; var cls='alt'+(sel?' sel':'');
+        if(G){ if(a.ok) cls+=' certa'; else if(sel) cls+=' marcada-errada'; else cls+=' errada'; }
+        h+='<label class="'+cls+'"><input type="radio" name="q'+i+'" value="'+a.id+'" '+(sel?'checked':'')+' '+(T?'disabled':'')+' onchange="marcar('+i+',\''+a.id+'\')"> <b>'+letra+')</b> '+a.t+(G?'<div class="exp show">'+(a.ok?'✅ ':'⚪ ')+a.e+'</div>':'')+'</label>';
+      });
+    }
+    if(q.tipo==='fill'){
+      var v=estado.resp[i]||''; var cls='fill-in'+(G?(acertou(i)?' ok-c':' no-c'):'');
+      h+='<input class="'+cls+'" id="f'+i+'" value="'+esc(v)+'" '+(T?'disabled':'')+' placeholder="Escreva aqui" oninput="escreveu('+i+')" autocomplete="off" autocapitalize="off" spellcheck="false">';
+      if(G) h+='<div class="exp show">'+(acertou(i)?'✅ ':'❌ ')+'Resposta: <b>'+q.correta+'</b>. '+q.e+'</div>';
+    }
+    if(q.tipo==='reorder'){
+      var arr=estado.resp[i]||[]; var cls2='linha'+(G?(acertou(i)?' ok-c':' no-c'):'');
+      h+='<div class="'+cls2+'">';
+      if(!arr.length) h+='<span class="vazio">Toque nas partes abaixo, na ordem certa.</span>';
+      arr.forEach(function(k,pos){ h+='<button class="chip" '+(T?'disabled':'')+' onclick="devolver('+i+','+pos+')">'+q.pecas[k]+'</button>'; });
+      h+='</div><div class="banco">';
+      q.banco.forEach(function(k){ var usado=arr.indexOf(k)>=0; h+='<button class="chip'+(usado?' usado':'')+'" '+(T?'disabled':'')+' onclick="pegar('+i+','+k+')">'+q.pecas[k]+'</button>'; });
+      h+='</div>';
+      if(G) h+='<div class="exp show">'+(acertou(i)?'✅ ':'❌ ')+'Frase certa: <b>'+q.aceitas[0]+'</b> '+q.e+'</div>';
+    }
+    h+='</div>';
+  });
+  c.innerHTML=h; atualizarBarra(); if(T) mostrarEnviado();
+}
+function marcar(i,v){ if(estado.enviado) return; estado.resp[i]=v; salvar(); var q=document.getElementById('q'+i); var labs=q.querySelectorAll('.alt'); for(var k=0;k<labs.length;k++){ labs[k].classList.toggle('sel', labs[k].querySelector('input').value===v); } atualizarBarra(); }
+function escreveu(i){ if(estado.enviado) return; estado.resp[i]=document.getElementById('f'+i).value; salvar(); atualizarBarra(); }
+function pegar(i,k){ if(estado.enviado) return; var arr=estado.resp[i]||[]; if(arr.indexOf(k)>=0) return; arr.push(k); estado.resp[i]=arr; salvar(); render(); }
+function devolver(i,pos){ if(estado.enviado) return; var arr=estado.resp[i]||[]; arr.splice(pos,1); estado.resp[i]=arr; salvar(); render(); }
+function atualizarBarra(){ var n=0; Q.forEach(function(q,i){ if(respondida(i)) n++; }); document.getElementById('barra').style.width=(n/Q.length*100)+'%'; var b=document.getElementById('btn-enviar'); if(!estado.enviado){ b.disabled=n<Q.length; b.textContent=n<Q.length?'📨 Enviar simulado ('+n+' de '+Q.length+' respondidas)':'📨 Enviar simulado'; } }
+function enviar(){
+  if(estado.enviado) return;
+  var ac=0, porTipo={mc:[0,0],fill:[0,0],reorder:[0,0],rom:[0,0]};
+  Q.forEach(function(q,i){ var ok=acertou(i); if(ok) ac++; porTipo[q.tipo][1]++; if(ok) porTipo[q.tipo][0]++; });
+  estado.acertos=ac; estado.objetivas=OBJ; estado.porTipo=porTipo; estado.codigo=gerarCodigo(ac); estado.enviado=true; estado.corrigido=true; estado.concluido=true; estado.concluidoEm=new Date().toISOString();
+  salvar(); render(); window.scrollTo({top:0,behavior:'smooth'});
+}
+function mostrarEnviado(){
+  var b=document.getElementById('btn-enviar'); b.disabled=true; b.textContent='✅ Simulado enviado — respostas travadas';
+  document.getElementById('codigo').classList.add('show'); document.getElementById('cod').textContent=estado.codigo;
+  document.getElementById('codtxt').textContent='Anote este código para os pais. Ele abre o gabarito comentado e o relatório no Início.';
+  document.getElementById('gab').classList.add('show'); document.getElementById('fim').style.display='block';
+}
+function abrirGab(){ var v=document.getElementById('gab-in').value.trim().toUpperCase(); var m=document.getElementById('gab-msg'); if(estado.enviado&&(v===estado.codigo||v==='PAIS-77')){ estado.gabarito=true; salvar(); render(); document.getElementById('gab-msg').innerHTML='<span style="color:var(--verde)">Gabarito liberado: '+estado.acertos+' acertos de '+OBJ+' questões. A certa está em verde; as outras, em cinza, com a explicação.</span>'; } else { m.innerHTML='<span style="color:#ffb3bb">Código incorreto.</span>'; } }
+function exportar(){ var blob=new Blob([JSON.stringify(estado,null,2)],{type:'application/json'}); var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='simulado_maraton-nocturno.json'; a.click(); }
+function importar(ev){ var f=ev.target.files[0]; if(!f) return; var r=new FileReader(); r.onload=function(){ try{ estado=JSON.parse(r.result); salvar(); render(); mostrarModal('✅ Progresso importado!',false);}catch(e){ mostrarModal('❌ Arquivo inválido.',false);} }; r.readAsText(f); }
+var acaoZerar=null;
+function pedirZerar(){ acaoZerar=true; mostrarModal('Apagar as respostas deste Simulado? (Se ele já foi enviado, o código e a conclusão são mantidos.)',true); }
+function mostrarModal(txt,confirmar){ document.getElementById('modal-txt').innerHTML=txt; document.getElementById('modal').classList.add('show'); document.getElementById('modal-cancel').style.display=confirmar?'inline-block':'none'; document.getElementById('modal-ok').textContent=confirmar?'Sim, apagar':'Ok';
+  document.getElementById('modal-ok').onclick=function(){ if(confirmar&&acaoZerar){ if(!estado.enviado){ estado={resp:{},enviado:false}; salvar(); render(); } else { acaoZerar=null; mostrarModal('O Simulado já foi enviado: as respostas ficam travadas. Para refazer do zero, use "Zerar o kit inteiro" no Início (com o código dos pais).',false); return; } } acaoZerar=null; fecharModal(); }; }
+function fecharModal(){ document.getElementById('modal').classList.remove('show'); }
+
+if(checarTrava()){ render(); }
+</script>
+</body>
+</html>

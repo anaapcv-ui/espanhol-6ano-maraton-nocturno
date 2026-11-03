@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kit de Estudos — Espanhol 6º ano | Maratón Nocturno 🏃</title>
+<style>
+  :root{
+    --bg:#0f1218; --bg2:#161b24; --card:#1a2030; --borda:#2a3347; --borda2:#3a4560;
+    --naranja:#ff7a1a; --verde:#b6f03c; --cian:#2ad4e8; --rojo:#ff4d5e; --amar:#ffd23f;
+    --texto:#eef1f7; --cinza:#94a0b8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',system-ui,Arial,sans-serif;background:radial-gradient(1000px 520px at 50% -12%,#2f1f10,#0f1218 62%),var(--bg);color:var(--texto);line-height:1.6;padding-bottom:60px;font-size:17px}
+  header{background:linear-gradient(120deg,#1a1410,#2b1a0c 55%,#14232a);padding:30px 18px;text-align:center;box-shadow:0 4px 18px rgba(0,0,0,.5);border-bottom:4px solid var(--naranja)}
+  header .selo{font-size:.8rem;letter-spacing:2px;color:#ffc89a;text-transform:uppercase}
+  header .faixa{font-size:1.6rem;letter-spacing:10px;margin:4px 0}
+  header h1{font-size:2rem;margin:2px 0}
+  header p{color:#d8dce6;font-size:.95rem}
+  .wrap{max-width:900px;margin:0 auto;padding:16px}
+  .intro,.como,.cai,.rel{background:var(--bg2);border:1px solid var(--borda);border-radius:16px;padding:18px;margin-bottom:16px}
+  h2{color:var(--naranja);font-size:1.2rem;margin-bottom:8px}
+  .ordem{background:#221a14;border:1px dashed var(--naranja);border-radius:12px;padding:10px;text-align:center;font-weight:bold;margin:12px 0 6px}
+  .trilha{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:6px 0 18px}
+  .card{position:relative;display:block;text-decoration:none;color:var(--texto);background:var(--card);border:2px solid var(--borda2);border-radius:18px;padding:18px;transition:transform .15s}
+  .card:hover{transform:translateY(-3px)}
+  .card .passo{font-size:.75rem;color:var(--amar);font-weight:800;letter-spacing:1px;text-transform:uppercase}
+  .card .emoji{font-size:2.3rem}
+  .card h3{font-size:1.2rem;margin:4px 0}
+  .card p{font-size:.88rem;color:var(--cinza)}
+  .card .estado{margin-top:10px;font-size:.85rem;font-weight:bold}
+  .card.aberto{border-color:var(--naranja)}
+  .card.feito{border-color:var(--verde);background:#1b260c}
+  .card.feito .estado{color:var(--verde)}
+  .card.novo{border-color:var(--cian);box-shadow:0 0 0 0 rgba(42,212,232,.6);animation:pulsa 1.6s ease-out 3}
+  .card.novo .estado{color:var(--cian)}
+  @keyframes pulsa{0%{box-shadow:0 0 0 0 rgba(42,212,232,.6)}100%{box-shadow:0 0 0 18px rgba(42,212,232,0)}}
+  .card.trancado{filter:grayscale(1);opacity:.6;cursor:not-allowed}
+  .card.trancado:hover{transform:none}
+  .card.trancado .estado{color:#c9cfdb;font-weight:normal}
+  .card .cadeado{position:absolute;top:12px;right:14px;font-size:1.5rem}
+  .selo-pais{display:none;background:#10262c;border:2px solid var(--cian);border-radius:12px;padding:10px 14px;margin-bottom:14px;text-align:center;font-weight:bold;color:var(--cian)}
+  .selo-pais.show{display:block}
+  .selo-pais button{margin-left:8px;background:var(--bg);color:var(--texto);border:1px solid var(--borda2);border-radius:8px;padding:5px 10px;cursor:pointer}
+  .como ol{margin-left:22px} .como li{margin:6px 0}
+  .cai p{margin-bottom:6px}
+  .dica{background:#2e2408;border-left:5px solid var(--amar);border-radius:0 12px 12px 0;padding:12px 16px;margin-bottom:16px;color:#ffe9a8}
+  .rel input{font-size:16px;padding:9px;border:1px solid var(--borda2);border-radius:8px;width:180px;text-transform:uppercase;background:var(--bg);color:var(--texto)}
+  .rel button,.liberar,.perigo{cursor:pointer;border:none;border-radius:10px;padding:10px 16px;font-weight:700;background:var(--cian);color:#05262b;font-size:15px;margin:6px 6px 0 0}
+  .perigo{background:#3a1419;color:#ffc9cf;border:1px solid var(--rojo)}
+  .out .bloco{background:#121722;border:1px solid var(--borda2);border-radius:10px;padding:10px 12px;margin-top:10px;font-size:.95rem}
+  .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:50;align-items:center;justify-content:center;padding:16px}
+  .modal-bg.show{display:flex}
+  .modal{background:var(--bg2);border:1px solid var(--naranja);border-radius:14px;padding:20px;max-width:440px;text-align:center}
+  .modal p{margin-bottom:14px}
+  .modal button{background:var(--naranja);color:#2a1200;border:none;border-radius:8px;padding:9px 16px;font-weight:bold;cursor:pointer;margin:0 4px}
+  .modal button.sec{background:var(--bg);color:var(--texto);border:1px solid var(--borda2)}
+  .rodape{text-align:center;color:var(--cinza);font-size:.8rem;margin-top:24px}
+</style>
+</head>
+<body>
+<header>
+  <div class="selo">Kit de Estudos · Colégio Coração Feliz</div>
+  <div class="faixa">🏃🌙🏅</div>
+  <h1>Maratón Nocturno</h1>
+  <p>Espanhol · 6º ano · Unidad 8 “Los deportes” (livro pp. 114–128) · Prova 05/11 · com áudio em espanhol 🔊</p>
+</header>
+
+<div class="wrap">
+  <div class="intro">
+    <h2>👋 ¡Bienvenido(a) a la carrera, jovem aprendiz!</h2>
+    <p>Esta unidade virou uma <b>maratona noturna pela cidade</b>. Você corre <b>9 quilômetros</b> de conteúdo — benefícios dos esportes, ciberdeportes e a entrevista com SaNkHs, o gênero entrevista, esportes e acessórios, gerúndio, “estar” + gerúndio, números do 30 ao 1000, c/s/z e os esportes dos povos indígenas — e termina na <b>Carrera Final</b>. Tudo foi feito a partir das páginas do seu livro.</p>
+    <div class="ordem">Trilha: 📖 Leitura Guiada → 🎯 Quiz → 🗺️ Resumo → 📝 Simulado</div>
+    <p style="text-align:center;font-size:.92rem;color:var(--cinza)">Os materiais abrem <b>um por vez, na ordem</b>. Conclua um para destravar o próximo.</p>
+  </div>
+
+  <div class="selo-pais" id="selo-pais">🔓 Trilha liberada pelos pais <button onclick="trancar()">Trancar de novo</button></div>
+
+  <div class="trilha" id="trilha"></div>
+
+  <div class="como">
+    <h2>📌 Como usar este material</h2>
+    <ol>
+      <li><b>📖 Leitura Guiada</b> (9 KM): leia, ouça o espanhol no 🔊, faça o aquecimento e <b>escreva</b> as respostas com as suas palavras. Conferir os 9 KM e responder a autoavaliação destrava o Quiz.</li>
+      <li><b>🎯 Quiz</b> (15 questões): teste o que entendeu enquanto está fresco. Enviar o Quiz destrava o Resumo.</li>
+      <li><b>🗺️ Resumo</b>: feche as dúvidas que o Quiz mostrou. Ler até o fim e clicar em “Li o resumo até o fim” destrava o Simulado.</li>
+      <li><b>📝 Simulado</b> (25 questões no estilo da prova, sem áudio): valendo, como se fosse a prova de verdade.</li>
+      <li>Depois do Simulado, <b>tudo fica aberto</b> para revisar quantas vezes quiser até a prova.</li>
+    </ol>
+    <p style="margin-top:8px;font-size:.88rem;color:var(--cinza)">🔊 Os botões de áudio usam a voz do próprio navegador. 💾 O progresso fica salvo sozinho neste aparelho; dá para exportar/importar em cada material.</p>
+  </div>
+
+  <div class="cai">
+    <h2>🏁 O que cai na prova (05/11)</h2>
+    <p><b>Unidad 8 · Los deportes</b> — objetivos do livro (p. 115): gênero textual entrevista; nome dos esportes; perguntar e informar sobre esportes e acessórios; gerúndio (verbos regulares e irregulares); perífrase verbal “estar” + gerúndio; números cardinais do 30 ao 1000; uso da “c”, da “s” e da “z”.</p>
+    <p style="font-size:.88rem;color:var(--cinza)">Fonte: fotos do livro, pp. 114–117 e 120–128. Não vieram nas fotos: a metade de baixo da p. 117 e as pp. 118–119 (vocabulário dos esportes). Atividades de áudio ficaram de fora.</p>
+  </div>
+
+  <div class="dica">📌 <b>Dica para os pais:</b> o progresso é do navegador de cada aparelho. Se a Leitura foi feita no tablet e o Quiz vai ser no computador, use 📥 Exportar / 📤 Importar em cada material — ou libere a trilha com o código da família (abaixo).</div>
+
+  <div class="rel">
+    <h2>📊 Relatório para os pais</h2>
+    <p>Digite um dos códigos: <b>MED-…</b> (do Quiz), <b>SIM-…</b> (do Simulado) ou o código fixo da família <b>PAIS-77</b> (mostra tudo e permite liberar a trilha).</p>
+    <div style="margin-top:8px"><input id="cod-in" placeholder="PAIS-77" maxlength="10"><button onclick="verRelatorio()">🔓 Ver relatório</button></div>
+    <div class="out" id="rel-out"></div>
+  </div>
+
+  <div class="rodape">Feito com carinho para o jovem aprendiz. 🏃 ¡Buena carrera — y buena prueba!</div>
+</div>
+
+<div class="modal-bg" id="modal">
+  <div class="modal">
+    <p id="modal-txt"></p>
+    <button id="modal-ok">Ok</button><button class="sec" id="modal-cancel" onclick="fecharModal()" style="display:none">Cancelar</button>
+  </div>
+</div>
+
+<script>
+/* ====== TRILHA COM CADEADOS (módulo comum do kit) ====== */
+var KIT='maraton_nocturno_esp6';
+var TRILHA=[
+ {id:'leitura', chave:KIT+'_leitura_v1', nome:'Leitura Guiada', arquivo:'leitura-guiada.html', emoji:'📖', desc:'Los 9 Kilómetros: o conteúdo explicado, com áudio 🔊, aquecimento e 3 perguntas em cada KM para escrever com as suas palavras.'},
+ {id:'quiz', chave:KIT+'_quiz_v1', nome:'Quiz', arquivo:'quiz.html', emoji:'🎯', desc:'Sprint: 15 questões para testar o que você entendeu. Código MED e gabarito comentado.'},
+ {id:'resumo', chave:KIT+'_resumo_v1', nome:'Resumo', arquivo:'resumo.html', emoji:'🗺️', desc:'Mapa del Recorrido: tabelas com áudio, cartões para virar, post-its, pegadinhas e glossário.'},
+ {id:'simulado', chave:KIT+'_simulado_v1', nome:'Simulado', arquivo:'simulado.html', emoji:'📝', desc:'Carrera Final: 25 questões (múltipla escolha, complete, monte a frase e números romanos). Código SIM.'}
+];
+function lerJSON(k){ try{ var s=localStorage.getItem(k); return s?JSON.parse(s):null; }catch(e){ return null; } }
+function gravarJSON(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
+function trilhaLiberada(){ var t=lerJSON(KIT+'_trilha_v1'); return !!(t&&t.liberadoPelosPais); }
+function dados(id){ var e=TRILHA.filter(function(t){return t.id===id;})[0]; return lerJSON(e.chave); }
+function etapaConcluida(id){ var d=dados(id); return !!(d&&d.concluido); }
+function podeAbrir(idx){ if(idx<=0||trilhaLiberada()) return true; return etapaConcluida(TRILHA[idx-1].id); }
+function fmt(iso){ if(!iso) return ''; var d=new Date(iso); return d.toLocaleDateString('pt-BR')+' '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}); }
+
+function faltaTexto(idx){ /* o que falta no material ANTERIOR para destravar este */
+  var ant=TRILHA[idx-1]; var d=dados(ant.id)||{};
+  if(ant.id==='leitura'){ var p=d.progresso||{conferidos:0,total:9,chkPendentes:0}; var f=p.total-p.conferidos; return f>0? 'Destrava quando você concluir os '+p.total+' KM da Leitura Guiada (faltam '+f+').' : 'Destrava quando você responder a autoavaliação da Leitura Guiada ('+p.chkPendentes+' ponto(s)).'; }
+  if(ant.id==='quiz'){ var n=d.resp?Object.keys(d.resp).length:0; return 'Destrava quando você enviar o Quiz'+(n?' ('+n+' de 15 respondidas)':'')+'.'; }
+  if(ant.id==='resumo'){ var r=Math.round(d.rolagemMax||0); return 'Destrava quando você ler o Resumo até o fim e clicar em “Li o resumo até o fim”'+(r?' (rolagem: '+r+'%)':'')+'.'; }
+  return 'Destrava quando você concluir '+ant.nome+'.';
+}
+function renderTrilha(){
+  var c=document.getElementById('trilha'); var h='';
+  TRILHA.forEach(function(t,idx){
+    var feito=etapaConcluida(t.id), aberto=podeAbrir(idx);
+    var cls='card', estado='', cadeado='';
+    if(feito){ cls+=' feito'; estado='✅ Concluído'+(dados(t.id).concluidoEm?' · '+fmt(dados(t.id).concluidoEm):''); }
+    else if(aberto){ var novo=(idx>0 && etapaConcluida(TRILHA[idx-1].id) && !trilhaLiberada()); cls+=novo?' novo':' aberto'; estado=novo?'✨ Novo destravado — pode começar!':(idx===0?'▶️ Comece por aqui':'▶️ Aberto'); }
+    else { cls+=' trancado'; cadeado='<span class="cadeado">🔒</span>'; estado='🔒 '+faltaTexto(idx); }
+    h+='<a class="'+cls+'" data-etapa="'+t.id+'" href="'+(aberto?t.arquivo:'#')+'" '+(aberto?'':'tabindex="-1" aria-disabled="true" onclick="return false"')+'>'+cadeado+'<div class="passo">Passo '+(idx+1)+'</div><div class="emoji">'+t.emoji+'</div><h3>'+t.nome+'</h3><p>'+t.desc+'</p><div class="estado">'+estado+'</div></a>';
+  });
+  c.innerHTML=h;
+  document.getElementById('selo-pais').classList.toggle('show', trilhaLiberada());
+}
+
+/* ====== RELATÓRIO PARA OS PAIS ====== */
+function relLeitura(){
+  var e=dados('leitura'); if(!e||!e.blocos) return '<p>Ainda não há registro da Leitura Guiada.</p>';
+  var conf=0,red=0,nao=0,comp=0,tot=9, det=[];
+  Object.keys(e.blocos).forEach(function(i){ var b=e.blocos[i]; if(b.conferido)conf++; if(b.completar&&b.completar.ok)comp++; if(b.perguntas)Object.keys(b.perguntas).forEach(function(j){ var p=b.perguntas[j]; if(p.red){red++; det.push('KM '+(+i+1)+', pergunta '+(+j+1)+': resposta muito parecida com o texto');} if(p.chk)Object.keys(p.chk).forEach(function(k){ if(p.chk[k]==='nao'){nao++; det.push('KM '+(+i+1)+', pergunta '+(+j+1)+': marcou “Não” num ponto da autoavaliação');} }); }); });
+  return '<b>KM conferidos:</b> '+conf+' de '+tot+'.<br><b>Aquecimentos (completar) certos:</b> '+comp+' de '+tot+'.<br><b>Respostas muito parecidas com o texto (vermelhas):</b> '+red+'.<br><b>Pontos marcados como "Não" na autoavaliação:</b> '+nao+'.'+(det.length?'<ul style="margin:6px 0 0 18px">'+det.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul>':'');
+}
+function relQuiz(){ var e=dados('quiz'); if(!e) return '<p>Ainda não há registro do Quiz.</p>'; if(!e.enviado) return '<p>Quiz iniciado ('+Object.keys(e.resp||{}).length+' de 15 respondidas), ainda não enviado.</p>'; return '<b>Quiz enviado.</b> Acertos: '+e.acertos+' de 15. Código: '+e.codigo+'.'; }
+function relResumo(){ var e=dados('resumo'); if(!e) return '<p>Ainda não há registro do Resumo.</p>'; return '<b>Rolagem máxima:</b> '+Math.round(e.rolagemMax||0)+'%. '+(e.concluido?'<b>Lido até o fim</b> em '+fmt(e.concluidoEm)+'.':'Ainda não confirmou a leitura até o fim.'); }
+function relSimulado(){ var e=dados('simulado'); if(!e) return '<p>Ainda não há registro do Simulado.</p>'; if(!e.enviado) return '<p>Simulado iniciado ('+(e.respondidas||0)+' de 25 respondidas), ainda não enviado.</p>';
+  var t=e.porTipo||{}; var nomes={mc:'Múltipla escolha',fill:'Complete',reorder:'Monte a frase',rom:'Números romanos'}; var det=Object.keys(nomes).filter(function(k){return t[k];}).map(function(k){return nomes[k]+': '+t[k][0]+'/'+t[k][1];}).join(' · ');
+  return '<b>Simulado enviado.</b> Acertos: '+e.acertos+' de '+(e.objetivas||25)+' questões. Código: '+e.codigo+'.'+(det?'<br>'+det:''); }
+function relTrilha(){
+  var h='<ul style="margin-left:18px">';
+  TRILHA.forEach(function(t){ var d=dados(t.id); h+='<li>'+t.emoji+' '+t.nome+': '+((d&&d.concluido)?'<span style="color:var(--verde)">concluído em '+fmt(d.concluidoEm)+'</span>':'<span style="color:#ffb3bb">não concluído</span>')+'</li>'; });
+  h+='</ul>'; var tr=lerJSON(KIT+'_trilha_v1'); if(tr&&tr.liberadoPelosPais) h+='<p>🔓 Trilha liberada pelos pais em '+fmt(tr.liberadoEm)+'.</p>'; else if(tr&&tr.liberadoEm) h+='<p>Trilha foi liberada pelos pais em '+fmt(tr.liberadoEm)+' e trancada de novo em '+fmt(tr.trancadoEm)+'.</p>';
+  return h;
+}
+function verRelatorio(){
+  var v=document.getElementById('cod-in').value.trim().toUpperCase(); var out=document.getElementById('rel-out');
+  var q=dados('quiz')||{}, s=dados('simulado')||{};
+  var tudo=(v==='PAIS-77'), okQ=(q.codigo&&v===q.codigo), okS=(s.codigo&&v===s.codigo);
+  if(!tudo&&!okQ&&!okS){ out.innerHTML='<p style="color:#ffb3bb;margin-top:8px">⚠️ Código não reconhecido. Use PAIS-77, o MED do Quiz ou o SIM do Simulado.</p>'; return; }
+  var h='';
+  if(tudo||okQ) h+='<div class="bloco"><b>📖 Leitura Guiada</b><br>'+relLeitura()+'</div><div class="bloco"><b>🎯 Quiz</b><br>'+relQuiz()+'</div>';
+  if(tudo) h+='<div class="bloco"><b>🗺️ Resumo</b><br>'+relResumo()+'</div>';
+  if(tudo||okS) h+='<div class="bloco"><b>📝 Simulado</b><br>'+relSimulado()+'</div>';
+  h+='<div class="bloco"><b>🛤️ Trilha</b>'+relTrilha()+'</div>';
+  if(tudo){
+    h+= trilhaLiberada() ? '<button class="liberar" onclick="trancar()">🔒 Trancar a trilha de novo</button>' : '<button class="liberar" onclick="liberar()">🔓 Liberar todos os materiais</button>';
+    h+=' <button class="perigo" onclick="pedirZerarKit()">🗑️ Zerar o kit inteiro</button>';
+  }
+  h+='<p style="font-size:.82rem;color:var(--cinza);margin-top:8px">As respostas ficam salvas neste aparelho. Este relatório não registra tempo de estudo.</p>';
+  out.innerHTML=h;
+}
+function liberar(){ var t=lerJSON(KIT+'_trilha_v1')||{}; t.liberadoPelosPais=true; t.liberadoEm=new Date().toISOString(); gravarJSON(KIT+'_trilha_v1',t); renderTrilha(); verRelatorio(); }
+function trancar(){ var t=lerJSON(KIT+'_trilha_v1')||{}; t.liberadoPelosPais=false; t.trancadoEm=new Date().toISOString(); gravarJSON(KIT+'_trilha_v1',t); renderTrilha(); if(document.getElementById('rel-out').innerHTML) verRelatorio(); }
+function pedirZerarKit(){ mostrarModal('Apagar TODO o progresso deste kit (leitura, quiz, resumo, simulado e trilha)? A criança volta ao começo, com só a Leitura Guiada aberta.',true,function(){ TRILHA.forEach(function(t){ try{localStorage.removeItem(t.chave);}catch(e){} }); try{localStorage.removeItem(KIT+'_trilha_v1');}catch(e){} renderTrilha(); document.getElementById('rel-out').innerHTML='<p style="color:var(--verde);margin-top:8px">Kit zerado.</p>'; }); }
+function mostrarModal(txt,confirmar,fn){ document.getElementById('modal-txt').innerHTML=txt; document.getElementById('modal').classList.add('show'); document.getElementById('modal-cancel').style.display=confirmar?'inline-block':'none'; var ok=document.getElementById('modal-ok'); ok.textContent=confirmar?'Sim, apagar':'Ok'; ok.onclick=function(){ if(fn) fn(); fecharModal(); }; }
+function fecharModal(){ document.getElementById('modal').classList.remove('show'); }
+
+renderTrilha();
+window.addEventListener('pageshow',renderTrilha);
+</script>
+</body>
+</html>

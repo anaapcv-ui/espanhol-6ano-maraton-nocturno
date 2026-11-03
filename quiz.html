@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz · Sprint · Maratón Nocturno · Espanhol 6º</title>
+<style>
+  :root{
+    --bg:#0f1218; --bg2:#161b24; --card:#1a2030; --borda:#2a3347; --borda2:#3a4560;
+    --naranja:#ff7a1a; --verde:#b6f03c; --cian:#2ad4e8; --rojo:#ff4d5e; --amar:#ffd23f;
+    --texto:#eef1f7; --cinza:#94a0b8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',system-ui,Arial,sans-serif;background:radial-gradient(900px 480px at 50% -12%,#2a1d12,#0f1218 60%),var(--bg);color:var(--texto);line-height:1.6;padding-bottom:60px;font-size:17px}
+  header{background:linear-gradient(120deg,#1a1410,#2b1a0c 60%,#14232a);padding:26px 18px;text-align:center;box-shadow:0 4px 18px rgba(0,0,0,.5);border-bottom:4px solid var(--naranja)}
+  header .selo{font-size:.78rem;letter-spacing:2px;color:#ffc89a;text-transform:uppercase}
+  header h1{font-size:1.55rem;margin:4px 0 2px}
+  header p{color:#d8dce6;font-size:.92rem}
+  .wrap{max-width:840px;margin:0 auto;padding:16px}
+  .barra-nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:16px 0}
+  .barra-nav a{background:var(--bg2);color:var(--texto);text-decoration:none;padding:7px 12px;border-radius:20px;font-size:.85rem;border:1px solid var(--borda)}
+  .barra-nav a.on{background:var(--naranja);color:#2a1200;font-weight:bold}
+  .barra-nav a.lock{opacity:.5}
+  .intro{background:var(--bg2);border:1px solid var(--borda);border-radius:14px;padding:16px;margin-bottom:16px}
+  .intro h2{color:var(--naranja);font-size:1.15rem;margin-bottom:8px}
+  .painel{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;background:var(--bg2);border:1px solid var(--borda);border-radius:12px;padding:10px 14px;margin-bottom:16px;font-size:.85rem}
+  .painel .btns{display:flex;gap:6px;flex-wrap:wrap}
+  button{cursor:pointer;font-family:inherit}
+  .mini{background:var(--bg);color:var(--texto);border:1px solid var(--borda2);border-radius:8px;padding:6px 10px;font-size:.8rem}
+  .codigo{background:linear-gradient(120deg,#1b260c,#2c3d10);border:2px solid var(--verde);border-radius:14px;padding:16px;text-align:center;margin-bottom:16px;display:none}
+  .codigo.show{display:block}
+  .codigo .cod{font-size:1.8rem;font-weight:bold;letter-spacing:3px;color:var(--verde);margin:6px 0}
+  .progresso{height:10px;background:var(--borda);border-radius:6px;overflow:hidden;margin-bottom:16px}
+  .progresso div{height:100%;background:linear-gradient(90deg,var(--naranja),var(--amar));width:0;transition:width .3s}
+  .q{background:var(--bg2);border:1px solid var(--borda);border-left:5px solid var(--naranja);border-radius:14px;padding:14px 16px;margin-bottom:14px}
+  .q .num{color:var(--naranja);font-weight:bold;font-size:.8rem;letter-spacing:1px;text-transform:uppercase}
+  .tema{display:inline-block;font-size:.7rem;background:#16384a;color:#9fe3f0;border-radius:10px;padding:2px 9px;margin-bottom:4px}
+  .q h3{font-size:1.02rem;margin:6px 0 10px;font-weight:600}
+  .alt{display:block;background:#121722;border:1px solid var(--borda2);border-radius:10px;padding:10px 12px;margin:6px 0;cursor:pointer}
+  .alt:hover{border-color:var(--naranja)}
+  .alt input{margin-right:8px}
+  .alt.sel{border-color:var(--naranja);background:#2a1d12}
+  .alt.certa{border-color:var(--verde);background:#1b260c}
+  .alt.errada{border-color:#555;background:#171a20;color:#aab}
+  .alt.marcada-errada{border-color:var(--rojo);background:#3a1419}
+  .exp{display:none;font-size:.88rem;margin-top:6px;color:#cfd6e3}
+  .exp.show{display:block}
+  .es{color:#bff4fb;font-style:italic}
+  .som{background:none;border:1px solid var(--borda2);border-radius:6px;padding:0 4px;margin-left:3px;font-size:.78rem;vertical-align:middle;color:var(--texto)}
+  .enviar{width:100%;background:var(--naranja);color:#2a1200;border:none;border-radius:12px;padding:14px;font-size:1.05rem;font-weight:bold;margin:10px 0}
+  .enviar:disabled{background:#2a2f3a;color:#77808f;cursor:not-allowed}
+  .gab{background:var(--bg2);border:1px dashed var(--naranja);border-radius:14px;padding:16px;margin:16px 0;display:none}
+  .gab.show{display:block}
+  .gab input{padding:9px;border-radius:8px;border:1px solid var(--borda2);background:#0b0e14;color:var(--texto);font-size:1rem;width:180px;text-transform:uppercase}
+  .gab button{background:var(--naranja);color:#2a1200;border:none;border-radius:8px;padding:9px 14px;font-weight:bold;margin-left:6px}
+  .gab .msg{margin-top:8px;font-size:.92rem}
+  .trilha-fim{background:linear-gradient(120deg,#1b260c,#22300f);border:2px solid var(--verde);border-radius:16px;padding:18px;margin-top:18px;text-align:center}
+  .trilha-fim h3{color:var(--verde);margin-bottom:8px}
+  .trilha-fim a.btn{display:inline-block;margin-top:8px;background:var(--verde);color:#1a2600;text-decoration:none;font-weight:bold;padding:11px 20px;border-radius:10px}
+  .trilha-fim a.btn.off{background:#2a2f3a;color:#77808f;pointer-events:none}
+  .modal-bg{display:none;position:fixed;inset:0;background:rgba(5,7,10,.96);z-index:50;align-items:center;justify-content:center;padding:16px}
+  .modal-bg.show{display:flex}
+  .modal{background:var(--bg2);border:1px solid var(--naranja);border-radius:14px;padding:22px;max-width:440px;text-align:center}
+  .modal p{margin-bottom:14px}
+  .modal .big{font-size:2.2rem}
+  .modal button,.modal a{display:inline-block;background:var(--naranja);color:#2a1200;border:none;border-radius:8px;padding:9px 16px;font-weight:bold;text-decoration:none}
+  .rodape{text-align:center;color:var(--cinza);font-size:.8rem;margin-top:24px}
+</style>
+</head>
+<body>
+<header>
+  <div class="selo">Maratón Nocturno · Espanhol 6º ano · CCF</div>
+  <h1>🎯 Quiz · Sprint</h1>
+  <p>15 questões · Unidad 8 “Los deportes” (pp. 114–128) · Código MED para os pais</p>
+</header>
+
+<div class="wrap">
+  <nav class="barra-nav" id="nav">
+    <a href="leitura-guiada.html">📖 Leitura Guiada</a>
+    <a class="on" href="quiz.html">🎯 Quiz</a>
+    <a href="resumo.html" data-etapa="resumo">🗺️ Resumo</a>
+    <a href="simulado.html" data-etapa="simulado">📝 Simulado</a>
+    <a href="index.html">🏠 Início</a>
+  </nav>
+
+  <div class="codigo" id="codigo"><div>Seu código de liberação</div><div class="cod" id="cod"></div><div id="codtxt"></div></div>
+
+  <div class="intro">
+    <h2>⚡ Sprint: 15 questões rápidas</h2>
+    <p>Responda as <b>15 questões</b> (todas obrigatórias). Pode tocar no 🔊 para ouvir o espanhol. Depois de <b>Enviar</b>, as respostas travam, sai o seu <b>código MED</b> e o gabarito comentado abre com o código. Ao enviar, o <b>🗺️ Resumo destrava</b>.</p>
+  </div>
+
+  <div class="painel">
+    <span id="salvo">💾 Progresso salvo automaticamente.</span>
+    <div class="btns">
+      <button class="mini" onclick="exportar()">📥 Exportar</button>
+      <button class="mini" onclick="document.getElementById('imp').click()">📤 Importar</button>
+      <input type="file" id="imp" accept="application/json" style="display:none" onchange="importar(event)">
+      <button class="mini" onclick="pedirZerar()">🗑️ Zerar tudo</button>
+    </div>
+  </div>
+
+  <div class="progresso"><div id="barra"></div></div>
+  <div id="questoes"></div>
+  <button class="enviar" id="btn-enviar" onclick="enviar()" disabled>📨 Enviar respostas (responda todas)</button>
+
+  <div class="gab" id="gab">
+    <b>🔑 Gabarito comentado:</b> digite o código MED que apareceu no topo.<br>
+    <input id="gab-in" placeholder="MED-XX-YY"><button onclick="abrirGab()">Ver gabarito</button>
+    <div class="msg" id="gab-msg"></div>
+  </div>
+
+  <div class="trilha-fim" id="trilha-fim">
+    <h3>🔒 Próxima etapa: Resumo</h3>
+    <p id="trilha-fim-txt">O Resumo destrava quando você enviar o Quiz.</p>
+    <a class="btn off" id="btn-prox" href="resumo.html">🗺️ Ir para o Resumo</a>
+  </div>
+
+  <div class="rodape">Feito com carinho para o jovem aprendiz. 🏃</div>
+</div>
+
+<div class="modal-bg" id="lock">
+  <div class="modal">
+    <div class="big">🔒</div>
+    <p><b>Esta etapa ainda está trancada.</b></p>
+    <p id="lock-txt">Para abrir o Quiz, conclua a Leitura Guiada.</p>
+    <a href="index.html">Voltar ao início</a>
+  </div>
+</div>
+<div class="modal-bg" id="modal" style="background:rgba(0,0,0,.75)">
+  <div class="modal">
+    <p id="modal-txt"></p>
+    <button onclick="fecharModal()" id="modal-ok">Ok</button>
+    <button class="mini" onclick="fecharModal()" id="modal-cancel" style="display:none;margin-left:8px">Cancelar</button>
+  </div>
+</div>
+
+<script>
+/* ====== TRILHA COM CADEADOS (módulo comum do kit) ====== */
+var KIT='maraton_nocturno_esp6';
+var TRILHA=[
+ {id:'leitura', chave:KIT+'_leitura_v1', nome:'Leitura Guiada', arquivo:'leitura-guiada.html', emoji:'📖'},
+ {id:'quiz', chave:KIT+'_quiz_v1', nome:'Quiz', arquivo:'quiz.html', emoji:'🎯'},
+ {id:'resumo', chave:KIT+'_resumo_v1', nome:'Resumo', arquivo:'resumo.html', emoji:'🗺️'},
+ {id:'simulado', chave:KIT+'_simulado_v1', nome:'Simulado', arquivo:'simulado.html', emoji:'📝'}
+];
+function lerJSON(k){ try{ var s=localStorage.getItem(k); return s?JSON.parse(s):null; }catch(e){ return null; } }
+function trilhaLiberada(){ var t=lerJSON(KIT+'_trilha_v1'); return !!(t&&t.liberadoPelosPais); }
+function etapaConcluida(id){ var e=TRILHA.filter(function(t){return t.id===id;})[0]; var d=lerJSON(e.chave); return !!(d&&d.concluido); }
+function podeAbrir(id){ var idx=TRILHA.map(function(t){return t.id;}).indexOf(id); if(idx<=0||trilhaLiberada()) return true; return etapaConcluida(TRILHA[idx-1].id); }
+function marcarNav(){
+  var links=document.querySelectorAll('#nav a[data-etapa]');
+  for(var i=0;i<links.length;i++){ var id=links[i].getAttribute('data-etapa'); if(!podeAbrir(id)){ links[i].classList.add('lock'); links[i].textContent='🔒 '+links[i].textContent.replace('🔒 ',''); } else { links[i].classList.remove('lock'); links[i].textContent=links[i].textContent.replace('🔒 ',''); } }
+}
+function checarTrava(){
+  if(podeAbrir('quiz')) return true;
+  var L=lerJSON(KIT+'_leitura_v1'); var p=(L&&L.progresso)||{conferidos:0,total:9,chkPendentes:0};
+  var faltam=p.total-p.conferidos;
+  var txt= faltam>0 ? 'Para abrir o Quiz, conclua a Leitura Guiada: faltam '+faltam+' de '+p.total+' KM.' : 'Para abrir o Quiz, responda a autoavaliação Sim/Não da Leitura Guiada ('+p.chkPendentes+' ponto(s) pendente(s)).';
+  document.getElementById('lock-txt').textContent=txt;
+  document.getElementById('lock').classList.add('show');
+  document.querySelector('.wrap').style.filter='blur(8px)';
+  document.getElementById('questoes').innerHTML='';
+  return false;
+}
+
+/* ====== ÁUDIO ====== */
+function speak(t){ try{ if(!('speechSynthesis' in window)) return; var u=new SpeechSynthesisUtterance(t); u.lang='es-ES'; u.rate=0.82; var vs=speechSynthesis.getVoices(); for(var i=0;i<vs.length;i++){ if(vs[i].lang&&vs[i].lang.toLowerCase().indexOf('es')===0){ u.voice=vs[i]; break; } } speechSynthesis.cancel(); speechSynthesis.speak(u); }catch(e){} }
+function ligarAudio(raiz){
+  var els=(raiz||document).querySelectorAll('.es');
+  for(var i=0;i<els.length;i++){ (function(el){ if(el.getAttribute('data-som')) return; el.setAttribute('data-som','1'); var b=document.createElement('button'); b.className='som'; b.type='button'; b.title='Ouvir em espanhol'; b.textContent='🔊'; var frase=el.textContent; b.addEventListener('click',function(ev){ ev.preventDefault(); ev.stopPropagation(); speak(frase); }); el.parentNode.insertBefore(b, el.nextSibling); })(els[i]); }
+}
+
+/* ====== QUESTÕES (só o livro, pp. 114–128 das fotos) — a correta é guardada pelo id ====== */
+var Q=[
+ {tema:"KM 1 · p. 114",p:"Segundo a abertura da unidade, os esportes trazem benefícios para:",alts:[
+  {id:"a",t:"<span class='es'>el cuerpo y la mente</span>",ok:true,e:"Isso: “Los deportes traen una serie de beneficios para el cuerpo y la mente.”"},
+  {id:"b",t:"<span class='es'>solo el cuerpo</span>",e:"O livro fala do corpo E da mente (memória, concentração)."},
+  {id:"c",t:"<span class='es'>solo la mente</span>",e:"O livro também cita a capacidade física e a redução do risco de doenças."},
+  {id:"d",t:"<span class='es'>solo el entretenimiento</span>",e:"Entretenimento aparece na legenda da p. 115, mas a abertura fala de corpo e mente."}]},
+ {tema:"KM 2 · p. 115",p:"Segundo o livro, o <b>ciberdeporte</b> também é chamado de:",alts:[
+  {id:"a",t:"<span class='es'>e-sport o esport</span>",ok:true,e:"Isso: “ciberdeporte (también llamado e-sport o esport)”."},
+  {id:"b",t:"<span class='es'>senderismo</span>",e:"Senderismo é o esporte das pessoas andando pelos senderos (p. 122)."},
+  {id:"c",t:"<span class='es'>balonmano</span>",e:"Balonmano aparece no mapa da Síntesis como um dos esportes."},
+  {id:"d",t:"<span class='es'>escalada deportiva</span>",e:"Escalada deportiva também é um esporte do mapa da Síntesis."}]},
+ {tema:"KM 2 · p. 116",p:"Quem é <b>SaNkHs</b>, a entrevistada da Hora de leer?",alts:[
+  {id:"a",t:"Sandra Martínez, <i>streamer</i> espanhola e jogadora profissional de FIFA.",ok:true,e:"Isso: espanhola, 25 anos, jogadora profissional de FIFA, ligada a SDHuesca e Falcons."},
+  {id:"b",t:"A entrevistadora que fez as perguntas sobre o torneio.",e:"Ela é a entrevistada (quem responde), não quem pergunta."},
+  {id:"c",t:"Uma jogadora brasileira que venceu a final.",e:"Ela é espanhola e foi coach das jogadoras na final entre Espanha e Brasil."},
+  {id:"d",t:"A criadora do vídeo “¿Qué son los eSports?”.",e:"O vídeo é indicado no quadro Conoce más; não é dela."}]},
+ {tema:"KM 3 · p. 124",p:"Na entrevista, o <b>entrevistador</b> é:",alts:[
+  {id:"a",t:"o responsável por realizar as perguntas.",ok:true,e:"“El entrevistador es el responsable por realizar las preguntas.”"},
+  {id:"b",t:"quem responde às perguntas.",e:"Quem responde é o entrevistado."},
+  {id:"c",t:"o leitor que lê a entrevista pronta.",e:"O livro define dois papéis: entrevistador e entrevistado."},
+  {id:"d",t:"quem apenas escolhe o título.",e:"O título é uma das etapas, mas o papel do entrevistador é fazer as perguntas."}]},
+ {tema:"KM 3 · p. 124",p:"Qual característica da entrevista o livro apresenta no quadro <b>Fíjate en el género</b>?",alts:[
+  {id:"a",t:"É marcada pela oralidade e, dependendo do contexto, pode ser formal ou informal.",ok:true,e:"Exatamente o que diz o quadro da p. 124."},
+  {id:"b",t:"É sempre formal, em qualquer contexto.",e:"O livro diz que pode ser formal OU informal, conforme o contexto."},
+  {id:"c",t:"É produzida por uma única pessoa, sem interação.",e:"É produzida a partir da interação entre duas ou mais pessoas."},
+  {id:"d",t:"Não tem perguntas, só respostas.",e:"Tem perguntas (entrevistador) e respostas (entrevistado)."}]},
+ {tema:"KM 4 · p. 121",p:"A pergunta <span class='es'>¿Qué deportes practicas?</span> serve para:",alts:[
+  {id:"a",t:"perguntar que esportes a pessoa pratica.",ok:true,e:"É a pergunta da Hora de hablar; a resposta informa: “Practico corrida.”"},
+  {id:"b",t:"falar dos acessórios esportivos.",e:"Acessórios aparecem em frases como “Juego con la pelota.”"},
+  {id:"c",t:"contar como era o esporte no Paleolítico.",e:"Isso é da p. 128, não da Hora de hablar."},
+  {id:"d",t:"explicar a regra da letra z.",e:"A regra do z é da p. 120."}]},
+ {tema:"KM 4 · p. 121",p:"Qual frase <b>fala de um acessório esportivo</b> (e não informa o esporte praticado)?",alts:[
+  {id:"a",t:"<span class='es'>Surfeo con la tabla.</span>",ok:true,e:"Fala do acessório: la tabla (como “Juego con la pelota” e “Ando con la bici”)."},
+  {id:"b",t:"<span class='es'>Practican surf.</span>",e:"Essa informa o esporte praticado."},
+  {id:"c",t:"<span class='es'>Practico natación.</span>",e:"Essa informa o esporte praticado."},
+  {id:"d",t:"<span class='es'>Practica baloncesto.</span>",e:"Essa informa o esporte praticado."}]},
+ {tema:"KM 5 · p. 122",p:"Qual é o gerúndio de <span class='es'>subir</span>, segundo a tabela dos verbos regulares?",alts:[
+  {id:"a",t:"<span class='es'>subiendo</span>",ok:true,e:"“…subiendo la montaña” (p. 122) — subir → subiendo."},
+  {id:"b",t:"<span class='es'>subando</span>",e:"Na tabela, só o verbo em -ar (andar) ficou com -ando."},
+  {id:"c",t:"<span class='es'>subindo</span>",e:"Essa é a forma em português; em espanhol é subiendo."},
+  {id:"d",t:"<span class='es'>subiyendo</span>",e:"O y aparece nos irregulares (cayendo, leyendo, yendo), não em subir."}]},
+ {tema:"KM 5 · p. 122",p:"Qual é o gerúndio do verbo <span class='es'>ir</span>?",alts:[
+  {id:"a",t:"<span class='es'>yendo</span>",ok:true,e:"Ir → yendo (verbo irregular da tabela)."},
+  {id:"b",t:"<span class='es'>iendo</span>",e:"Pegadinha! A tabela mostra yendo, com y."},
+  {id:"c",t:"<span class='es'>indo</span>",e:"Essa é a forma em português."},
+  {id:"d",t:"<span class='es'>iyendo</span>",e:"Não existe na tabela: o certo é yendo."}]},
+ {tema:"KM 5 · p. 122",p:"Complete com o gerúndio de <i>leer</i>: <span class='es'>El juez empezó el torneo ___ a todos las reglas del juego.</span>",alts:[
+  {id:"a",t:"<span class='es'>leyendo</span>",ok:true,e:"Leer → leyendo (irregular, com y)."},
+  {id:"b",t:"<span class='es'>leiendo</span>",e:"Pegadinha: o certo é com y — leyendo."},
+  {id:"c",t:"<span class='es'>leendo</span>",e:"Falta o y: leyendo."},
+  {id:"d",t:"<span class='es'>lendo</span>",e:"Essa é a forma em português."}]},
+ {tema:"KM 6 · p. 122",p:"Segundo a atividade 3 da p. 122, a perífrase <b>“estar” + gerundio</b> indica:",alts:[
+  {id:"a",t:"ações que estão em curso (acontecendo).",ok:true,e:"Por isso a atividade 4 pergunta “¿Qué están haciendo?”."},
+  {id:"b",t:"ações que já estão terminadas.",e:"Essa é a opção errada da atividade 3."},
+  {id:"c",t:"o nome de um esporte.",e:"A perífrase é uma estrutura de verbo, não um nome de esporte."},
+  {id:"d",t:"um número cardinal.",e:"Números cardinais são outro assunto (p. 123)."}]},
+ {tema:"KM 6 · p. 121/123",p:"Complete: <span class='es'>(yo) ___ corriendo en la pista.</span>",alts:[
+  {id:"a",t:"<span class='es'>Estoy</span>",ok:true,e:"Com yo: “Siempre estoy corriendo de los problemas.” (p. 121)."},
+  {id:"b",t:"<span class='es'>Están</span>",e:"Están é para ellos/ellas (Están andando por los senderos)."},
+  {id:"c",t:"<span class='es'>Estamos</span>",e:"Estamos é para nosotros/nosotras."},
+  {id:"d",t:"<span class='es'>Corriendo estoy</span>",e:"A ordem do livro é estar + gerúndio: estoy corriendo."}]},
+ {tema:"KM 7 · p. 123",p:"Segundo a tabela, como se escreve o número <b>101</b>?",alts:[
+  {id:"a",t:"<span class='es'>ciento uno</span>",ok:true,e:"100 sozinho é cien; 101 é ciento uno."},
+  {id:"b",t:"<span class='es'>cien uno</span>",e:"Pegadinha: cien é só o 100 exato."},
+  {id:"c",t:"<span class='es'>cien y uno</span>",e:"Não: a tabela mostra ciento uno."},
+  {id:"d",t:"<span class='es'>uno ciento</span>",e:"A ordem está invertida."}]},
+ {tema:"KM 8 · p. 120",p:"Segundo o livro, na escrita a letra <b>z</b> só aparece antes de:",alts:[
+  {id:"a",t:"a, o, u",ok:true,e:"Ex.: lanza, triangulazo, zumo. Nunca antes de e ou i."},
+  {id:"b",t:"e, i",e:"É justamente o contrário: o z nunca se escreve antes de e e i."},
+  {id:"c",t:"todas as vogais",e:"O z não se escreve antes de e e i."},
+  {id:"d",t:"somente a",e:"Também aparece antes de o e u (triangulazo, zumo)."}]},
+ {tema:"KM 9 · p. 125",p:"Como era o <b>juego de pelota</b> mesoamericano (tlachtli / pok-ta-pok)?",alts:[
+  {id:"a",t:"Batia-se numa bola de borracha sólida com diferentes partes do corpo, para passá-la por um anel de pedra.",ok:true,e:"E era proibido bater com os pés ou com as mãos."},
+  {id:"b",t:"Chutava-se a bola com os pés até um gol.",e:"Era proibido bater na bola com os pés."},
+  {id:"c",t:"Jogava-se a bola com as mãos dentro de uma cesta.",e:"Era proibido usar as mãos; o alvo era um anel de pedra."},
+  {id:"d",t:"Usava-se uma raqueta para lançar a bola.",e:"O texto fala em bater com partes do corpo, não com raquete."}]}
+];
+
+/* ====== EMBARALHAMENTO COM SEMENTE FIXA (mulberry32) ====== */
+function mulberry32(a){ return function(){ a|=0; a=a+0x6D2B79F5|0; var t=Math.imul(a^a>>>15,1|a); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
+var rnd=mulberry32(51126072);
+Q.forEach(function(q){ var arr=q.alts.slice(); for(var i=arr.length-1;i>0;i--){ var j=Math.floor(rnd()*(i+1)); var tmp=arr[i]; arr[i]=arr[j]; arr[j]=tmp; } q.ordem=arr; });
+
+/* ====== ESTADO ====== */
+var CHAVE=KIT+'_quiz_v1'; var mem={}; var estado=carregar();
+function carregar(){ try{ var s=localStorage.getItem(CHAVE); if(s) return JSON.parse(s);}catch(e){ if(mem[CHAVE]) return JSON.parse(mem[CHAVE]); } return {resp:{},enviado:false}; }
+function salvar(){ estado.respondidas=Object.keys(estado.resp).length; estado.total=Q.length; var s=JSON.stringify(estado); try{ localStorage.setItem(CHAVE,s);}catch(e){ mem[CHAVE]=s; } var d=new Date(); document.getElementById('salvo').textContent='💾 Salvo às '+d.toLocaleTimeString('pt-BR')+' de '+d.toLocaleDateString('pt-BR'); }
+var LETRAS='ABCDEFGHJKLMNPQRSTUVWXYZ';
+function gerarCodigo(ac){ var xx=(ac<10?'0':'')+ac; var yy=LETRAS[Math.floor(Math.random()*LETRAS.length)]+LETRAS[Math.floor(Math.random()*LETRAS.length)]; return 'MED-'+xx+'-'+yy; }
+
+function render(){
+  var c=document.getElementById('questoes'); var h='';
+  Q.forEach(function(q,i){
+    h+='<div class="q" id="q'+i+'"><span class="tema">'+q.tema+'</span><div class="num">Questão '+(i+1)+' de '+Q.length+'</div><h3>'+q.p+'</h3>';
+    q.ordem.forEach(function(a,k){
+      var letra='abcd'[k]; var sel=estado.resp[i]===a.id;
+      var cls='alt'+(sel?' sel':'');
+      if(estado.gabarito){ if(a.ok) cls+=' certa'; else if(sel) cls+=' marcada-errada'; else cls+=' errada'; }
+      h+='<label class="'+cls+'"><input type="radio" name="q'+i+'" value="'+a.id+'" '+(sel?'checked':'')+' '+(estado.enviado?'disabled':'')+' onchange="marcar('+i+',\''+a.id+'\')"> <b>'+letra+')</b> '+a.t;
+      if(estado.gabarito){ h+='<div class="exp show">'+(a.ok?'✅ ':'⚪ ')+a.e+'</div>'; }
+      h+='</label>';
+    });
+    h+='</div>';
+  });
+  c.innerHTML=h;
+  ligarAudio(c);
+  atualizarBarra();
+  if(estado.enviado){ mostrarEnviado(); }
+  atualizarTrilhaFim();
+}
+function marcar(i,id){ if(estado.enviado) return; estado.resp[i]=id; salvar(); var q=document.getElementById('q'+i); var labs=q.querySelectorAll('.alt'); for(var k=0;k<labs.length;k++){ labs[k].classList.toggle('sel', labs[k].querySelector('input').value===id); } atualizarBarra(); }
+function atualizarBarra(){ var n=Object.keys(estado.resp).length; document.getElementById('barra').style.width=(n/Q.length*100)+'%'; var b=document.getElementById('btn-enviar'); if(!estado.enviado){ b.disabled=n<Q.length; b.textContent=n<Q.length?'📨 Enviar respostas ('+n+' de '+Q.length+' respondidas)':'📨 Enviar respostas'; } }
+function enviar(){
+  if(estado.enviado) return;
+  var ac=0; Q.forEach(function(q,i){ var a=q.alts.filter(function(x){return x.id===estado.resp[i];})[0]; if(a&&a.ok) ac++; });
+  estado.acertos=ac; estado.total=Q.length; estado.codigo=gerarCodigo(ac); estado.enviado=true; estado.concluido=true; estado.concluidoEm=new Date().toISOString();
+  salvar(); render(); window.scrollTo({top:0,behavior:'smooth'});
+}
+function mostrarEnviado(){
+  var b=document.getElementById('btn-enviar'); b.disabled=true; b.textContent='✅ Quiz enviado — respostas travadas';
+  document.getElementById('codigo').classList.add('show'); document.getElementById('cod').textContent=estado.codigo;
+  document.getElementById('codtxt').textContent='Anote este código para os pais. Ele abre o gabarito comentado e o relatório no Início.';
+  document.getElementById('gab').classList.add('show');
+}
+function abrirGab(){ var v=document.getElementById('gab-in').value.trim().toUpperCase(); var m=document.getElementById('gab-msg'); if(estado.enviado&&(v===estado.codigo||v==='PAIS-77')){ estado.gabarito=true; salvar(); render(); document.getElementById('gab-msg').innerHTML='<span style="color:var(--verde)">Gabarito liberado: '+estado.acertos+' acertos de '+Q.length+'. A certa está em verde; as outras, em cinza, com a explicação.</span>'; } else { m.innerHTML='<span style="color:#ffb3bb">Código incorreto.</span>'; } }
+function atualizarTrilhaFim(){
+  var box=document.getElementById('trilha-fim'), txt=document.getElementById('trilha-fim-txt'), btn=document.getElementById('btn-prox'); var h3=box.querySelector('h3');
+  if(estado.concluido||trilhaLiberada()){ h3.textContent='✅ Quiz enviado — Resumo destravado!'; txt.textContent=estado.concluido?'Agora use o Resumo para fechar as dúvidas que o Sprint mostrou.':'Trilha liberada pelos pais.'; btn.classList.remove('off'); }
+  else { h3.textContent='🔒 Próxima etapa: Resumo'; txt.textContent='Destrava quando você enviar o Quiz.'; btn.classList.add('off'); }
+  marcarNav();
+}
+function exportar(){ var blob=new Blob([JSON.stringify(estado,null,2)],{type:'application/json'}); var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='quiz_maraton-nocturno.json'; a.click(); }
+function importar(ev){ var f=ev.target.files[0]; if(!f) return; var r=new FileReader(); r.onload=function(){ try{ estado=JSON.parse(r.result); salvar(); render(); mostrarModal('✅ Progresso importado!',false);}catch(e){ mostrarModal('❌ Arquivo inválido.',false);} }; r.readAsText(f); }
+var acaoZerar=null;
+function pedirZerar(){ acaoZerar=true; mostrarModal('Apagar as respostas deste Quiz? (Se ele já foi enviado, o código e a conclusão são mantidos.)',true); }
+function mostrarModal(txt,confirmar){ document.getElementById('modal-txt').innerHTML=txt; document.getElementById('modal').classList.add('show'); document.getElementById('modal-cancel').style.display=confirmar?'inline-block':'none'; document.getElementById('modal-ok').textContent=confirmar?'Sim, apagar':'Ok';
+  document.getElementById('modal-ok').onclick=function(){ if(confirmar&&acaoZerar){ if(!estado.enviado){ estado={resp:{},enviado:false}; salvar(); render(); } else { acaoZerar=null; mostrarModal('O Quiz já foi enviado: as respostas ficam travadas. Para refazer do zero, use "Zerar o kit inteiro" no Início (com o código dos pais).',false); return; } } acaoZerar=null; fecharModal(); }; }
+function fecharModal(){ document.getElementById('modal').classList.remove('show'); }
+
+if(checarTrava()){ render(); } else { marcarNav(); }
+</script>
+</body>
+</html>

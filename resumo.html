@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resumo · Mapa del Recorrido · Maratón Nocturno · Espanhol 6º</title>
+<style>
+  :root{
+    --bg:#0f1218; --bg2:#161b24; --card:#1a2030; --borda:#2a3347; --borda2:#3a4560;
+    --naranja:#ff7a1a; --verde:#b6f03c; --cian:#2ad4e8; --rojo:#ff4d5e; --amar:#ffd23f;
+    --texto:#eef1f7; --cinza:#94a0b8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',system-ui,Arial,sans-serif;background:radial-gradient(900px 480px at 50% -12%,#2a1d12,#0f1218 60%),var(--bg);color:var(--texto);line-height:1.6;padding-bottom:60px;font-size:18px}
+  header{background:linear-gradient(120deg,#1a1410,#2b1a0c 60%,#14232a);padding:26px 18px;text-align:center;box-shadow:0 4px 18px rgba(0,0,0,.5);border-bottom:4px solid var(--naranja)}
+  header .selo{font-size:.78rem;letter-spacing:2px;color:#ffc89a;text-transform:uppercase}
+  header h1{font-size:1.6rem;margin:4px 0 2px}
+  header p{color:#d8dce6;font-size:.92rem}
+  .wrap{max-width:880px;margin:0 auto;padding:16px}
+  .barra-nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:16px 0}
+  .barra-nav a{background:var(--bg2);color:var(--texto);text-decoration:none;padding:7px 12px;border-radius:20px;font-size:.85rem;border:1px solid var(--borda)}
+  .barra-nav a.on{background:var(--naranja);color:#2a1200;font-weight:bold}
+  .barra-nav a.lock{opacity:.5}
+  .painel{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;background:var(--bg2);border:1px solid var(--borda);border-radius:12px;padding:10px 14px;margin-bottom:16px;font-size:.85rem}
+  .painel .btns{display:flex;gap:6px;flex-wrap:wrap}
+  button{cursor:pointer;font-family:inherit}
+  .mini{background:var(--bg);color:var(--texto);border:1px solid var(--borda2);border-radius:8px;padding:6px 10px;font-size:.8rem}
+  .rota{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:6px 0 18px}
+  .rota a{background:#221a14;border:1px solid var(--naranja);color:#ffd2ad;border-radius:999px;padding:4px 11px;font-size:.82rem;text-decoration:none}
+  .card{background:var(--bg2);border:1px solid var(--borda);border-top:5px solid var(--naranja);border-radius:16px;padding:18px;margin-bottom:18px;box-shadow:0 3px 12px rgba(0,0,0,.35)}
+  .card h2{font-size:1.2rem;color:var(--naranja);margin-bottom:4px}
+  .card .pg{font-size:.75rem;color:var(--cinza);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
+  .card p{margin-bottom:8px}
+  .card ul{margin:0 0 8px 22px}
+  .card li{margin-bottom:4px}
+  .duas{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+  .caixa{background:#121722;border:1px solid var(--borda2);border-radius:12px;padding:12px}
+  .caixa h3{font-size:1rem;color:var(--cian);margin-bottom:6px}
+  .es{color:#bff4fb;font-style:italic}
+  .som{background:none;border:1px solid var(--borda2);border-radius:6px;padding:0 4px;margin-left:3px;font-size:.78rem;vertical-align:middle;color:var(--texto)}
+  .som:hover{background:#163a44}
+  table.t{width:100%;border-collapse:collapse;font-size:1rem;margin:6px 0 10px}
+  table.t th,table.t td{border:1px solid var(--borda2);padding:7px 9px;text-align:center}
+  table.t th{background:#2a1d12;color:var(--naranja)}
+  .postit{background:#ffe974;color:#3a2f00;border-radius:4px;padding:12px 14px;margin:10px 0;box-shadow:3px 4px 0 rgba(0,0,0,.35);transform:rotate(-.6deg);font-size:.98rem}
+  .postit b{color:#7a3d00}
+  .alerta{background:#3a1419;border-left:5px solid var(--rojo);border-radius:0 10px 10px 0;padding:10px 14px;margin:10px 0;font-size:.96rem}
+  .alerta b{color:#ffb3bb}
+  .narr{background:#10262c;border:1px dashed var(--cian);border-radius:10px;padding:10px 14px;margin:10px 0;font-size:.95rem;color:#c9f4fa}
+  .anat{border-radius:10px;padding:8px 12px;margin:6px 0;font-size:.95rem}
+  .anat .lab{font-size:.72rem;letter-spacing:1px;text-transform:uppercase;font-weight:bold;display:block}
+  .a1{background:#2a1d12;border-left:5px solid var(--naranja)} .a1 .lab{color:var(--naranja)}
+  .a2{background:#10262c;border-left:5px solid var(--cian)} .a2 .lab{color:var(--cian)}
+  .a3{background:#1b260c;border-left:5px solid var(--verde)} .a3 .lab{color:var(--verde)}
+  .a4{background:#2a2410;border-left:5px solid var(--amar)} .a4 .lab{color:var(--amar)}
+  .flips{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;margin-top:8px}
+  .flip{perspective:800px;height:118px;cursor:pointer}
+  .flip .inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+  .flip.on .inner{transform:rotateY(180deg)}
+  .face{position:absolute;inset:0;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px;text-align:center;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+  .frente{background:#221a14;border:2px solid var(--naranja)}
+  .frente small{color:var(--cinza);font-size:.7rem;margin-top:6px}
+  .verso{background:#1b260c;border:2px solid var(--verde);transform:rotateY(180deg);font-size:.92rem}
+  .nums{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+  .num{background:#121722;border:1px solid var(--borda2);border-radius:10px;padding:8px 10px;text-align:center;cursor:pointer}
+  .num b{display:block;font-size:1.3rem;color:var(--naranja)}
+  .num.dif{border-color:var(--rojo)}
+  .num:hover{border-color:var(--cian)}
+  .linha-tempo{position:relative;margin:10px 0 4px 10px;padding-left:22px;border-left:4px solid var(--naranja)}
+  .marco{position:relative;margin-bottom:12px}
+  .marco:before{content:'';position:absolute;left:-31px;top:6px;width:14px;height:14px;border-radius:50%;background:var(--verde);border:3px solid var(--bg)}
+  .marco b{color:var(--amar)}
+  .gloss{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:8px}
+  .gl{background:#121722;border:1px solid var(--borda2);border-radius:10px;padding:8px 12px;font-size:.95rem}
+  .pq{background:#121722;border:1px solid var(--borda2);border-radius:10px;padding:10px 12px;margin:8px 0}
+  .op{background:var(--bg);color:var(--texto);border:1px solid var(--borda2);border-radius:8px;padding:6px 12px;margin:6px 6px 0 0;font-size:.95rem}
+  .op.ok{background:var(--verde);color:#1a2600;border-color:var(--verde)}
+  .op.no{background:var(--rojo);color:#fff;border-color:var(--rojo)}
+  .fb{font-size:.9rem;margin-top:6px}
+  .fim{background:linear-gradient(120deg,#1b260c,#22300f);border:2px solid var(--verde);border-radius:16px;padding:18px;margin-top:18px;text-align:center}
+  .fim h3{color:var(--verde);margin-bottom:8px}
+  .fim button{background:var(--naranja);color:#2a1200;border:none;border-radius:10px;padding:12px 18px;font-weight:bold;font-size:1rem;margin:6px}
+  .fim button:disabled{background:#2a2f3a;color:#77808f;cursor:not-allowed}
+  .fim a.btn{display:inline-block;margin:6px;background:var(--verde);color:#1a2600;text-decoration:none;font-weight:bold;padding:12px 20px;border-radius:10px}
+  .fim a.btn.off{background:#2a2f3a;color:#77808f;pointer-events:none}
+  .modal-bg{display:none;position:fixed;inset:0;background:rgba(5,7,10,.96);z-index:50;align-items:center;justify-content:center;padding:16px}
+  .modal-bg.show{display:flex}
+  .modal{background:var(--bg2);border:1px solid var(--naranja);border-radius:14px;padding:22px;max-width:440px;text-align:center}
+  .modal p{margin-bottom:14px}
+  .modal .big{font-size:2.2rem}
+  .modal button,.modal a{display:inline-block;background:var(--naranja);color:#2a1200;border:none;border-radius:8px;padding:9px 16px;font-weight:bold;text-decoration:none}
+  .rodape{text-align:center;color:var(--cinza);font-size:.8rem;margin-top:24px}
+</style>
+</head>
+<body>
+<header>
+  <div class="selo">Maratón Nocturno · Espanhol 6º ano · CCF</div>
+  <h1>🗺️ Resumo · Mapa del Recorrido</h1>
+  <p>Unidad 8 · Los deportes · tudo o que caiu nos 9 KM, num mapa só · áudio 🔊</p>
+</header>
+
+<div class="wrap">
+  <nav class="barra-nav" id="nav">
+    <a href="leitura-guiada.html">📖 Leitura Guiada</a>
+    <a href="quiz.html">🎯 Quiz</a>
+    <a class="on" href="resumo.html">🗺️ Resumo</a>
+    <a href="simulado.html" data-etapa="simulado">📝 Simulado</a>
+    <a href="index.html">🏠 Início</a>
+  </nav>
+
+  <div class="painel">
+    <span id="salvo">📏 Rolagem máxima: 0%</span>
+    <div class="btns">
+      <button class="mini" onclick="exportar()">📥 Exportar</button>
+      <button class="mini" onclick="document.getElementById('imp').click()">📤 Importar</button>
+      <input type="file" id="imp" accept="application/json" style="display:none" onchange="importar(event)">
+      <button class="mini" onclick="pedirZerar()">🗑️ Zerar tudo</button>
+    </div>
+  </div>
+
+  <div class="rota">
+    <a href="#c1">KM 1 Benefícios</a><a href="#c2">KM 2 Ciberdeportes</a><a href="#c3">KM 3 Entrevista</a><a href="#c4">KM 4 Hablar</a><a href="#c5">KM 5 Gerundio</a><a href="#c6">KM 6 Estar + gerundio</a><a href="#c7">KM 7 Números</a><a href="#c8">KM 8 c/s/z</a><a href="#c9">KM 9 Historia</a><a href="#peg">⚠️ Pegadinhas</a><a href="#glo">📚 Glossário</a>
+  </div>
+
+  <div class="narr">🎙️ <b>Narrador da prova:</b> “Atenção, corredores! Este é o mapa do percurso inteiro. Quem conhece o mapa não se perde na prova de 05/11.”</div>
+
+  <!-- KM 1 -->
+  <div class="card" id="c1">
+    <h2>🏁 KM 1 · Os benefícios dos esportes</h2>
+    <div class="pg">Livro pp. 114, 115 e 121</div>
+    <p><span class="es">Los deportes traen una serie de beneficios para el cuerpo y la mente.</span></p>
+    <div class="duas">
+      <div class="caixa"><h3>💪 Corpo</h3><ul><li>melhoram a capacidade física</li><li>reduzem o risco de algumas doenças: <span class="es">diabetes, ciertos tipos de cáncer, osteoporosis</span></li><li>aumentam a esperança de vida</li></ul></div>
+      <div class="caixa"><h3>🧠 Mente</h3><ul><li>potencializam a memória e a concentração</li><li><span class="es">mejorar el humor</span></li><li><span class="es">reducir el estrés y la depresión</span></li><li><span class="es">mejorar la autoconfianza</span></li><li>ajudam no <span class="es">autoconocimiento</span></li></ul></div>
+      <div class="caixa"><h3>🤝 Convivência</h3><p><span class="es">Los deportes son fuente de entretenimiento y fomentan valores sociales como la colaboración y el respeto.</span></p></div>
+    </div>
+  </div>
+
+  <!-- KM 2 -->
+  <div class="card" id="c2">
+    <h2>🎮 KM 2 · Hora de leer: los ciberdeportes</h2>
+    <div class="pg">Livro pp. 115, 116 e 117</div>
+    <p><b>Ciberdeporte</b> = também chamado de <span class="es">e-sport</span> ou <span class="es">esport</span>.</p>
+    <div class="duas">
+      <div class="caixa"><h3>🪪 Ficha da entrevistada</h3><ul><li><b>Nome:</b> Sandra Martínez</li><li><b>Apelido:</b> SaNkHs</li><li><b>Nacionalidade:</b> espanhola</li><li><b>Idade:</b> 25 anos</li><li><b>Profissão:</b> <i>streamer</i> e jogadora profissional de FIFA</li><li><b>Clubes:</b> SDHuesca (sociedade esportiva) e Falcons (clube de esportes eletrônicos)</li></ul></div>
+      <div class="caixa"><h3>🏆 Contexto e ideias</h3><ul><li>Torneio <b>GamHer</b>: evento para todas as fãs do FIFA20.</li><li>Ela foi <i>coach</i> na <b>final Espanha × Brasil</b>.</li><li>Com LaurixGames, são as únicas FIFA <i>players</i> profissionais na Espanha.</li><li>Acha <b>lógico</b> as mulheres ganharem espaço nos esports.</li><li>Mensagem às meninas: <b>não ter medo</b>, <b>confiar em si mesmas</b>, chegar aonde quiserem.</li></ul></div>
+    </div>
+    <div class="postit">📌 <b>Título da entrevista:</b> <span class="es">Muchas mujeres juegan bien, pero les da miedo exponerse.</span></div>
+  </div>
+
+  <!-- KM 3 -->
+  <div class="card" id="c3">
+    <h2>🎤 KM 3 · La entrevista (gênero textual)</h2>
+    <div class="pg">Livro pp. 116, 117 e 124</div>
+    <p>Gênero produzido a partir da <b>interação entre duas ou mais pessoas</b>, nos papéis de <span class="es">entrevistador</span> (faz as perguntas) e <span class="es">entrevistado</span> (responde). Tem <b>oralidade</b> e pode ser <b>formal ou informal</b>, conforme o contexto.</p>
+    <p><b>🦴 Anatomia da entrevista (com a de SaNkHs):</b></p>
+    <div class="anat a1"><span class="lab">1 · Título</span>“Muchas mujeres juegan bien, pero les da miedo exponerse”.</div>
+    <div class="anat a2"><span class="lab">2 · Introdução</span>contexto (torneio GamHer) + perfil da entrevistada (espanhola, 25 anos, jogadora profissional de FIFA…).</div>
+    <div class="anat a3"><span class="lab">3 · Pergunta (entrevistador)</span><span class="es">¿Qué te parece que las mujeres comiencen a tener terreno en el mundo de los esports?</span></div>
+    <div class="anat a4"><span class="lab">4 · Resposta (entrevistada, entre aspas)</span><span class="es">Me parece algo lógico que tenía que acabar pasando.</span></div>
+    <div class="duas" style="margin-top:10px">
+      <div class="caixa"><h3>📝 Guion (antes)</h3><ul><li>decidir a quem entrevistar</li><li>pensar em que informações quer conhecer</li><li>perguntas <span class="es">claro, objetivo y respetuoso</span></li><li>roteiro no caderno → professor → revisar</li><li>entrevistar e, se possível, gravar</li></ul></div>
+      <div class="caixa"><h3>✨ Depois</h3><ul><li>escolher um <b>título</b></li><li><b>introdução</b>: objetivo + perfil do entrevistado</li><li><b>perguntas</b> + respostas transcritas</li><li>compartilhar com os colegas</li></ul></div>
+    </div>
+  </div>
+
+  <!-- KM 4 -->
+  <div class="card" id="c4">
+    <h2>🗣️ KM 4 · Preguntar e informar sobre los deportes</h2>
+    <div class="pg">Livro pp. 121, 126 e 127</div>
+    <p>Pergunta: <span class="es">¿Qué deportes practicas?</span> → Resposta: <span class="es">Practico corrida.</span></p>
+    <p>Toque nos cartões para virar:</p>
+    <div class="flips" id="flips"></div>
+    <div class="postit">📌 <b>Esportes que aparecem nas páginas:</b> corrida, senderismo, natación, baloncesto, surf, escalada deportiva, balonmano, karate e os ciberdeportes. <b>Objetos/lugares:</b> la pelota, la tabla, la bici, una raqueta, la red, la cesta, la portería, la pista, la cancha. <i>(O vocabulário completo, pp. 118–119, não veio nas fotos.)</i></div>
+  </div>
+
+  <!-- KM 5 -->
+  <div class="card" id="c5">
+    <h2>🏃 KM 5 · Gerundio</h2>
+    <div class="pg">Livro pp. 122 e 127</div>
+    <p><span class="es">Practican senderismo. Están andando por los senderos y subiendo la montaña.</span></p>
+    <p><b>Verbos regulares</b></p>
+    <table class="t"><tr><th>Andar</th><th>Correr</th><th>Subir</th></tr><tr><td><span class="es">andando</span></td><td><span class="es">corriendo</span></td><td><span class="es">subiendo</span></td></tr></table>
+    <p><b>Verbos irregulares</b> (repare no <b>y</b>)</p>
+    <table class="t"><tr><th>Caer</th><th>Leer</th><th>Ir</th></tr><tr><td><span class="es">cayendo</span></td><td><span class="es">leyendo</span></td><td><span class="es">yendo</span></td></tr></table>
+    <div class="alerta">⚠️ <b>Pegadinha:</b> ir → <b>yendo</b> (não “iendo”); leer → <b>leyendo</b> (não “leiendo”).</div>
+    <div class="postit">📌 <b>Padrão da tabela:</b> verbo em <b>-ar</b> (andar) → <b>-ando</b>; verbos em <b>-er/-ir</b> (correr, subir) → <b>-iendo</b>.</div>
+  </div>
+
+  <!-- KM 6 -->
+  <div class="card" id="c6">
+    <h2>⏱️ KM 6 · Perífrasis “estar” + gerundio</h2>
+    <div class="pg">Livro pp. 121, 122, 123 e 126</div>
+    <p><b>estar + gerúndio</b> = indica <b>ações em curso</b> (acontecendo). Por isso a pergunta <span class="es">¿Qué están haciendo?</span></p>
+    <table class="t"><tr><th>Pessoa</th><th>Exemplo do livro</th></tr>
+      <tr><td>yo</td><td><span class="es">Siempre estoy corriendo de los problemas.</span></td></tr>
+      <tr><td>uma pessoa</td><td><span class="es">Está andando 30 kilómetros los fines de semana.</span></td></tr>
+      <tr><td>nosotros / nosotras</td><td><span class="es">Estamos leyendo los resultados del torneo.</span></td></tr>
+      <tr><td>ellos / ellas</td><td><span class="es">Están andando por los senderos.</span></td></tr>
+    </table>
+    <p><b>Trocando a pessoa (atividade 5, p. 123):</b> <span class="es">Estoy yendo al juego.</span> → (nosotras) <span class="es">Estamos yendo al juego.</span></p>
+    <div class="alerta">⚠️ <b>Só o “estar” muda</b> com a pessoa; o gerúndio fica igual. <i>(A forma de “vosotros” não aparece nas fotos — confira no caderno.)</i></div>
+    <div class="postit">📌 Na entrevista de SaNkHs: gerúndios <b>pasando</b> e <b>leyendo</b>; perífrase: <span class="es">que me estén leyendo</span>.</div>
+  </div>
+
+  <!-- KM 7 -->
+  <div class="card" id="c7">
+    <h2>🔢 KM 7 · Números cardinales del 30 al 1000</h2>
+    <div class="pg">Livro p. 123 · toque no número para ouvir</div>
+    <div class="nums" id="nums"></div>
+    <div class="postit">📌 <b>Padrões:</b> dezena + <b>y</b> + unidade (treinta y uno) · <b>cien</b> = só o 100 · 101 = <b>ciento</b> uno · 130 = ciento treinta.</div>
+    <div class="alerta">⚠️ <b>As “diferentonas”</b> (contorno vermelho): <b>quinientos</b> (500), <b>setecientos</b> (700), <b>novecientos</b> (900). E 1000 = <b>mil</b>.</div>
+  </div>
+
+  <!-- KM 8 -->
+  <div class="card" id="c8">
+    <h2>🔤 KM 8 · El uso de la “c”, la “s” o la “z”</h2>
+    <div class="pg">Livro p. 120</div>
+    <table class="t">
+      <tr><th>Letra</th><th>Regra do livro</th><th>Exemplos</th></tr>
+      <tr><td><b>c</b> + a, o, u</td><td style="text-align:left">mesmo fonema que em português</td><td><span class="es">casa</span> <span class="es">colegio</span> <span class="es">cuadro</span></td></tr>
+      <tr><td><b>c</b> + e, i</td><td style="text-align:left">2 pronúncias: língua entre os dentes (grande parte da Espanha) · som de <b>s</b> (maioria da Hispano-América)</td><td><span class="es">avance</span> <span class="es">formación</span></td></tr>
+      <tr><td><b>s</b></td><td style="text-align:left">língua vibrando na parte da frente do céu da boca</td><td><span class="es">uso</span></td></tr>
+      <tr><td><b>z</b></td><td style="text-align:left">mesmas 2 pronúncias da c + e/i; na escrita, <b>só antes de a, o, u</b></td><td><span class="es">lanza</span> <span class="es">triangulazo</span> <span class="es">zumo</span></td></tr>
+    </table>
+    <div class="alerta">⚠️ <b>Pegadinha:</b> o <b>z nunca</b> se escreve antes de <b>e</b> nem de <b>i</b>.</div>
+  </div>
+
+  <!-- KM 9 -->
+  <div class="card" id="c9">
+    <h2>🏺 KM 9 · Pueblos indígenas y la historia de los deportes</h2>
+    <div class="pg">Livro pp. 125 e 128</div>
+    <div class="linha-tempo">
+      <div class="marco"><b>Paleolítico</b> — origem dos esportes, ligada à <span class="es">supervivencia</span>. Depois, a função e as características mudaram.</div>
+      <div class="marco"><b>Há mais de 3700 anos</b> — surge o <span class="es">juego de pelota</span> (tlachtli em náhuatl, pok-ta-pok em maya) na costa do golfo do México.</div>
+      <div class="marco"><b>2015</b> — no Brasil, os primeiros <span class="es">Juegos Mundiales de los Pueblos Indígenas</span>.</div>
+    </div>
+    <div class="duas">
+      <div class="caixa"><h3>⚙️ Funções na América pré-colombiana</h3><ul><li>entretenimento</li><li>competição</li><li>alianças entre comunidades</li><li>resolver conflitos</li><li>habilidades físicas e mentais</li><li>treino para a guerra</li></ul></div>
+      <div class="caixa"><h3>🏐 Juego de pelota</h3><ul><li>bola de <b>borracha sólida</b> (<span class="es">caucho sólido</span>)</li><li>bater com diferentes partes do corpo</li><li>passar por um <b>anel de pedra</b> no alto da quadra</li><li><b>proibido</b> usar os pés e as mãos</li></ul></div>
+    </div>
+    <div class="postit">📌 <b>V ou F (p. 125):</b> só entreter? <b>F</b> · surgiu onde hoje é o México? <b>V</b> · podia usar pés e mãos? <b>F</b>.</div>
+  </div>
+
+  <!-- PEGADINHAS -->
+  <div class="card" id="peg" style="border-top-color:var(--rojo)">
+    <h2 style="color:#ffb3bb">⚠️ Pegadinhas da Carrera</h2>
+    <div class="postit">1. <b>ir → yendo</b>, <b>leer → leyendo</b>, <b>caer → cayendo</b> (com y).</div>
+    <div class="postit">2. Estar + gerúndio = <b>em curso</b>, não “terminado”.</div>
+    <div class="postit">3. <b>cien</b> só para 100; 101 = <b>ciento uno</b>.</div>
+    <div class="postit">4. <b>quinientos · setecientos · novecientos · mil</b>.</div>
+    <div class="postit">5. <b>z</b> só antes de a, o, u.</div>
+    <div class="postit">6. <b>Entrevistador</b> pergunta; <b>entrevistado</b> responde.</div>
+    <div class="postit">7. “Practico natación” <b>informa o esporte</b>; “Juego con la pelota” <b>fala do acessório</b>.</div>
+    <div class="postit">8. Juego de pelota: <b>proibido</b> pés e mãos; anel de <b>pedra</b>; golfo do <b>México</b>.</div>
+  </div>
+
+  <!-- GLOSSÁRIO -->
+  <div class="card" id="glo" style="border-top-color:var(--cian)">
+    <h2 style="color:var(--cian)">📚 Glossário da unidade (sentido usado no livro)</h2>
+    <div class="gloss">
+      <div class="gl"><span class="es">ciberdeporte</span> — também chamado de <i>e-sport</i> ou <i>esport</i> (p. 115).</div>
+      <div class="gl"><span class="es">entrevistador</span> — quem faz as perguntas.</div>
+      <div class="gl"><span class="es">entrevistado</span> — quem responde.</div>
+      <div class="gl"><span class="es">guion</span> — roteiro da entrevista (feito antes).</div>
+      <div class="gl"><span class="es">oralidad</span> — marca da fala; característica da entrevista.</div>
+      <div class="gl"><span class="es">gerundio</span> — forma como andando, corriendo, subiendo.</div>
+      <div class="gl"><span class="es">perífrasis “estar” + gerundio</span> — ação em curso: estoy corriendo.</div>
+      <div class="gl"><span class="es">accesorios deportivos</span> — objetos do esporte: la pelota, la tabla, la bici.</div>
+      <div class="gl"><span class="es">autoconocimiento</span> — conhecer a si mesmo; o esporte ajuda nisso (p. 121).</div>
+      <div class="gl"><span class="es">supervivencia</span> — sobrevivência; a ligação dos esportes no Paleolítico.</div>
+      <div class="gl"><span class="es">tlachtli / pok-ta-pok</span> — nomes do juego de pelota (náhuatl / maya).</div>
+      <div class="gl"><span class="es">anillo de piedra</span> — anel de pedra por onde a bola tinha de passar.</div>
+    </div>
+  </div>
+
+  <!-- MINI-QUIZ -->
+  <div class="card" style="border-top-color:var(--verde)">
+    <h2 style="color:var(--verde)">⚡ Mini-quiz relâmpago</h2>
+    <div id="relampago"></div>
+  </div>
+
+  <div class="fim" id="fim">
+    <h3 id="fim-h3">🔒 Próxima etapa: Simulado</h3>
+    <p id="fim-txt">Role até o fim da página para habilitar o botão.</p>
+    <button id="btn-li" onclick="confirmarLeitura()" disabled>✅ Li o resumo até o fim</button>
+    <br><a class="btn off" id="btn-prox" href="simulado.html">📝 Pronto para o Simulado!</a>
+  </div>
+
+  <div class="rodape">Feito com carinho para o jovem aprendiz. 🏃 ¡Ánimo en la carrera final!</div>
+</div>
+
+<div class="modal-bg" id="lock">
+  <div class="modal">
+    <div class="big">🔒</div>
+    <p><b>Esta etapa ainda está trancada.</b></p>
+    <p id="lock-txt">Para abrir o Resumo, envie o Quiz.</p>
+    <a href="index.html">Voltar ao início</a>
+  </div>
+</div>
+<div class="modal-bg" id="modal" style="background:rgba(0,0,0,.75)">
+  <div class="modal">
+    <p id="modal-txt"></p>
+    <button id="modal-ok">Ok</button>
+    <button class="mini" onclick="fecharModal()" id="modal-cancel" style="display:none;margin-left:8px">Cancelar</button>
+  </div>
+</div>
+
+<script>
+/* ====== TRILHA COM CADEADOS (módulo comum do kit) ====== */
+var KIT='maraton_nocturno_esp6';
+var TRILHA=[
+ {id:'leitura', chave:KIT+'_leitura_v1', nome:'Leitura Guiada', arquivo:'leitura-guiada.html', emoji:'📖'},
+ {id:'quiz', chave:KIT+'_quiz_v1', nome:'Quiz', arquivo:'quiz.html', emoji:'🎯'},
+ {id:'resumo', chave:KIT+'_resumo_v1', nome:'Resumo', arquivo:'resumo.html', emoji:'🗺️'},
+ {id:'simulado', chave:KIT+'_simulado_v1', nome:'Simulado', arquivo:'simulado.html', emoji:'📝'}
+];
+function lerJSON(k){ try{ var s=localStorage.getItem(k); return s?JSON.parse(s):null; }catch(e){ return null; } }
+function trilhaLiberada(){ var t=lerJSON(KIT+'_trilha_v1'); return !!(t&&t.liberadoPelosPais); }
+function etapaConcluida(id){ var e=TRILHA.filter(function(t){return t.id===id;})[0]; var d=lerJSON(e.chave); return !!(d&&d.concluido); }
+function podeAbrir(id){ var idx=TRILHA.map(function(t){return t.id;}).indexOf(id); if(idx<=0||trilhaLiberada()) return true; return etapaConcluida(TRILHA[idx-1].id); }
+function marcarNav(){
+  var links=document.querySelectorAll('#nav a[data-etapa]');
+  for(var i=0;i<links.length;i++){ var id=links[i].getAttribute('data-etapa'); if(!podeAbrir(id)){ links[i].classList.add('lock'); links[i].textContent='🔒 '+links[i].textContent.replace('🔒 ',''); } else { links[i].classList.remove('lock'); links[i].textContent=links[i].textContent.replace('🔒 ',''); } }
+}
+function checarTrava(){
+  if(podeAbrir('resumo')) return true;
+  var L=lerJSON(KIT+'_leitura_v1');
+  document.getElementById('lock-txt').textContent=(L&&L.concluido)?'Para abrir o Resumo, envie o Quiz.':'Para abrir o Resumo, conclua a Leitura Guiada e envie o Quiz.';
+  document.getElementById('lock').classList.add('show');
+  var w=document.querySelector('.wrap'); w.style.filter='blur(8px)'; w.style.pointerEvents='none';
+  return false;
+}
+
+/* ====== ÁUDIO ====== */
+function speak(t){ try{ if(!('speechSynthesis' in window)) return; var u=new SpeechSynthesisUtterance(t); u.lang='es-ES'; u.rate=0.82; var vs=speechSynthesis.getVoices(); for(var i=0;i<vs.length;i++){ if(vs[i].lang&&vs[i].lang.toLowerCase().indexOf('es')===0){ u.voice=vs[i]; break; } } speechSynthesis.cancel(); speechSynthesis.speak(u); }catch(e){} }
+try{ if('speechSynthesis' in window){ speechSynthesis.onvoiceschanged=function(){ speechSynthesis.getVoices(); }; } }catch(e){}
+function ligarAudio(raiz){
+  var els=(raiz||document).querySelectorAll('.es');
+  for(var i=0;i<els.length;i++){ (function(el){ if(el.getAttribute('data-som')) return; el.setAttribute('data-som','1'); var b=document.createElement('button'); b.className='som'; b.type='button'; b.title='Ouvir em espanhol'; b.textContent='🔊'; var frase=el.textContent; b.addEventListener('click',function(ev){ ev.stopPropagation(); speak(frase); }); el.parentNode.insertBefore(b, el.nextSibling); })(els[i]); }
+}
+
+/* ====== FLIP CARDS (p. 121) ====== */
+var FLIPS=[
+ ["¿Qué deportes practicas?","❓ Pergunta: que esportes a pessoa pratica"],
+ ["Practico corrida.","📢 Informa o esporte (eu)"],
+ ["Practico natación.","📢 Informa o esporte"],
+ ["Practica baloncesto.","📢 Informa o esporte"],
+ ["Practican surf.","📢 Informa o esporte"],
+ ["Juego con la pelota.","🎒 Fala do acessório: la pelota"],
+ ["Surfeo con la tabla.","🎒 Fala do acessório: la tabla"],
+ ["Ando con la bici.","🎒 Fala do acessório: la bici"]
+];
+function montarFlips(){
+  var c=document.getElementById('flips'); var h='';
+  FLIPS.forEach(function(w){ h+='<div class="flip" onclick="this.classList.toggle(\'on\')"><div class="inner"><div class="face frente"><span class="es">'+w[0]+'</span><small>toque para virar</small></div><div class="face verso"><b>'+w[1]+'</b></div></div></div>'; });
+  c.innerHTML=h;
+}
+
+/* ====== NÚMEROS (tabela da p. 123) ====== */
+var NUMS=[[30,"treinta"],[31,"treinta y uno"],[32,"treinta y dos"],[40,"cuarenta"],[50,"cincuenta"],[60,"sesenta"],[70,"setenta"],[80,"ochenta"],[90,"noventa"],[100,"cien"],[101,"ciento uno"],[200,"doscientos"],[300,"trescientos"],[400,"cuatrocientos"],[500,"quinientos",1],[600,"seiscientos"],[700,"setecientos",1],[800,"ochocientos"],[900,"novecientos",1],[1000,"mil"]];
+function montarNums(){
+  var c=document.getElementById('nums'); var h='';
+  NUMS.forEach(function(n){ h+='<div class="num'+(n[2]?' dif':'')+'" onclick="speak(\''+n[1]+'\')"><b>'+n[0]+'</b>'+n[1]+' 🔊</div>'; });
+  c.innerHTML=h;
+}
+
+/* ====== MINI-QUIZ RELÂMPAGO ====== */
+var REL=[
+ {p:"Gerúndio de <b>ir</b>:",ops:["iendo","yendo"],ok:1,e:"Ir → yendo (irregular)."},
+ {p:"<b>500</b> por extenso:",ops:["quinientos","cincocientos"],ok:0,e:"500 = quinientos."},
+ {p:"“Estar” + gerundio indica ações…",ops:["em curso","já terminadas"],ok:0,e:"Ações em curso — ¿Qué están haciendo?"},
+ {p:"Na escrita, o <b>z</b> pode vir antes de <b>e</b>?",ops:["Sim","Não"],ok:1,e:"Não: só antes de a, o, u."},
+ {p:"Quem faz as perguntas numa entrevista?",ops:["entrevistador","entrevistado"],ok:0,e:"O entrevistador pergunta; o entrevistado responde."}
+];
+function montarRelampago(){
+  var c=document.getElementById('relampago'); var h='';
+  REL.forEach(function(q,i){ h+='<div class="pq"><div>'+(i+1)+'. '+q.p+'</div>'; q.ops.forEach(function(o,k){ h+='<button class="op" id="r'+i+'_'+k+'" onclick="resp('+i+','+k+')">'+o+'</button>'; }); h+='<div class="fb" id="rf'+i+'"></div></div>'; });
+  c.innerHTML=h;
+}
+function resp(i,k){ var q=REL[i]; for(var j=0;j<q.ops.length;j++){ document.getElementById('r'+i+'_'+j).className='op'+(j===q.ok?' ok':(j===k?' no':'')); } document.getElementById('rf'+i).innerHTML=(k===q.ok?'✅ ':'❌ ')+q.e; }
+
+/* ====== ESTADO DO RESUMO ====== */
+var CHAVE=KIT+'_resumo_v1'; var mem={}; var estado=carregar();
+function carregar(){ try{ var s=localStorage.getItem(CHAVE); if(s) return JSON.parse(s);}catch(e){ if(mem[CHAVE]) return JSON.parse(mem[CHAVE]); } return {rolagemMax:0}; }
+function salvar(){ estado.maxScroll=Math.round(estado.rolagemMax||0); var s=JSON.stringify(estado); try{ localStorage.setItem(CHAVE,s);}catch(e){ mem[CHAVE]=s; } document.getElementById('salvo').textContent='📏 Rolagem máxima: '+Math.round(estado.rolagemMax||0)+'%'+(estado.concluido?' · ✅ lido até o fim':''); }
+function medirRolagem(){
+  var h=document.documentElement; var total=h.scrollHeight-h.clientHeight; var pct= total<=0?100:Math.min(100,(window.scrollY||h.scrollTop)/total*100);
+  if(pct>(estado.rolagemMax||0)){ estado.rolagemMax=pct; salvar(); }
+  var b=document.getElementById('btn-li'); if(!estado.concluido && (estado.rolagemMax||0)>=90){ b.disabled=false; }
+}
+function confirmarLeitura(){ if(estado.concluido) return; if((estado.rolagemMax||0)<90) return; estado.concluido=true; estado.concluidoEm=new Date().toISOString(); salvar(); atualizarFim(); }
+function atualizarFim(){
+  var h3=document.getElementById('fim-h3'), txt=document.getElementById('fim-txt'), b=document.getElementById('btn-li'), a=document.getElementById('btn-prox');
+  if(estado.concluido||trilhaLiberada()){ h3.textContent='✅ Resumo lido — Simulado destravado!'; txt.textContent=estado.concluido?'Agora encare a Carrera Final, como se fosse a prova.':'Trilha liberada pelos pais.'; b.disabled=!!estado.concluido; b.textContent=estado.concluido?'✅ Resumo concluído':'✅ Li o resumo até o fim'; a.classList.remove('off'); }
+  else { h3.textContent='🔒 Próxima etapa: Simulado'; txt.textContent=(estado.rolagemMax||0)>=90?'Clique em “Li o resumo até o fim” para destravar o Simulado.':'Role até o fim da página para habilitar o botão (rolagem: '+Math.round(estado.rolagemMax||0)+'%).'; a.classList.add('off'); }
+  marcarNav();
+}
+function exportar(){ var blob=new Blob([JSON.stringify(estado,null,2)],{type:'application/json'}); var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='resumo_maraton-nocturno.json'; a.click(); }
+function importar(ev){ var f=ev.target.files[0]; if(!f) return; var r=new FileReader(); r.onload=function(){ try{ estado=JSON.parse(r.result); salvar(); atualizarFim(); mostrarModal('✅ Progresso importado!',false);}catch(e){ mostrarModal('❌ Arquivo inválido.',false);} }; r.readAsText(f); }
+function pedirZerar(){ mostrarModal('Zerar a rolagem deste Resumo? (Se ele já foi concluído, a conclusão é mantida.)',true,function(){ var c=estado.concluido, ce=estado.concluidoEm; estado={rolagemMax:0}; if(c){ estado.concluido=true; estado.concluidoEm=ce; } salvar(); atualizarFim(); }); }
+function mostrarModal(txt,confirmar,fn){ document.getElementById('modal-txt').innerHTML=txt; document.getElementById('modal').classList.add('show'); document.getElementById('modal-cancel').style.display=confirmar?'inline-block':'none'; var ok=document.getElementById('modal-ok'); ok.textContent=confirmar?'Sim, zerar':'Ok'; ok.onclick=function(){ if(fn) fn(); fecharModal(); }; }
+function fecharModal(){ document.getElementById('modal').classList.remove('show'); }
+
+montarFlips(); montarNums(); montarRelampago(); ligarAudio(document);
+if(checarTrava()){ salvar(); atualizarFim(); window.addEventListener('scroll',function(){ medirRolagem(); atualizarFim(); }); setTimeout(medirRolagem,300); } else { marcarNav(); }
+</script>
+</body>
+</html>

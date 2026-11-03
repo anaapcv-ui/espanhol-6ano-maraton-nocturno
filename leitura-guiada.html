@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leitura Guiada · Maratón Nocturno · Espanhol 6º</title>
+<style>
+  :root{
+    --bg:#0f1218; --bg2:#161b24; --card:#1a2030; --borda:#2a3347; --borda2:#3a4560;
+    --naranja:#ff7a1a; --verde:#b6f03c; --cian:#2ad4e8; --rojo:#ff4d5e; --amar:#ffd23f;
+    --texto:#eef1f7; --cinza:#94a0b8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',system-ui,Arial,sans-serif;background:
+    radial-gradient(900px 480px at 50% -12%,#2a1d12,#0f1218 60%),var(--bg);
+    color:var(--texto);line-height:1.6;padding-bottom:60px;font-size:17px}
+  header{background:linear-gradient(120deg,#1a1410,#2b1a0c 60%,#14232a);padding:26px 18px;text-align:center;
+    box-shadow:0 4px 18px rgba(0,0,0,.5);border-bottom:4px solid var(--naranja)}
+  header .selo{font-size:.78rem;letter-spacing:2px;color:#ffc89a;text-transform:uppercase}
+  header .faixa{font-size:1.2rem;letter-spacing:8px;margin-top:4px}
+  header h1{font-size:1.55rem;margin:4px 0 2px}
+  header p{color:#d8dce6;font-size:.92rem}
+  .wrap{max-width:840px;margin:0 auto;padding:16px}
+  .barra-nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:16px 0}
+  .barra-nav a{background:var(--bg2);color:var(--texto);text-decoration:none;padding:7px 12px;border-radius:20px;font-size:.85rem;border:1px solid var(--borda)}
+  .barra-nav a.on{background:var(--naranja);color:#2a1200;font-weight:bold}
+  .barra-nav a.lock{opacity:.5}
+  .intro{background:var(--bg2);border:1px solid var(--borda);border-radius:14px;padding:16px;margin-bottom:16px}
+  .intro h2{color:var(--naranja);font-size:1.15rem;margin-bottom:8px}
+  .intro ol{margin:8px 0 0 20px}
+  .painel{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;
+    background:var(--bg2);border:1px solid var(--borda);border-radius:12px;padding:10px 14px;margin-bottom:16px;font-size:.85rem}
+  .painel .btns{display:flex;gap:6px;flex-wrap:wrap}
+  button{cursor:pointer;font-family:inherit}
+  .mini{background:var(--bg);color:var(--texto);border:1px solid var(--borda2);border-radius:8px;padding:6px 10px;font-size:.8rem}
+  .bloco{background:var(--bg2);border:1px solid var(--borda);border-left:6px solid var(--naranja);border-radius:16px;margin-bottom:18px;overflow:hidden;box-shadow:0 3px 12px rgba(0,0,0,.35)}
+  .bloco.travado{opacity:.55}
+  .bloco-cab{display:flex;align-items:center;gap:12px;padding:14px 16px;background:linear-gradient(90deg,#221a14,#1a2030);border-bottom:1px solid var(--borda)}
+  .dorsal{background:#fff;color:#1a1a1a;width:56px;height:50px;border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:900;flex-shrink:0;box-shadow:0 2px 6px rgba(0,0,0,.5);border-top:6px solid var(--naranja);line-height:1}
+  .dorsal small{font-size:.6rem;letter-spacing:1px;color:#666}
+  .dorsal b{font-size:1.25rem}
+  .bloco-cab h3{font-size:1.08rem;color:#fff}
+  .bloco-cab .km{font-size:.7rem;color:var(--cinza);letter-spacing:1px;text-transform:uppercase}
+  .bloco-corpo{padding:16px}
+  .texto p{margin-bottom:10px}
+  .texto ul{margin:0 0 10px 20px}
+  .texto li{margin-bottom:6px}
+  .es{color:#bff4fb;font-style:italic}
+  .som{background:none;border:1px solid var(--borda2);border-radius:6px;padding:0 4px;margin-left:3px;font-size:.78rem;vertical-align:middle;color:var(--texto)}
+  .som:hover{background:#163a44}
+  .quadro{width:100%;border-collapse:collapse;font-size:.92rem;margin:4px 0 12px}
+  .quadro th,.quadro td{border:1px solid var(--borda2);padding:6px 8px;text-align:left;vertical-align:top}
+  .quadro th{background:#2a1d12;color:var(--naranja)}
+  .olhar{background:#2e2408;border-left:3px solid var(--amar);padding:8px 12px;margin:0 0 10px;border-radius:0 8px 8px 0;font-size:.95rem}
+  .olhar b{color:var(--amar)}
+  .cadeado{padding:22px 16px;text-align:center;color:var(--cinza);font-size:.9rem}
+  .completar{background:#10262c;border:1px solid var(--cian);border-radius:12px;padding:12px 14px;margin:12px 0}
+  .completar .cq{font-weight:600;margin-bottom:8px}
+  .completar input{background:var(--bg);color:var(--texto);border:1.5px solid var(--borda2);border-radius:8px;padding:7px 9px;font-size:16px;width:180px}
+  .completar button.ck{background:var(--cian);border:none;color:#05262b;border-radius:9px;padding:7px 13px;font-weight:800;margin-left:6px}
+  .completar .fb{margin-top:8px;font-size:.92rem;display:none}
+  .completar .fb.ok{display:block;color:var(--verde)} .completar .fb.no{display:block;color:#ffb0b8}
+  .perg{background:#121722;border:1px solid var(--borda);border-radius:12px;padding:12px;margin-top:14px}
+  .perg.red{border-color:var(--rojo);box-shadow:0 0 0 1px var(--rojo)}
+  .perg .tag{display:inline-block;font-size:.66rem;text-transform:uppercase;letter-spacing:1px;padding:2px 8px;border-radius:10px;margin-bottom:6px}
+  .tag.conc{background:#16384a;color:#9fe3f0}
+  .tag.apl{background:#2d3a12;color:#d8f59a}
+  .perg label{display:block;font-weight:600;margin-bottom:8px}
+  .perg textarea{width:100%;min-height:70px;background:#0b0e14;color:var(--texto);border:1px solid var(--borda2);border-radius:8px;padding:9px;font-family:inherit;font-size:.95rem;resize:vertical}
+  .aviso{margin-top:8px;padding:9px 11px;border-radius:8px;font-size:.88rem;display:none}
+  .aviso.amarelo{display:block;background:#4a3d12;border:1px solid var(--amar);color:#ffe9ad}
+  .aviso.vermelho{display:block;background:#4a1720;border:1px solid var(--rojo);color:#ffc9cf}
+  .modelo{margin-top:10px;padding:10px 12px;background:#1b260c;border:1px solid var(--verde);border-radius:8px;font-size:.92rem;display:none}
+  .modelo.show{display:block}
+  .modelo .lab{color:var(--verde);font-weight:bold;font-size:.78rem;text-transform:uppercase;letter-spacing:1px}
+  .chk{margin-top:10px;font-size:.9rem}
+  .chk .item{display:flex;align-items:center;gap:8px;margin:6px 0;flex-wrap:wrap}
+  .chk .item span{flex:1;min-width:180px}
+  .chk .simnao button{border:1px solid var(--borda2);background:#0b0e14;color:var(--texto);border-radius:6px;padding:4px 10px;margin-left:4px;font-size:.82rem}
+  .chk .simnao button.sim.ativo{background:var(--verde);border-color:var(--verde);color:#1a2600}
+  .chk .simnao button.nao.ativo{background:var(--rojo);border-color:var(--rojo);color:#fff}
+  .conferir{margin-top:14px;background:var(--naranja);color:#2a1200;border:none;border-radius:10px;padding:11px 18px;font-size:1rem;font-weight:bold;width:100%}
+  .conferir:disabled{background:#2a2f3a;color:#77808f;cursor:not-allowed}
+  .status-bloco{margin-top:10px;text-align:center;font-weight:bold;font-size:.95rem}
+  .prox{margin-top:12px;text-align:center}
+  .prox a{color:var(--naranja);text-decoration:none;font-weight:bold}
+  .peg{background:#3a1419;border:2px solid var(--rojo);border-radius:16px;padding:16px;margin-top:20px}
+  .peg h3{color:#ffb3bb;margin-bottom:10px}
+  .peg ol{margin-left:20px}
+  .peg li{margin-bottom:7px}
+  .cobertura{background:var(--bg2);border:1px solid var(--borda);border-radius:16px;padding:16px;margin-top:18px}
+  .cobertura h3{color:var(--naranja);margin-bottom:10px}
+  table.cob{width:100%;border-collapse:collapse;font-size:.86rem}
+  table.cob th,table.cob td{border:1px solid var(--borda);padding:7px 9px;text-align:left}
+  table.cob th{background:#2a1d12}
+  .revisar{background:#3a2e06;border:2px solid var(--amar);border-radius:16px;padding:16px;margin-top:18px}
+  .revisar h3{color:var(--amar);margin-bottom:8px}
+  .revisar ul{margin-left:18px}
+  .relatorio{background:var(--bg2);border:1px dashed var(--naranja);border-radius:14px;padding:16px;margin-top:18px;font-size:.92rem}
+  .relatorio h3{color:var(--naranja);margin-bottom:8px}
+  .trilha-fim{background:linear-gradient(120deg,#1b260c,#22300f);border:2px solid var(--verde);border-radius:16px;padding:18px;margin-top:18px;text-align:center}
+  .trilha-fim h3{color:var(--verde);margin-bottom:8px}
+  .trilha-fim a.btn{display:inline-block;margin-top:8px;background:var(--verde);color:#1a2600;text-decoration:none;font-weight:bold;padding:11px 20px;border-radius:10px}
+  .trilha-fim a.btn.off{background:#2a2f3a;color:#77808f;pointer-events:none}
+  .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:50;align-items:center;justify-content:center;padding:16px}
+  .modal-bg.show{display:flex}
+  .modal{background:var(--bg2);border:1px solid var(--naranja);border-radius:14px;padding:20px;max-width:420px;text-align:center}
+  .modal p{margin-bottom:14px}
+  .modal button{background:var(--naranja);color:#2a1200;border:none;border-radius:8px;padding:9px 16px;font-weight:bold}
+  .rodape{text-align:center;color:var(--cinza);font-size:.8rem;margin-top:24px}
+</style>
+</head>
+<body>
+<header>
+  <div class="selo">Maratón Nocturno · Espanhol 6º ano · CCF</div>
+  <div class="faixa">🏃 🌙 🏅</div>
+  <h1>📖 Leitura Guiada · Los 9 Kilómetros</h1>
+  <p>Unidad 8 · Los deportes · Prova 05/11 · Livro pp. 114–128 (fotos)</p>
+</header>
+
+<div class="wrap">
+  <nav class="barra-nav" id="nav">
+    <a class="on" href="leitura-guiada.html">📖 Leitura Guiada</a>
+    <a href="quiz.html" data-etapa="quiz">🎯 Quiz</a>
+    <a href="resumo.html" data-etapa="resumo">🗺️ Resumo</a>
+    <a href="simulado.html" data-etapa="simulado">📝 Simulado</a>
+    <a href="index.html">🏠 Início</a>
+  </nav>
+
+  <div class="intro">
+    <h2>🏃 Como funciona a Maratón Nocturno</h2>
+    <p>A Unidade 8 virou uma <b>corrida noturna de 9 quilômetros</b>. Cada <b>KM</b> é um posto de controle com um pedaço do conteúdo. Você só passa para o próximo KM quando conferir o anterior.</p>
+    <ol>
+      <li>Leia o KM com calma. Tudo vem das páginas do seu livro (o número da página está no topo).</li>
+      <li>Toque no 🔊 para ouvir as palavras e frases em espanhol.</li>
+      <li>Faça o <b>completar</b> (caixa azul) para aquecer.</li>
+      <li>Responda as 3 perguntas <b>escrevendo com as suas palavras</b>. Não vale copiar do texto.</li>
+      <li>Clique em <b>Conferir</b>: aparecem a resposta-modelo e uma autoavaliação Sim/Não.</li>
+      <li>Com os 9 KM conferidos e a autoavaliação respondida, o <b>🎯 Quiz destrava</b>.</li>
+    </ol>
+  </div>
+
+  <div class="painel">
+    <span id="salvo">💾 Progresso salvo automaticamente.</span>
+    <div class="btns">
+      <button class="mini" onclick="exportar()">📥 Exportar</button>
+      <button class="mini" onclick="document.getElementById('imp').click()">📤 Importar</button>
+      <input type="file" id="imp" accept="application/json" style="display:none" onchange="importar(event)">
+      <button class="mini" onclick="pedirZerar()">🗑️ Zerar tudo</button>
+    </div>
+  </div>
+
+  <div id="blocos"></div>
+
+  <div class="peg">
+    <h3>⚠️ 10 Pegadinhas da Prova (não tropece nelas!)</h3>
+    <ol>
+      <li><b>Gerúndio de ir</b> é <span class="es">yendo</span> — nem parece com "ir"!</li>
+      <li><b>leer → leyendo</b> e <b>caer → cayendo</b>: os irregulares da tabela aparecem com <b>y</b> (nunca "leiendo").</li>
+      <li><b>Regulares da tabela:</b> andar → <span class="es">andando</span>; correr → <span class="es">corriendo</span>; subir → <span class="es">subiendo</span>.</li>
+      <li><b>"Estar" + gerundio</b> indica ações <b>em curso</b> (acontecendo), não ações já terminadas.</li>
+      <li>Na perífrase, <b>quem muda com a pessoa é o estar</b> (estoy, estamos, están…); o gerúndio fica igual.</li>
+      <li><b>100 sozinho = cien</b>; a partir de 101 é <span class="es">ciento</span> (ciento uno).</li>
+      <li><b>500 = quinientos · 700 = setecientos · 900 = novecientos</b> (as centenas "diferentonas") e <b>1000 = mil</b>.</li>
+      <li><b>Letra z</b>: na escrita, nunca vem antes de <b>e</b> nem de <b>i</b> — só antes de a, o, u (lanza, triangulazo, zumo).</li>
+      <li><b>Entrevistador</b> faz as perguntas; <b>entrevistado</b> responde. A entrevista tem <b>oralidade</b> e pode ser formal ou informal.</li>
+      <li><b>Juego de pelota</b>: era <b>proibido</b> bater na bola com os pés ou com as mãos; e os esportes pré-colombianos tinham <b>várias</b> funções, não só entreter.</li>
+    </ol>
+  </div>
+
+  <div class="cobertura">
+    <h3>🧭 Cobertura: Tópico → KM</h3>
+    <table class="cob">
+      <thead><tr><th>Tópico (Objetivos da unidade, p. 115)</th><th>Páginas</th><th>KM</th></tr></thead>
+      <tbody>
+        <tr><td>Tema da unidade: benefícios dos esportes</td><td>114, 115, 121</td><td>1</td></tr>
+        <tr><td>Hora de leer: los ciberdeportes (entrevista com SaNkHs)</td><td>115–117</td><td>2</td></tr>
+        <tr><td>Estudar o gênero textual entrevista</td><td>116, 117, 124</td><td>3</td></tr>
+        <tr><td>Nome dos esportes; perguntar e informar sobre esportes e acessórios</td><td>121, 126, 127</td><td>4</td></tr>
+        <tr><td>Verbos regulares e irregulares no gerúndio</td><td>122, 127</td><td>5</td></tr>
+        <tr><td>Perífrase verbal "estar" + gerúndio</td><td>121–123, 126</td><td>6</td></tr>
+        <tr><td>Números cardinais do 30 ao 1000</td><td>123</td><td>7</td></tr>
+        <tr><td>Uso da "c", da "s" e da "z"</td><td>120</td><td>8</td></tr>
+        <tr><td>Conecta con Historia + La historia de los deportes</td><td>125, 128</td><td>9</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:.82rem;color:var(--cinza);margin-top:8px">Não vieram nas fotos: a metade de baixo da p. 117 e as pp. 118–119 (vocabulário dos esportes). As atividades de áudio ficaram de fora.</p>
+  </div>
+
+  <div class="revisar" id="revisar" style="display:none">
+    <h3>🔁 Para revisar antes da prova</h3>
+    <ul id="revisar-lista"></ul>
+  </div>
+
+  <div class="relatorio">
+    <h3>📊 Para os pais (resumo desta leitura)</h3>
+    <div id="rel-conteudo">Conforme os KM forem sendo conferidos, o resumo aparece aqui.</div>
+  </div>
+
+  <div class="trilha-fim" id="trilha-fim">
+    <h3>🔒 Próxima etapa: Quiz</h3>
+    <p id="trilha-fim-txt">O Quiz destrava quando os 9 KM estiverem conferidos e a autoavaliação respondida.</p>
+    <a class="btn off" id="btn-prox" href="quiz.html">🎯 Ir para o Quiz</a>
+  </div>
+
+  <div class="rodape">Feito com carinho para o jovem aprendiz. 🏃 ¡Buena carrera y buena prueba!</div>
+</div>
+
+<div class="modal-bg" id="modal">
+  <div class="modal">
+    <p id="modal-txt"></p>
+    <button onclick="fecharModal()" id="modal-ok">Ok</button>
+    <button class="mini" onclick="fecharModal()" id="modal-cancel" style="display:none;margin-left:8px">Cancelar</button>
+  </div>
+</div>
+
+<script>
+/* ====== TRILHA COM CADEADOS (módulo comum do kit) ====== */
+var KIT='maraton_nocturno_esp6';
+var TRILHA=[
+ {id:'leitura', chave:KIT+'_leitura_v1', nome:'Leitura Guiada', arquivo:'leitura-guiada.html', emoji:'📖'},
+ {id:'quiz', chave:KIT+'_quiz_v1', nome:'Quiz', arquivo:'quiz.html', emoji:'🎯'},
+ {id:'resumo', chave:KIT+'_resumo_v1', nome:'Resumo', arquivo:'resumo.html', emoji:'🗺️'},
+ {id:'simulado', chave:KIT+'_simulado_v1', nome:'Simulado', arquivo:'simulado.html', emoji:'📝'}
+];
+function lerJSON(k){ try{ var s=localStorage.getItem(k); return s?JSON.parse(s):null; }catch(e){ return null; } }
+function trilhaLiberada(){ var t=lerJSON(KIT+'_trilha_v1'); return !!(t&&t.liberadoPelosPais); }
+function etapaConcluida(id){ var e=TRILHA.filter(function(t){return t.id===id;})[0]; var d=lerJSON(e.chave); return !!(d&&d.concluido); }
+function podeAbrir(id){ var idx=TRILHA.map(function(t){return t.id;}).indexOf(id); if(idx<=0||trilhaLiberada()) return true; return etapaConcluida(TRILHA[idx-1].id); }
+function marcarNav(){
+  var links=document.querySelectorAll('#nav a[data-etapa]');
+  for(var i=0;i<links.length;i++){ var id=links[i].getAttribute('data-etapa'); if(!podeAbrir(id)){ links[i].classList.add('lock'); links[i].textContent='🔒 '+links[i].textContent.replace('🔒 ',''); links[i].setAttribute('title','Ainda trancado'); } else { links[i].classList.remove('lock'); links[i].textContent=links[i].textContent.replace('🔒 ',''); } }
+}
+
+/* ====== ÁUDIO (voz do navegador · espanhol) ====== */
+function speak(t){ try{ if(!('speechSynthesis' in window)) return; var u=new SpeechSynthesisUtterance(t); u.lang='es-ES'; u.rate=0.82; var vs=speechSynthesis.getVoices(); for(var i=0;i<vs.length;i++){ if(vs[i].lang&&vs[i].lang.toLowerCase().indexOf('es')===0){ u.voice=vs[i]; break; } } speechSynthesis.cancel(); speechSynthesis.speak(u); }catch(e){} }
+try{ if('speechSynthesis' in window){ speechSynthesis.onvoiceschanged=function(){ speechSynthesis.getVoices(); }; } }catch(e){}
+function ligarAudio(raiz){
+  var els=(raiz||document).querySelectorAll('.es');
+  for(var i=0;i<els.length;i++){ (function(el){ if(el.getAttribute('data-som')) return; el.setAttribute('data-som','1'); var b=document.createElement('button'); b.className='som'; b.type='button'; b.title='Ouvir em espanhol'; b.textContent='🔊'; var frase=el.textContent; b.addEventListener('click',function(){ speak(frase); }); el.parentNode.insertBefore(b, el.nextSibling); })(els[i]); }
+}
+/* [[texto]] vira frase em espanhol com áudio */
+function esHTML(s){ return s.replace(/\[\[(.+?)\]\]/g,"<span class='es'>$1</span>"); }
+
+/* ====== OS 9 KM (conteúdo SÓ das fotos do livro: pp. 114–117 e 120–128) ====== */
+var BLOCOS = [
+ {
+  km:"KM 1 · pp. 114, 115 e 121", n:"1",
+  titulo:"¿Cuál es el tema? Os benefícios dos esportes",
+  texto:[
+   "A Unidade 8 se chama [[Los deportes]]. Logo na abertura (p. 114), o livro diz que os esportes trazem uma série de <b>benefícios para o corpo e para a mente</b>: [[Los deportes traen una serie de beneficios para el cuerpo y la mente.]]",
+   "Segundo o livro, as vantagens são muitas. Os esportes:<ul><li>ajudam a melhorar a nossa <b>capacidade física</b>;</li><li>potencializam a <b>memória</b> e a <b>concentração</b>;</li><li>reduzem o risco de algumas <b>doenças</b> — o livro cita [[diabetes, ciertos tipos de cáncer, osteoporosis]];</li><li>aumentam a <b>esperança de vida</b>: [[aumentan la esperanza de vida]].</li></ul>",
+   "Na foto do surfista (p. 115), a legenda completa a ideia: [[Los deportes son fuente de entretenimiento y fomentan valores sociales como la colaboración y el respeto.]] Ou seja: esporte também é <b>diversão</b> e ensina <b>colaboração</b> e <b>respeito</b>.",
+   "No quadro <b>Cuenta conmigo</b> (p. 121), o livro fala da <b>saúde mental</b>: a prática esportiva pode [[mejorar el humor]], [[aumentar la concentración]], [[reducir el estrés y la depresión]] e [[mejorar la autoconfianza]]. E ainda é uma ferramenta importante para o <b>autoconhecimento</b> ([[autoconocimiento]]), que pode influenciar na escolha dos esportes que a pessoa pratica.",
+   "<div class='olhar'><b>Olhar de prova:</b> na abertura, o livro propõe três perguntas para conversar: [[¿Practicas algún deporte?]] · [[¿Prefieres los deportes individuales o en grupo?]] · [[¿Cuáles son las principales reglas o características de tu deporte preferido?]]</div>"
+  ],
+  completar:{cq:"Complete com a palavra do livro (p. 115): “…fomentan valores sociales como la colaboración y el ______.”", resp:["respeto","el respeto"], dica:"é um valor social; em português, “respeito”", fala:"Los deportes son fuente de entretenimiento y fomentan valores sociales como la colaboración y el respeto"},
+  perguntas:[
+   {tag:"conc",q:"Cite três benefícios dos esportes para o CORPO e dois para a MENTE que o livro apresenta.",modelo:"Corpo: melhoram a capacidade física, reduzem o risco de algumas doenças (diabetes, alguns tipos de câncer, osteoporose) e aumentam a esperança de vida. Mente: melhoram a memória e a concentração; melhoram o humor, reduzem o estresse e a depressão, melhoram a autoconfiança.",chk:["Citei pelo menos 3 benefícios para o corpo?","Citei pelo menos 2 benefícios para a mente?"]},
+   {tag:"apl",q:"Um colega diz: “Esporte só serve para ficar forte.” Usando o que o livro diz, responda a ele com DOIS argumentos diferentes: um sobre a mente e um sobre a convivência com as pessoas.",modelo:"Ex.: “Não é só isso! O esporte também ajuda na concentração e no humor e diminui o estresse. E ainda ensina valores como colaboração e respeito.”",chk:["Dei um argumento sobre a mente (memória, concentração, humor, estresse, autoconfiança)?","Dei um argumento sobre valores (colaboração, respeito) ou diversão?"]},
+   {tag:"apl",q:"Responda em português a uma das perguntas da abertura: você prefere esportes individuais ou em grupo? Ligue a sua escolha a um benefício ou valor que o livro cita.",modelo:"Resposta pessoal. Ex.: “Prefiro em grupo, porque assim treino a colaboração e o respeito, que o livro diz que o esporte ensina.”",chk:["Disse qual tipo eu prefiro?","Liguei a escolha a um benefício ou valor citado pelo livro?"]}
+  ]
+ },
+ {
+  km:"KM 2 · pp. 115, 116 e 117", n:"2",
+  titulo:"Hora de leer: los ciberdeportes",
+  texto:[
+   "A seção <b>Hora de leer</b> se chama [[Los ciberdeportes]]. O texto trata de um exemplo de <b>ciberdeporte</b> — que o livro diz ser também chamado de [[e-sport]] ou [[esport]]. Para saber mais, o livro indica um vídeo chamado [[¿Qué son los eSports?]]",
+   "O texto é uma <b>entrevista</b> com o título [[Muchas mujeres juegan bien, pero les da miedo exponerse.]] Ela começa contando que, menos de uma semana antes, aconteceu o torneio <b>GamHer</b>, um evento destinado a todas as fãs do jogo FIFA20: [[evento destinado a todas las fanáticas del FIFA20]].",
+   "A entrevistada é <b>Sandra Martínez</b>, mais conhecida como <b>SaNkHs</b>. O que o texto conta sobre ela:<ul><li>foi uma das <i>coaches</i> das jogadoras que disputaram a <b>grande final entre Espanha e Brasil</b>;</li><li>é <b>espanhola</b>, <i>streamer</i> e <b>jogadora profissional de FIFA</b>, e tem <b>25 anos</b>;</li><li>está ligada a <b>dois clubes</b>: SDHuesca (uma sociedade esportiva) e Falcons (um clube de esportes eletrônicos);</li><li>junto com LaurixGames, são as <b>únicas</b> FIFA <i>players</i> profissionais na Espanha.</li></ul>",
+   "As ideias dela:<ul><li>sobre as mulheres ganhando espaço nos esports, ela acha <b>lógico</b> — com a presença cada vez mais forte de mulheres, a prática deixa de ser identificada com um gênero: [[Me parece algo lógico que tenía que acabar pasando.]]</li><li>a mensagem final é um <b>incentivo às meninas</b>: que não tenham medo do que possam dizer, que confiem nelas mesmas e que podem chegar aonde quiserem: [[que confíen en ellas mismas]].</li></ul>",
+   "<div class='olhar'><b>Olhar de prova:</b> no livro, o texto tem lacunas para encaixar duas partes destacadas. A pergunta [[¿Qué te parece que las mujeres comiencen a tener terreno en el mundo de los esports?]] vem antes da resposta “Me parece algo lógico…”; e a frase [[Y para todas las niñas que han llegado hasta aquí, Sandra quiso dejarles un mensaje:]] vem antes da mensagem “Pues desde aquí quería animar a todas las chicas…”.</div>"
+  ],
+  completar:{cq:"Complete: “Sandra Martínez, más conocida como ______.”", resp:["sankhs"], dica:"é o apelido dela (com letras maiúsculas e minúsculas misturadas)", fala:"Sandra Martínez, más conocida como SaNkHs"},
+  perguntas:[
+   {tag:"conc",q:"Sobre o que trata a entrevista? (É a pergunta 4 do livro — responda com as suas palavras, em poucas linhas.)",modelo:"Trata de SaNkHs (Sandra Martínez), jogadora profissional de FIFA, e da participação das mulheres nos esports: fala do torneio GamHer, ela diz que é lógico as mulheres ganharem espaço e deixa uma mensagem de coragem para as meninas.",chk:["Disse quem é a entrevistada (jogadora/streamer de FIFA)?","Falei do tema: as mulheres nos esports (ciberdeportes)?"]},
+   {tag:"apl",q:"Monte uma “ficha” da entrevistada com os dados pessoais (é a pergunta 5 do livro): nome, apelido, nacionalidade, idade, profissão e clubes.",modelo:"Nome: Sandra Martínez · apelido: SaNkHs · espanhola · 25 anos · streamer e jogadora profissional de FIFA · clubes: SDHuesca e Falcons.",chk:["Coloquei nome e apelido?","Coloquei nacionalidade e idade?","Coloquei a profissão e os dois clubes?"]},
+   {tag:"apl",q:"Imagine que uma amiga sua tem vergonha de jogar no time da escola. Escreva o que você diria a ela usando a ideia da mensagem de SaNkHs.",modelo:"Ex.: “Não tenha medo do que vão dizer! Confie em você: você pode chegar aonde quiser.” (é a ideia da mensagem: não ter medo, confiar em si mesma, poder chegar aonde se propõe).",chk:["Falei de não ter medo do que os outros vão dizer?","Falei de confiar em si mesma / poder chegar aonde quiser?"]}
+  ]
+ },
+ {
+  km:"KM 3 · pp. 116, 117 e 124", n:"3",
+  titulo:"La entrevista: o gênero textual",
+  texto:[
+   "No quadro <b>Fíjate en el género</b> (p. 124), o livro define: [[La entrevista es un género textual producido a partir de la interacción entre dos o más personas que asumen los papeles de entrevistador y entrevistado.]]",
+   "Os dois papéis:<ul><li>o [[entrevistador]] é o responsável por <b>fazer as perguntas</b>;</li><li>o [[entrevistado]] é <b>quem responde</b>.</li></ul>A entrevista é um texto caracterizado pela <b>oralidade</b> ([[oralidad]]) e, dependendo do contexto, pode ser <b>formal ou informal</b>.",
+   "Para produzir uma entrevista (seção <b>Hora de escribir</b>), o livro orienta a fazer um <b>guion</b> (roteiro): decidir <b>a quem</b> entrevistar; pensar em <b>que informações</b> do entrevistado você quer conhecer; formular as perguntas de modo [[claro, objetivo y respetuoso]]; fazer o roteiro no caderno e mostrar ao professor; revisar; entrevistar a pessoa e, se possível, gravar.",
+   "Depois da entrevista, o livro manda reorganizar o texto: escolher um <b>título</b>; escrever uma pequena <b>introdução</b> para o leitor, contextualizando o <b>objetivo</b> da entrevista e o <b>perfil do entrevistado</b>; redigir as <b>perguntas</b> e transcrever as <b>respostas</b>; e compartilhar com os colegas.",
+   "<div class='olhar'><b>Olhar de prova:</b> a entrevista com SaNkHs tem exatamente essas partes — <b>título</b>, <b>introdução</b> (o torneio GamHer e quem é a entrevistada) e depois <b>perguntas e respostas</b> (as respostas dela aparecem entre aspas).</div>"
+  ],
+  completar:{cq:"Complete (p. 124): “El ______ es el responsable por realizar las preguntas.”", resp:["entrevistador"], dica:"é quem pergunta (não é o entrevistado)", fala:"El entrevistador es el responsable por realizar las preguntas"},
+  perguntas:[
+   {tag:"conc",q:"Qual é a diferença entre entrevistador e entrevistado? E do que depende a entrevista ser formal ou informal?",modelo:"O entrevistador faz as perguntas; o entrevistado responde. Ser formal ou informal depende do contexto.",chk:["Disse que o entrevistador pergunta e o entrevistado responde?","Disse que formal/informal depende do contexto?"]},
+   {tag:"apl",q:"Você vai entrevistar alguém da sua família sobre esporte. Escreva DUAS perguntas para o seu roteiro, em espanhol, claras e respeitosas. Dica: as perguntas da Hora de hablar (p. 121) servem de modelo.",modelo:"Ex.: ¿Qué deportes practicas? / ¿Qué accesorios deportivos usas? — ou outras perguntas claras e educadas sobre esporte.",chk:["Escrevi duas perguntas sobre esporte?","As perguntas são claras e respeitosas?"]},
+   {tag:"apl",q:"Na entrevista com SaNkHs, diga com as suas palavras: (a) qual é a função da introdução; (b) sobre o que é a pergunta que o entrevistador faz antes da resposta “Me parece algo lógico…”.",modelo:"(a) A introdução apresenta o contexto (o torneio GamHer) e o perfil da entrevistada. (b) Ele pergunta o que ela acha de as mulheres começarem a ganhar espaço no mundo dos esports.",chk:["Disse que a introdução apresenta o contexto e/ou o perfil da entrevistada?","Disse que a pergunta é sobre as mulheres ganhando espaço nos esports?"]}
+  ]
+ },
+ {
+  km:"KM 4 · pp. 121, 126 e 127", n:"4",
+  titulo:"Hora de hablar: preguntar e informar sobre los deportes",
+  texto:[
+   "A seção <b>Hora de hablar</b> se chama [[Preguntar e informar sobre los deportes.]] Na foto de uma moça correndo, aparece a pergunta [[¿Qué deportes practicas?]] — que serve para <b>perguntar</b> que esportes a pessoa pratica. A resposta <b>informa</b>: [[Practico corrida.]] [[Siempre estoy corriendo de los problemas.]]",
+   "Para conversar em dupla, o livro propõe: [[¿Qué deportes practican las personas con quienes vives?]] e [[¿Qué deportes practicas y qué accesorios deportivos usas?]]",
+   "Na atividade 3, o livro separa as expressões em duas funções:",
+   "<table class='quadro'><tr><th>a) Informar os esportes que uma pessoa pratica</th><th>b) Falar sobre os acessórios esportivos</th></tr><tr><td>[[Practico natación.]]<br>[[Practica baloncesto.]]<br>[[Practican surf.]]</td><td>[[Juego con la pelota.]]<br>[[Surfeo con la tabla.]]<br>[[Ando con la bici.]]</td></tr></table>",
+   "Repare: para <b>informar o esporte</b>, aparece [[practicar]] + o nome do esporte. Para <b>falar do acessório</b>, aparece um verbo de ação + [[con]] + o objeto: [[con la pelota]], [[con la tabla]], [[con la bici]].",
+   "Esportes que aparecem nestas páginas: [[corrida]], [[senderismo]], [[natación]], [[baloncesto]], [[surf]], [[escalada deportiva]], [[balonmano]], [[karate]] (mapa da Síntesis, p. 127) e os [[ciberdeportes]]. Objetos e lugares que aparecem: [[la pelota]], [[la tabla]], [[la bici]], [[una raqueta]], [[la red]], [[la cesta]], [[la portería]], [[la pista]], [[la cancha]]. <i>(A lista completa do vocabulário — pp. 118 e 119 — não veio nas fotos.)</i>",
+   "<div class='olhar'><b>Olhar de prova:</b> “Practico natación” <b>informa o esporte</b>; “Juego con la pelota” <b>fala do acessório</b> (a pelota). Não confunda as duas funções.</div>"
+  ],
+  completar:{cq:"Complete a pergunta da p. 121: “¿Qué deportes ______?”", resp:["practicas"], dica:"verbo practicar, falando com “tú”", fala:"¿Qué deportes practicas?"},
+  perguntas:[
+   {tag:"conc",q:"Para que serve a pergunta “¿Qué deportes practicas?”? E qual é a diferença de função entre “Practico natación” e “Juego con la pelota”?",modelo:"É a pergunta para saber qual esporte a outra pessoa faz. A primeira frase conta o esporte que alguém faz; a segunda fala do objeto usado no jogo (a pelota).",chk:["Disse que a pergunta serve para saber que esporte a pessoa pratica?","Diferenciei informar o esporte × falar do acessório?"]},
+   {tag:"apl",q:"Classifique em (a) informa o esporte ou (b) fala do acessório: 1) “Practican surf.” 2) “Ando con la bici.” 3) “Practica baloncesto.” 4) “Surfeo con la tabla.”",modelo:"1) a · 2) b · 3) a · 4) b.",chk:["Marquei 1 e 3 como (a)?","Marquei 2 e 4 como (b)?"]},
+   {tag:"apl",q:"Responda em espanhol, imitando o modelo do livro: (1) que esporte você pratica ou gostaria de praticar — use “Practico…” com um esporte da lista; (2) uma frase sobre um acessório — imite “Juego con la pelota.”",modelo:"Ex.: Practico natación. / Ando con la bici. (ou: Practico karate. / Juego con la pelota.)",chk:["Usei “Practico” + nome de um esporte?","Usei verbo + “con” + um acessório?"]}
+  ]
+ },
+ {
+  km:"KM 5 · pp. 122 e 127", n:"5",
+  titulo:"Gerundio: verbos regulares e irregulares",
+  texto:[
+   "No <b>Cajón de lengua</b> (p. 122), o livro apresenta o <b>gerundio</b> com esta frase: [[Practican senderismo. Están andando por los senderos y subiendo la montaña.]] As palavras em negrito no livro — <b>andando</b> e <b>subiendo</b> — são gerúndios.",
+   "Tabela dos <b>verbos regulares</b> (completa, como no mapa da Síntesis, p. 127):",
+   "<table class='quadro'><tr><th>Andar</th><th>Correr</th><th>Subir</th></tr><tr><td>[[andando]]</td><td>[[corriendo]]</td><td>[[subiendo]]</td></tr></table>",
+   "Tabela dos <b>verbos irregulares</b>:",
+   "<table class='quadro'><tr><th>Caer</th><th>Leer</th><th>Ir</th></tr><tr><td>[[cayendo]]</td><td>[[leyendo]]</td><td>[[yendo]]</td></tr></table>",
+   "Repare que nos três irregulares da tabela aparece a letra <b>y</b>: ca<b>y</b>endo, le<b>y</b>endo, <b>y</b>endo.",
+   "Na atividade 2 (p. 122), os gerúndios aparecem em frases. Veja algumas já completas: [[Siempre las veo corriendo en el parque.]] · [[Esta pista está cerrada por reparaciones. Los deportistas se estaban cayendo mucho.]] · [[Voy a seguir subiendo en dirección a la cumbre de la montaña.]]",
+   "<div class='olhar'><b>Olhar de prova:</b> o gerúndio de <b>ir</b> é [[yendo]] — a palavra nem parece com “ir”! E <b>leer</b> vira [[leyendo]], com y.</div>"
+  ],
+  completar:{cq:"Complete com o gerúndio de leer (p. 122): “El juez empezó el torneo ______ a todos las reglas del juego.”", resp:["leyendo"], dica:"é irregular e tem y", fala:"El juez empezó el torneo leyendo a todos las reglas del juego"},
+  perguntas:[
+   {tag:"conc",q:"Na tabela dos regulares, andar virou andando; correr e subir viraram corriendo e subiendo. Que final ganhou o verbo terminado em -ar? E os terminados em -er e -ir?",modelo:"O verbo em -ar (andar) ganhou -ando; os verbos em -er e -ir (correr, subir) ganharam -iendo.",chk:["Disse -ando para andar?","Disse -iendo para correr e subir?"]},
+   {tag:"apl",q:"Complete com o gerúndio (atividade 2 da p. 122): (a) “Estamos ___ y ___ con el apoyo de un entrenador.” (andar / correr) (b) “Llevo varios años ___ a las olimpíadas de invierno.” (ir)",modelo:"(a) Estamos andando y corriendo con el apoyo de un entrenador. (b) Llevo varios años yendo a las olimpíadas de invierno.",chk:["Escrevi andando e corriendo?","Escrevi yendo?"]},
+   {tag:"apl",q:"Um colega escreveu “leiendo” e “iendo”. Corrija as duas palavras e explique o que elas têm em comum, segundo a tabela dos irregulares.",modelo:"O certo é “leyendo” (de leer) e “yendo” (de ir). Os dois são gerúndios irregulares e aparecem com a letra y.",chk:["Escrevi leyendo e yendo?","Disse que são irregulares / aparecem com y?"]}
+  ]
+ },
+ {
+  km:"KM 6 · pp. 121, 122, 123 e 126", n:"6",
+  titulo:"Perífrasis verbal “estar” + gerundio",
+  texto:[
+   "Quando juntamos o verbo <b>estar</b> com um <b>gerúndio</b>, formamos a <b>perífrase verbal “estar” + gerundio</b>. O livro usa dois exemplos: [[Están andando por los senderos y subiendo la montaña.]] e [[Siempre estoy corriendo de los problemas.]]",
+   "Na atividade 3 (p. 122), o livro pergunta para que serve essa perífrase, com duas opções: ações que <b>já estão terminadas</b> ou ações que <b>estão em curso</b>. A certa é: indica <b>ações que estão em curso</b> (acontecendo). Tanto que a atividade 4 (p. 123) mostra fotos e pergunta [[¿Qué están haciendo?]]",
+   "Formas de <b>estar</b> que aparecem nestas páginas:",
+   "<table class='quadro'><tr><th>Pessoa</th><th>Exemplo do livro</th></tr><tr><td>yo</td><td>[[Siempre estoy corriendo de los problemas.]]</td></tr><tr><td>uma pessoa (ele/ela)</td><td>[[Está andando 30 kilómetros los fines de semana.]]</td></tr><tr><td>nosotros / nosotras</td><td>[[Estamos leyendo los resultados del torneo.]]</td></tr><tr><td>ellos / ellas</td><td>[[Están andando por los senderos.]]</td></tr></table>",
+   "Na atividade 5 (p. 123), o livro pede para reescrever trocando a pessoa. Dois exemplos: [[Estoy yendo al juego.]] → (nosotras) [[Estamos yendo al juego.]] · [[Estamos leyendo los resultados del torneo.]] → (ellos) [[Están leyendo los resultados del torneo.]] Repare: <b>só o estar muda</b>; o gerúndio continua igual. <i>(A forma de “vosotros”, do item d, não aparece nas fotos — confira no caderno.)</i>",
+   "<div class='olhar'><b>Olhar de prova:</b> na entrevista com SaNkHs também há gerúndios: [[acabar pasando]] e [[que me estén leyendo]] — e “estén leyendo” é uma perífrase “estar” + gerundio (é a atividade 5 do <i>Ahora ya lo sé</i>, p. 126).</div>"
+  ],
+  completar:{cq:"Complete com a forma de estar (p. 121): “Practico corrida. Siempre ______ corriendo de los problemas.”", resp:["estoy"], dica:"quem fala é “yo”", fala:"Practico corrida. Siempre estoy corriendo de los problemas"},
+  perguntas:[
+   {tag:"conc",q:"Para que serve a perífrase “estar” + gerundio, segundo a atividade 3 da p. 122? Crie um exemplo SEU (pode ser em espanhol, com um gerúndio da tabela).",modelo:"Indica ações que estão em curso (acontecendo). Ex.: Estoy leyendo. / Estamos corriendo.",chk:["Disse que indica ações em curso / acontecendo?","Dei um exemplo com estar + gerúndio?"]},
+   {tag:"apl",q:"Reescreva trocando a pessoa: (a) “Estoy leyendo las reglas del juego.” (ellos) (b) “Están subiendo la montaña.” (yo)",modelo:"(a) Están leyendo las reglas del juego. (b) Estoy subiendo la montaña.",chk:["Em (a) troquei estoy por están e mantive leyendo?","Em (b) troquei están por estoy e mantive subiendo?"]},
+   {tag:"apl",q:"Na atividade 4 (p. 123), a foto (b) mostra crianças correndo numa pista de atletismo. Escreva em espanhol o que elas estão fazendo, usando estar + gerundio. Depois escreva uma frase dizendo o que VOCÊ está fazendo agora.",modelo:"(b) Están corriendo en la pista. — Frase sua, ex.: Estoy leyendo.",chk:["Usei están + corriendo para as crianças?","Na minha frase usei estoy + gerúndio?"]}
+  ]
+ },
+ {
+  km:"KM 7 · p. 123", n:"7",
+  titulo:"Números cardinales del 30 al 1000",
+  texto:[
+   "No quadro <b>Fíjate en la lengua</b> (p. 123), o livro parte da frase [[Está andando 30 kilómetros los fines de semana.]] e mostra como se escreve esse número: [[treinta]]. Depois traz a tabela do 30 ao 1000:",
+   "<table class='quadro'><tr><th>Dezenas</th><th>Centenas</th></tr><tr><td>30 – [[treinta]]<br>31 – [[treinta y uno]]<br>32 – [[treinta y dos]]<br>40 – [[cuarenta]]<br>50 – [[cincuenta]]<br>60 – [[sesenta]]<br>70 – [[setenta]]<br>80 – [[ochenta]]<br>90 – [[noventa]]<br>100 – [[cien]]</td><td>101 – [[ciento uno]]<br>200 – [[doscientos]]<br>300 – [[trescientos]]<br>400 – [[cuatrocientos]]<br>500 – [[quinientos]]<br>600 – [[seiscientos]]<br>700 – [[setecientos]]<br>800 – [[ochocientos]]<br>900 – [[novecientos]]<br>1000 – [[mil]]</td></tr></table>",
+   "Padrões que dá para ver na tabela:<ul><li>entre a dezena e a unidade entra <b>y</b>: [[treinta y uno]], [[treinta y dos]]. Do mesmo jeito: 41 = [[cuarenta y uno]] e 92 = [[noventa y dos]];</li><li><b>100 sozinho</b> é [[cien]]; mas o <b>101</b> já é [[ciento uno]]. Do mesmo jeito: 130 = [[ciento treinta]];</li><li>as centenas terminam em <b>-cientos</b> (doscientos, trescientos…), com três “diferentonas”: [[quinientos]] (500), [[setecientos]] (700) e [[novecientos]] (900).</li></ul>",
+   "<div class='olhar'><b>Olhar de prova:</b> 500 é <b>quinientos</b>; 700 é <b>setecientos</b>; 900 é <b>novecientos</b>; 1000 é só <b>mil</b>. E “cien” é só para o 100 exato.</div>"
+  ],
+  completar:{cq:"Escreva por extenso, como na tabela: 50 = ______", resp:["cincuenta"], dica:"começa com “cin…”", fala:"cincuenta"},
+  perguntas:[
+   {tag:"conc",q:"Explique a diferença entre “cien” e “ciento” usando a tabela do livro.",modelo:"“Cien” é o 100 sozinho. Quando vem outro número depois (101, 130…), usa-se “ciento”: ciento uno.",chk:["Disse que cien é o 100 sozinho?","Disse que com número depois vira ciento (ex.: ciento uno)?"]},
+   {tag:"apl",q:"Escreva por extenso seguindo os padrões da tabela: 42, 71, 230 e 532.",modelo:"42 = cuarenta y dos · 71 = setenta y uno · 230 = doscientos treinta · 532 = quinientos treinta y dos.",chk:["Usei “y” entre dezena e unidade (cuarenta y dos, setenta y uno)?","Escrevi doscientos treinta e quinientos treinta y dos?"]},
+   {tag:"apl",q:"Um colega escreveu “cincocientos”, “sietecientos” e “nuevecientos”. Corrija e explique qual é a pegadinha.",modelo:"O certo é quinientos (500), setecientos (700) e novecientos (900). São as centenas “diferentonas”, que não seguem o jeito das outras.",chk:["Escrevi quinientos, setecientos e novecientos?","Expliquei que essas centenas mudam de forma?"]}
+  ]
+ },
+ {
+  km:"KM 8 · p. 120", n:"8",
+  titulo:"El uso de la “c”, la “s” o la “z”",
+  texto:[
+   "Na <b>Hora de escuchar</b> (p. 120), o quadro [[El uso de la c, la s o la z]] mostra características da pronúncia dessas consoantes em espanhol.",
+   "<b>Letra C</b>:<ul><li>antes de <b>a, o, u</b>, representa o <b>mesmo fonema que em português</b> antes dessas vogais. Exemplos do livro: [[casa]], [[colegio]], [[cuadro]];</li><li>antes de <b>e, i</b>, há <b>duas pronúncias possíveis</b>: em grande parte da <b>Espanha</b>, a língua fica <b>entre os dentes</b>; na maioria da <b>Hispano-América</b>, com o mesmo som da letra <b>s</b>. Exemplos: [[avance]], [[formación]].</li></ul>",
+   "<b>Letra S</b>: pronuncia-se fazendo vibrar a língua na parte da frente do céu da boca (o “paladar”). Exemplo do livro: [[uso]].",
+   "<b>Letra Z</b>: tem <b>as mesmas duas pronúncias</b> que a c antes de e e de i; mas, <b>na escrita, nunca vem antes de e nem de i</b> — só antes de <b>a, o, u</b>. Exemplos: [[lanza]], [[triangulazo]], [[zumo]].",
+   "Na atividade 3, o livro destaca letras em [[realizar]], [[casa]] e [[social]] para você anotar no caderno a diferença de pronúncia entre o espanhol e o português.",
+   "<div class='olhar'><b>Olhar de prova:</b> z + e e z + i não aparecem na escrita, segundo a regra do livro. O z só vem antes de a, o, u.</div>"
+  ],
+  completar:{cq:"Complete a regra: na escrita, a letra z só vem antes de a, o e ___.", resp:["u"], dica:"é uma vogal", fala:"lanza, triangulazo, zumo"},
+  perguntas:[
+   {tag:"conc",q:"Segundo o livro, quais são as duas pronúncias possíveis da letra c antes de e e de i? Onde se usa cada uma?",modelo:"Em boa parte da Espanha, fala-se com a ponta da língua encostada nos dentes; em quase toda a Hispano-América, soa igual ao s. Ex.: formación.",chk:["Falei da língua entre os dentes (Espanha)?","Falei do som de s (Hispano-América)?"]},
+   {tag:"apl",q:"Use a regra do livro para analisar três palavras: “cuadro”, “formación” e “zumo”. Em qual a letra c tem o mesmo som do português? Em quais a letra pode ter duas pronúncias? Explique.",modelo:"cuadro: c antes de u → mesmo som do português. formación: c antes de i → duas pronúncias (entre os dentes na Espanha; som de s na maior parte da Hispano-América). zumo: o z tem essas mesmas duas pronúncias.",chk:["Disse que em cuadro o c soa como em português?","Disse que formación e zumo podem ter as duas pronúncias?"]},
+   {tag:"apl",q:"Um colega disse: “Em espanhol posso escrever ze e zi à vontade.” Ele está certo? Explique com a regra do livro e dê um exemplo correto de palavra com z.",modelo:"Não está certo. O livro ensina que, escrito, o z não fica na frente de e ou de i; ele aparece com a, o, u, como em zumo.",chk:["Disse que ele está errado (z não vai antes de e/i)?","Dei um exemplo com za, zo ou zu?"]}
+  ]
+ },
+ {
+  km:"KM 9 · pp. 125 e 128", n:"9",
+  titulo:"Pueblos indígenas y la historia de los deportes",
+  texto:[
+   "No <b>Conecta con Historia</b> (p. 125), o livro conta que os povos originários da América tiveram uma <b>relação intensa com os esportes</b>: muitos jogos faziam parte da vida cotidiana, simbólica e ritual dessas civilizações. E hoje os povos indígenas também têm seus esportes; em <b>2015</b> aconteceram <b>no Brasil</b> os primeiros [[Juegos Mundiales de los Pueblos Indígenas]], com tribos da América Latina e representantes de etnias de outros países.",
+   "No texto [[El deporte y los juegos en la América precolombina]], os esportes tinham <b>várias funções</b>: [[el entretenimiento]], [[la competencia]], a formação de alianças entre comunidades, a resolução de conflitos, o desenvolvimento de habilidades físicas e mentais e o treino para a guerra.",
+   "Um dos mais conhecidos é o [[juego de pelota]] mesoamericano, também chamado [[tlachtli]] em náhuatl ou [[pok-ta-pok]] em maya. <ul><li>Surgiu há <b>mais de 3700 anos</b>, na <b>costa do golfo do México</b>, e virou um dos pilares das comunidades urbanas mesoamericanas.</li><li>Consistia em <b>bater numa bola de borracha sólida</b> ([[una pelota de caucho sólido]]) com diferentes partes do corpo, para passá-la por um <b>anel de pedra</b> ([[un anillo de piedra]]) colocado no alto da quadra ([[la cancha]]).</li><li>Era <b>proibido</b> bater na bola com <b>os pés</b> ou com <b>as mãos</b>.</li></ul>",
+   "Na última página (p. 128), [[La historia de los deportes]]: estima-se que a origem dos esportes vem do <b>período paleolítico</b>, quando a prática estava ligada à <b>sobrevivência</b> ([[supervivencia]]). Com o passar dos anos, a <b>função</b> e as características dessas atividades <b>evoluíram e mudaram</b>.",
+   "<div class='olhar'><b>Olhar de prova (V ou F da p. 125):</b> “os esportes tinham SOMENTE a função de entreter” → <b>F</b>; “o juego de pelota surgiu onde hoje está o México” → <b>V</b>; “podia-se usar os pés e as mãos” → <b>F</b>.</div>"
+  ],
+  completar:{cq:"Complete: o juego de pelota se chama tlachtli em náhuatl e ______ em maya.", resp:["pok-ta-pok","pok ta pok","poktapok"], dica:"tem hifens: p…-t…-p…", fala:"juego de pelota, tlachtli, pok-ta-pok"},
+  perguntas:[
+   {tag:"conc",q:"Cite quatro funções que os esportes tinham na América pré-colombiana, segundo o texto da p. 125.",modelo:"Entretenimento, competição, formar alianças entre comunidades, resolver conflitos, desenvolver habilidades físicas e mentais e treinar para a guerra (bastam quatro).",chk:["Citei pelo menos quatro funções?","Lembrei que não era só entretenimento?"]},
+   {tag:"apl",q:"Um colega resumiu o juego de pelota assim: “Era um jogo de chutar a bola para dentro de um anel de madeira, inventado no Brasil.” Encontre e corrija os erros dele.",modelo:"Não se podia chutar (era proibido usar os pés e as mãos — batia-se com outras partes do corpo); o anel era de pedra; e surgiu na costa do golfo do México, não no Brasil.",chk:["Corrigi que pés e mãos eram proibidos?","Corrigi o anel (de pedra) e o lugar (golfo do México)?"]},
+   {tag:"apl",q:"Compare a função do esporte no Paleolítico (p. 128) com um benefício do esporte hoje, citado na abertura da unidade (p. 114).",modelo:"No Paleolítico, a prática estava ligada à sobrevivência. Hoje o livro destaca benefícios como melhorar a capacidade física, a memória e a concentração e aumentar a esperança de vida. A função mudou com o tempo.",chk:["Disse que no Paleolítico era ligada à sobrevivência?","Citei um benefício de hoje da p. 114?"]}
+  ]
+ }
+];
+
+/* ====== ESTADO E PERSISTÊNCIA ====== */
+var CHAVE=KIT+'_leitura_v1';
+var mem={};
+var estado=carregar();
+
+function carregar(){
+  try{ var s=localStorage.getItem(CHAVE); if(s) return JSON.parse(s); }catch(e){ if(mem[CHAVE]) return JSON.parse(mem[CHAVE]); }
+  return {blocos:{}};
+}
+function calcProgresso(){
+  var conf=0, chkPend=0, comp=0;
+  BLOCOS.forEach(function(bloco,i){
+    var b=estado.blocos[i]; if(!b) return;
+    if(b.completar&&b.completar.ok) comp++;
+    if(!b.conferido) return; conf++;
+    bloco.perguntas.forEach(function(p,j){ var ep=(b.perguntas&&b.perguntas[j])||{chk:{}}; p.chk.forEach(function(pt,k){ if(!ep.chk||!ep.chk[k]) chkPend++; }); });
+  });
+  estado.progresso={conferidos:conf,total:BLOCOS.length,chkPendentes:chkPend,completarOk:comp};
+  if(conf===BLOCOS.length && chkPend===0){ if(!estado.concluido){ estado.concluido=true; estado.concluidoEm=new Date().toISOString(); } }
+  return estado.progresso;
+}
+function salvar(){
+  calcProgresso();
+  var s=JSON.stringify(estado);
+  try{ localStorage.setItem(CHAVE,s); }catch(e){ mem[CHAVE]=s; }
+  var d=new Date();
+  document.getElementById('salvo').textContent='💾 Salvo às '+d.toLocaleTimeString('pt-BR')+' de '+d.toLocaleDateString('pt-BR');
+  atualizarTrilhaFim();
+}
+function atualizarTrilhaFim(){
+  var p=estado.progresso||calcProgresso();
+  var box=document.getElementById('trilha-fim'), txt=document.getElementById('trilha-fim-txt'), btn=document.getElementById('btn-prox');
+  var h3=box.querySelector('h3');
+  if(estado.concluido||trilhaLiberada()){
+    h3.textContent='✅ Leitura concluída — Quiz destravado!';
+    txt.textContent=estado.concluido?'Você correu os 9 KM e respondeu a autoavaliação. Agora encare o Sprint!':'Trilha liberada pelos pais.';
+    btn.classList.remove('off');
+  } else {
+    h3.textContent='🔒 Próxima etapa: Quiz';
+    var faltam=p.total-p.conferidos;
+    txt.textContent=faltam>0 ? 'Destrava quando você concluir os '+p.total+' KM da Leitura Guiada (faltam '+faltam+').' : 'Falta responder a autoavaliação Sim/Não de '+p.chkPendentes+' ponto(s) para destravar.';
+    btn.classList.add('off');
+  }
+  marcarNav();
+}
+function estBloco(i){ if(!estado.blocos[i]) estado.blocos[i]={aberto:i===0,conferido:false,perguntas:{}}; return estado.blocos[i]; }
+function estPerg(i,j){ var b=estBloco(i); if(!b.perguntas[j]) b.perguntas[j]={resp:'',warned:false,red:false,tentou:'',chk:{}}; return b.perguntas[j]; }
+
+/* ====== ANTICÓPIA (motor validado — Português 7º, 08/10/2026; mesmo do kit de Inglês 6º, 24/10) ====== */
+function normPal(s){
+  return (s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/<[^>]*>/g,' ').replace(/[^a-z0-9\s]/g,' ').replace(/\s+/g,' ').trim().split(' ').filter(Boolean);
+}
+function maiorRun(aw,bw){
+  var bStr=' '+bw.join(' ')+' ', best=0;
+  for(var i=0;i<aw.length;i++){
+    for(var len=aw.length-i; len>0; len--){
+      var sub=aw.slice(i,i+len).join(' ');
+      if(bStr.indexOf(' '+sub+' ')>=0){ if(len>best)best=len; break; }
+    }
+  }
+  return best;
+}
+function cobertoPorRuns(aw,bw,minRun){
+  var bStr=' '+bw.join(' ')+' ', cov=new Array(aw.length).fill(false);
+  for(var i=0;i<aw.length;i++){
+    for(var len=aw.length-i; len>=minRun; len--){
+      var sub=aw.slice(i,i+len).join(' ');
+      if(bStr.indexOf(' '+sub+' ')>=0){ for(var k=i;k<i+len;k++)cov[k]=true; break; }
+    }
+  }
+  return cov.filter(Boolean).length;
+}
+function ehCopia(resp, textoBloco, pergunta){
+  var a=normPal(resp), src=normPal(textoBloco), q=normPal(pergunta);
+  if(a.length<5) return false;
+  var qStr=' '+q.join(' ')+' ', keep=new Array(a.length).fill(true);
+  for(var i=0;i<a.length;i++){
+    for(var len=a.length-i; len>=4; len--){
+      var sub=a.slice(i,i+len).join(' ');
+      if(qStr.indexOf(' '+sub+' ')>=0){ for(var k=i;k<i+len;k++)keep[k]=false; break; }
+    }
+  }
+  var af=a.filter(function(w,idx){return keep[idx];});
+  if(af.length<5) return false;
+  var run=maiorRun(af,src);
+  var cov=cobertoPorRuns(af,src,5);
+  var ratio=cov/af.length;
+  return run>=8 || ratio>0.6;
+}
+
+/* ====== COMPLETAR (aquecimento — não trava a trilha) ====== */
+function normC(s){ return (s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[-]/g,' ').replace(/[^a-z0-9ñ\s]/g,'').replace(/\s+/g,' ').trim(); }
+function checarCompletar(i){
+  var b=estBloco(i), c=BLOCOS[i].completar, inp=document.getElementById('cp'+i), fb=document.getElementById('cpfb'+i);
+  var v=inp.value; var ok=c.resp.some(function(r){ return normC(r)===normC(v); });
+  b.completar={resp:v, ok:ok, tentativas:((b.completar&&b.completar.tentativas)||0)+1};
+  if(ok){ fb.className='fb ok'; fb.innerHTML='✅ Isso! Ouça a frase: <span class="es">'+c.fala+'</span>'; ligarAudio(fb); }
+  else { fb.className='fb no'; fb.innerHTML='❌ Ainda não. Dica: '+c.dica+'.'; }
+  salvar(); atualizarRelatorio();
+}
+
+/* ====== RENDER ====== */
+function textoPlano(bloco){ return bloco.texto.join(' ').replace(/\[\[|\]\]/g,' '); }
+function irBloco(i){ var el=document.getElementById('bloco'+i); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); }
+function escA(s){ return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+
+function render(){
+  var cont=document.getElementById('blocos'); cont.innerHTML='';
+  BLOCOS.forEach(function(bloco,i){
+    var b=estBloco(i);
+    var div=document.createElement('div'); div.className='bloco'+(b.aberto?'':' travado'); div.id='bloco'+i;
+    var html='<div class="bloco-cab"><div class="dorsal"><small>KM</small><b>'+bloco.n+'</b></div><div><div class="km">'+bloco.km+'</div><h3>'+bloco.titulo+'</h3></div></div>';
+    if(!b.aberto){
+      html+='<div class="cadeado">🔒 Este KM abre quando você conferir o KM anterior.</div>';
+      div.innerHTML=html; cont.appendChild(div); return;
+    }
+    html+='<div class="bloco-corpo"><div class="texto">';
+    bloco.texto.forEach(function(p){ var t=esHTML(p); html+= (t.indexOf('<div')===0 || t.indexOf('<ul')===0 || t.indexOf('<table')===0 ? t : '<p>'+t+'</p>'); });
+    html+='</div>';
+    var cp=b.completar||{};
+    html+='<div class="completar"><div class="cq">🔥 Aquecimento: '+bloco.completar.cq+'</div><input id="cp'+i+'" value="'+escA(cp.resp)+'" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="sua resposta"><button class="ck" onclick="checarCompletar('+i+')">Checar</button><div class="fb" id="cpfb'+i+'"></div></div>';
+    bloco.perguntas.forEach(function(p,j){
+      var ep=estPerg(i,j);
+      var tagTxt=p.tag==='conc'?'Conceito':'Aplicação';
+      html+='<div class="perg'+(ep.red?' red':'')+'" id="perg'+i+'_'+j+'">';
+      html+='<span class="tag '+p.tag+'">'+tagTxt+'</span>';
+      html+='<label for="ta'+i+'_'+j+'">'+(j+1)+'. '+p.q+'</label>';
+      html+='<textarea id="ta'+i+'_'+j+'" oninput="digitou('+i+','+j+')"></textarea>';
+      html+='<div class="aviso" id="av'+i+'_'+j+'"></div>';
+      html+='<div class="modelo" id="mod'+i+'_'+j+'"><span class="lab">Resposta-modelo</span><p>'+p.modelo+'</p>';
+      html+='<div class="chk" id="chk'+i+'_'+j+'"></div></div>';
+      html+='</div>';
+    });
+    html+='<button class="conferir" id="conf'+i+'" onclick="conferir('+i+')">✔️ Conferir este KM</button>';
+    html+='<div class="status-bloco" id="st'+i+'"></div>';
+    if(i<BLOCOS.length-1){ html+='<div class="prox" id="px'+i+'"></div>'; }
+    html+='</div>';
+    div.innerHTML=html;
+    cont.appendChild(div);
+    bloco.perguntas.forEach(function(p,j){ var ta=document.getElementById('ta'+i+'_'+j); if(ta) ta.value=estPerg(i,j).resp||''; });
+    if(cp.ok){ var fb=document.getElementById('cpfb'+i); fb.className='fb ok'; fb.innerHTML='✅ Isso! Ouça a frase: <span class="es">'+bloco.completar.fala+'</span>'; }
+  });
+  ligarAudio(cont);
+  BLOCOS.forEach(function(bloco,i){
+    var b=estBloco(i);
+    if(b.aberto && b.conferido){ mostrarConferido(i); }
+    atualizarBotao(i);
+  });
+  atualizarRelatorio();
+  atualizarTrilhaFim();
+}
+
+function digitou(i,j){
+  var ep=estPerg(i,j);
+  ep.resp=document.getElementById('ta'+i+'_'+j).value;
+  if(ep.red){
+    var bloco=BLOCOS[i];
+    if(!ehCopia(ep.resp, textoPlano(bloco), bloco.perguntas[j].q)){
+      ep.red=false;
+      var pd=document.getElementById('perg'+i+'_'+j); if(pd) pd.classList.remove('red');
+      var av=document.getElementById('av'+i+'_'+j); if(av){av.className='aviso'; av.textContent='';}
+    }
+  }
+  atualizarBotao(i);
+  salvar();
+  atualizarRelatorio();
+}
+
+function atualizarBotao(i){
+  var b=estBloco(i); if(!b.aberto) return;
+  var btn=document.getElementById('conf'+i); if(!btn) return;
+  if(b.conferido){ btn.disabled=true; return; }
+  var todas=true;
+  BLOCOS[i].perguntas.forEach(function(p,j){
+    var v=(document.getElementById('ta'+i+'_'+j)||{}).value||estPerg(i,j).resp||'';
+    if(v.trim().length<3) todas=false;
+  });
+  btn.disabled=!todas;
+}
+
+function conferir(i){
+  var bloco=BLOCOS[i], b=estBloco(i);
+  var algumBloqueado=false;
+  bloco.perguntas.forEach(function(p,j){
+    var ep=estPerg(i,j);
+    ep.resp=document.getElementById('ta'+i+'_'+j).value;
+    var av=document.getElementById('av'+i+'_'+j);
+    var copia=ehCopia(ep.resp, textoPlano(bloco), p.q);
+    if(copia){
+      if(!ep.warned || ep.resp===ep.tentou && !ep.segunda){
+        if(!ep.warned){ ep.warned=true; ep.tentou=ep.resp; }
+        av.className='aviso amarelo';
+        av.innerHTML='✋ Boa parte da sua resposta está igual ao texto. Tente <b>reescrever com as suas palavras</b> — explique como se fosse para um amigo, sem olhar o texto. Pode ficar mais curto e simples: o que vale é ser <b>SEU</b>.';
+        algumBloqueado=true;
+      } else {
+        ep.segunda=true; ep.red=true; ep.transcrita=true;
+        av.className='aviso vermelho';
+        av.innerHTML='🔴 Esta resposta continua muito parecida com o texto. Ela foi aceita, mas ficou marcada para revisar. Se reescrever com as suas palavras, a marca some.';
+        document.getElementById('perg'+i+'_'+j).classList.add('red');
+      }
+    } else {
+      ep.red=false;
+      if(av){ av.className='aviso'; av.textContent=''; }
+      var pd=document.getElementById('perg'+i+'_'+j); if(pd) pd.classList.remove('red');
+    }
+    ep.feito=true; ep.quando=new Date().toISOString();
+  });
+  salvar();
+  if(algumBloqueado){
+    document.getElementById('st'+i).innerHTML='<span style="color:var(--amar)">✍️ Altere as respostas marcadas em amarelo e clique em Conferir de novo.</span>';
+    return;
+  }
+  b.conferido=true;
+  if(i<BLOCOS.length-1){ estBloco(i+1).aberto=true; }
+  salvar();
+  render();
+  var alvo=document.getElementById('bloco'+i);
+  if(alvo) alvo.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function mostrarConferido(i){
+  var bloco=BLOCOS[i];
+  bloco.perguntas.forEach(function(p,j){
+    var ep=estPerg(i,j);
+    var mod=document.getElementById('mod'+i+'_'+j); if(mod) mod.classList.add('show');
+    if(ep.red){ var pd=document.getElementById('perg'+i+'_'+j); if(pd) pd.classList.add('red');
+      var av=document.getElementById('av'+i+'_'+j); if(av){av.className='aviso vermelho'; av.innerHTML='🔴 Resposta marcada para revisar (muito parecida com o texto). Reescreva com as suas palavras para tirar a marca.';}
+    }
+    var chk=document.getElementById('chk'+i+'_'+j); if(chk){
+      var h='<b style="font-size:.8rem;color:var(--verde)">Confira você: a sua resposta…</b>';
+      p.chk.forEach(function(pt,k){
+        var val=ep.chk[k]||'';
+        h+='<div class="item"><span>'+pt+'</span><span class="simnao">'
+         +'<button class="sim'+(val==='sim'?' ativo':'')+'" onclick="marcarChk('+i+','+j+','+k+',\'sim\')">Sim</button>'
+         +'<button class="nao'+(val==='nao'?' ativo':'')+'" onclick="marcarChk('+i+','+j+','+k+',\'nao\')">Não</button>'
+         +'</span></div>';
+      });
+      chk.innerHTML=h;
+    }
+  });
+  atualizarStatusBloco(i);
+  var btn=document.getElementById('conf'+i); if(btn){ btn.textContent='✔️ KM conferido'; btn.disabled=true; }
+  if(i<BLOCOS.length-1){
+    var px=document.getElementById('px'+i);
+    if(px) px.innerHTML='<a href="#bloco'+(i+1)+'" onclick="irBloco('+(i+1)+');return false;">➡️ Correr para o KM '+(i+2)+'</a>';
+  }
+}
+
+function marcarChk(i,j,k,val){
+  var ep=estPerg(i,j); ep.chk[k]=val;
+  salvar(); mostrarConferido(i); atualizarStatusBloco(i); atualizarRelatorio();
+}
+
+function statusPergunta(i,j){
+  var ep=estPerg(i,j), p=BLOCOS[i].perguntas[j];
+  if(ep.red) return 'revisar';
+  var temNao=false, todasResp=true;
+  p.chk.forEach(function(pt,k){ if(ep.chk[k]==='nao') temNao=true; if(!ep.chk[k]) todasResp=false; });
+  if(temNao) return 'revisar';
+  if(!todasResp) return 'pendente';
+  return 'ok';
+}
+function atualizarStatusBloco(i){
+  var st=document.getElementById('st'+i); if(!st) return;
+  var revisar=false, pendente=false;
+  BLOCOS[i].perguntas.forEach(function(p,j){ var s=statusPergunta(i,j); if(s==='revisar')revisar=true; if(s==='pendente')pendente=true; });
+  if(revisar) st.innerHTML='<span style="color:#ffb3bb">🔁 Este KM tem pontos para revisar.</span>';
+  else if(pendente) st.innerHTML='<span style="color:var(--amar)">📝 Responda a autoavaliação (Sim/Não) de cada pergunta.</span>';
+  else st.innerHTML='<span style="color:var(--verde)">✅ KM concluído com sucesso!</span>';
+  atualizarRelatorio();
+}
+
+function atualizarRelatorio(){
+  var lista=[], totalConf=0, totalRed=0, totalNao=0, comp=0;
+  BLOCOS.forEach(function(bloco,i){
+    var b=estBloco(i); if(b.completar&&b.completar.ok) comp++;
+    if(!b.conferido) return; totalConf++;
+    bloco.perguntas.forEach(function(p,j){
+      var ep=estPerg(i,j);
+      if(ep.red){ totalRed++; lista.push('KM '+(i+1)+' ('+bloco.titulo+'): pergunta '+(j+1)+' — resposta muito parecida com o texto.'); }
+      p.chk.forEach(function(pt,k){ if(ep.chk[k]==='nao'){ totalNao++; lista.push('KM '+(i+1)+' ('+bloco.titulo+'): revisar — "'+pt+'"'); } });
+    });
+  });
+  var rev=document.getElementById('revisar'), rl=document.getElementById('revisar-lista');
+  if(lista.length){ rev.style.display='block'; rl.innerHTML=lista.map(function(x){return '<li>'+x+'</li>';}).join(''); }
+  else { rev.style.display='none'; rl.innerHTML=''; }
+  var rc=document.getElementById('rel-conteudo');
+  rc.innerHTML='<b>KM conferidos:</b> '+totalConf+' de '+BLOCOS.length+'.<br>'
+    +'<b>Aquecimentos (completar) certos:</b> '+comp+' de '+BLOCOS.length+'.<br>'
+    +'<b>Respostas marcadas (muito parecidas com o texto):</b> '+totalRed+'.<br>'
+    +'<b>Pontos marcados como "Não" na autoavaliação:</b> '+totalNao+'.<br>'
+    +(lista.length? '<span style="color:#ffb3bb">Há '+lista.length+' ponto(s) para revisar (lista acima).</span>' : '<span style="color:var(--verde)">Sem pontos pendentes para revisar. 👏</span>');
+}
+
+/* ====== EXPORTAR / IMPORTAR / ZERAR ====== */
+function exportar(){
+  var dados=JSON.stringify(estado,null,2);
+  var blob=new Blob([dados],{type:'application/json'});
+  var a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='leitura-guiada_maraton-nocturno.json'; a.click();
+}
+function importar(ev){
+  var f=ev.target.files[0]; if(!f) return;
+  var r=new FileReader();
+  r.onload=function(){ try{ estado=JSON.parse(r.result); salvar(); render(); mostrarModal('✅ Progresso importado!',false); }catch(e){ mostrarModal('❌ Arquivo inválido.',false); } };
+  r.readAsText(f);
+}
+var acaoZerar=null;
+function pedirZerar(){ acaoZerar=true; mostrarModal('Tem certeza que quer apagar TODO o progresso desta leitura? (O Quiz continua destravado se já tiver sido destravado.)',true); }
+function mostrarModal(txt,confirmar){
+  document.getElementById('modal-txt').innerHTML=txt;
+  document.getElementById('modal').classList.add('show');
+  document.getElementById('modal-cancel').style.display=confirmar?'inline-block':'none';
+  document.getElementById('modal-ok').textContent=confirmar?'Sim, apagar':'Ok';
+  document.getElementById('modal-ok').onclick=function(){ if(confirmar && acaoZerar){ var c=estado.concluido, ce=estado.concluidoEm; estado={blocos:{}}; if(c){estado.concluido=true; estado.concluidoEm=ce;} salvar(); render(); } acaoZerar=null; fecharModal(); };
+}
+function fecharModal(){ document.getElementById('modal').classList.remove('show'); }
+
+ligarAudio(document.querySelector('.peg'));
+render();
+</script>
+</body>
+</html>
